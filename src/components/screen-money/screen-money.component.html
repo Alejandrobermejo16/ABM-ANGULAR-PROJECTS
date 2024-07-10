@@ -1,0 +1,23 @@
+<h1 class="title">ABM Forex Exchange</h1>
+
+<div class="form-group">
+  <p>INTRODUCE EL IMPORTE</p>
+  <input
+    type="text"
+    placeholder="Introduce la cantidad a cambiar"
+    id="amount"
+    name="amount"
+    class="input-amount"
+    required
+    aria-label="Cantidad a cambiar"
+  />
+</div>
+
+<p style="text-align: center; color: grey;">PAÍSES DISPONIBLES:</p>
+
+<div class="countries-list">
+  <!-- Usa 'slice:0:5' para mostrar solo los primeros 5 países -->
+  <p *ngFor="let country of countries.slice(0, 5)">
+    {{ country.name.common }} ({{ country.cca3 }})
+  </p>
+</div>

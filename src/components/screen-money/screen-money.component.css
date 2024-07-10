@@ -1,0 +1,31 @@
+/* Estilo para el título */
+.title {
+    text-align: center;
+    margin-bottom: 20px; /* Ajusta el espacio inferior según necesites */
+}
+
+/* Contenedor para el párrafo y el input */
+.form-group {
+    display: flex;
+    flex-direction: row; /* Los elementos estarán en una fila */
+    justify-content: center; /* Centra el contenido en el contenedor */
+    gap: 10px;  /* Espacio entre el párrafo y el input */
+    margin-bottom: 20px; /* Espacio inferior */
+}
+
+/* Estilo para el input */
+.input-amount {
+    padding: 10px; /* Añade algo de espacio dentro del input */
+    width: 200px; /* Establece un ancho fijo para el input */
+    max-width: 100%; /* Asegura que no se expanda más allá del contenedor */
+}
+
+/* Estilo opcional para la lista de países */
+.countries-list {
+    text-align: center; /* Centra el contenido dentro del div */
+    margin-top: 20px; /* Espacio entre el input y la lista de países */
+}
+
+.countries-list p {
+    margin: 5px 0; /* Espacio entre los elementos de la lista */
+}
