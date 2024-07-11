@@ -4,20 +4,27 @@
     margin-bottom: 20px;
 }
 
-/* Contenedor para los pares de párrafo e input */
-.form-group {
+/* Contenedor principal */
+.contenedor-padre {
     display: flex;
     justify-content: center;
-    background-color: blue;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;
+    flex-direction: column;  
+}
+
+/* Estilo para el grupo de formularios */
+.form-group {
+    display: flex;
     flex-direction: row; /* Los elementos estarán en una fila */
     gap: 20px;  /* Espacio entre los pares de párrafo e input */
     margin-bottom: 20px; /* Espacio inferior */
     padding: 20px; /* Añade espacio dentro del contenedor */
+    background-color: blue;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Contenedor para cada par de párrafo e input */
+/* Estilo para los grupos de campos */
 .field-group {
     display: flex;
     flex-direction: column; /* Los elementos estarán en una columna */
@@ -54,6 +61,7 @@
     cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
 }
 
+/* Estilo para el botón cambiar */
 .change-button {
     padding: 10px 20px; /* Espacio dentro del botón */
     background-color: rgb(24, 93, 115); /* Color de fondo del botón */
@@ -65,8 +73,7 @@
     margin-top: 40px;
 }
 
-
-/* Estilo opcional para la lista de países */
+/* Estilo para la lista de países */
 .countries-list {
     text-align: center; /* Centra el contenido dentro del div */
     margin-top: 20px; /* Espacio entre el input y la lista de países */
@@ -74,4 +81,27 @@
 
 .countries-list p {
     margin: 5px 0; /* Espacio entre los elementos de la lista */
+}
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .form-group {
+        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+        gap: 10px; /* Reduce el espacio entre elementos */
+    }
+    
+    .input-button-group {
+        flex-direction: column; /* Coloca los botones debajo del input */
+        gap: 10px; /* Reduce el espacio entre el input y los botones */
+    }
+
+    .input-amount {
+        width: 100%; /* El input ocupará el 100% del ancho disponible */
+    }
+
+    .convert-button,
+    .change-button {
+        width: 100%; /* Los botones ocuparán el 100% del ancho disponible */
+        margin-top: 10px; /* Añade margen superior para separación */
+    }
 }
