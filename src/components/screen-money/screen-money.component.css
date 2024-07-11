@@ -6,10 +6,11 @@
 
 /* Contenedor principal */
 .contenedor-padre {
-    display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    flex-direction: column;  
+    flex-direction: column;
+    
 }
 
 /* Estilo para el grupo de formularios */
@@ -22,6 +23,10 @@
     background-color: blue;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+
 }
 
 /* Estilo para los grupos de campos */
@@ -52,6 +57,7 @@
 
 /* Estilo para el botón convertir */
 .convert-button {
+    margin-top: 40px;
     padding: 10px 20px; /* Espacio dentro del botón */
     background-color: rgb(24, 93, 115); /* Color de fondo del botón */
     font-family: Arial, Helvetica, sans-serif;
@@ -88,7 +94,9 @@
     .form-group {
         flex-direction: column; /* Cambia a columna en pantallas pequeñas */
         gap: 10px; /* Reduce el espacio entre elementos */
+        height: 100%;
     }
+    
     
     .input-button-group {
         flex-direction: column; /* Coloca los botones debajo del input */

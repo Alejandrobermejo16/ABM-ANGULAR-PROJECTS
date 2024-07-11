@@ -5,72 +5,74 @@
 <h1 class="title">ABM Forex Exchange</h1>
 
 <div class="contenedor-padre">
-<div class="form-group">
-  <div class="field-group">
-    <p>IMPORTE:</p>
-    <input
-      type="text"
-      placeholder="Introduce cantidad"
-      id="amount"
-      name="amount"
-      class="input-amount"
-      required
-      aria-label="Cantidad a cambiar"
-    />
-  </div>
-  <div class="field-group">
-    <p>DE:</p>
-    <select
-      id="from-country"
-      name="from-country"
-      class="input-amount"
-      required
-      aria-label="País origen"
-    >
-      <option value="" disabled selected>País origen</option>
-      <!-- Renderiza países dinámicamente -->
-      <option
-        *ngFor="let country of countries.slice(0, 5)"
-        [value]="country.cca3"
+  <div class="form-group">
+    <div class="field-group">
+      <p>IMPORTE:</p>
+      <input
+        type="text"
+        placeholder="Introduce cantidad"
+        id="amount"
+        name="amount"
+        class="input-amount"
+        required
+        aria-label="Cantidad a cambiar"
+      />
+    </div>
+    <div class="field-group">
+      <p> DE: </p>
+      <select
+        id="from-country"
+        name="from-country"
+        class="input-amount"
+        [(ngModel)]="selectValue1" 
+        required
+        aria-label="País origen"
       >
-        {{ country.name.common }} ({{ country.cca3 }})
-      </option>
-    </select>
-  </div>
-  
-  <div class="input-button-group">
-    <button class="change-button"><i class="fa-solid fa-repeat"></i></button>
-  </div>
+        <option value="" disabled selected>País origen</option>
+        <!-- Renderiza países dinámicamente -->
+        <option
+          *ngFor="let country of countries.slice(0, 5)"
+          [value]="country.cca3"
+        >
+          {{ country.name.common }} ({{ country.cca3 }})
+        </option>
+      </select>
+    </div>
 
-  <div class="field-group">
-    <p>A:</p>
     <div class="input-button-group">
+      <button (click)="change()" class="change-button"><i class="fa-solid fa-repeat"></i></button>
+    </div>
+
+    <div class="field-group">
+      <p> A: </p>
       <select
         id="to-country"
         name="to-country"
         class="input-amount"
+        [(ngModel)]="selectValue2"  
         required
         aria-label="País destino"
       >
         <option value="" disabled selected>País destino</option>
-        <!-- Aquí deberías incluir una lista de países disponibles -->
-        <option value="USA">Estados Unidos</option>
-        <option value="ARG">Argentina</option>
-        <option value="BRA">Brasil</option>
-        <option value="CAN">Canadá</option>
-        <!-- Agrega más países aquí -->
+        <!-- Renderiza países dinámicamente -->
+        <option
+          *ngFor="let country of countries.slice(0, 5)"
+          [value]="country.cca3"
+        >
+          {{ country.name.common }} ({{ country.cca3 }})
+        </option>
       </select>
-      <button class="convert-button">Convertir</button>
     </div>
+    <button (click)="convert()" class="convert-button">Convertir</button>
+
   </div>
-</div>
 
-<p style="text-align: center; color: grey">PAÍSES DISPONIBLES:</p>
+  <p style="text-align: center; color: grey">PAÍSES DISPONIBLES:</p>
 
-<div class="countries-list">
-  <!-- Usa 'slice:0:5' para mostrar solo los primeros 5 países -->
-  <p *ngFor="let country of countries.slice(0, 5)">
-    {{ country.name.common }} ({{ country.cca3 }})
-  </p>
-</div>
+  <div class="countries-list">
+    <!-- Usa 'slice:0:5' para mostrar solo los primeros 5 países -->
+    <p *ngFor="let country of countries.slice(0, 5)">
+      {{ country.name.common }} ({{ country.cca3 }})
+    </p>
+  </div>
 </div>
