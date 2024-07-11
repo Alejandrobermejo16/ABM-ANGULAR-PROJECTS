@@ -36,7 +36,8 @@ export class ScreenMoneyComponent implements OnInit {
           name: { common: country.name.common },
           cca3: country.cca3
         }));
-        console.log(this.countries);
+        //ordenar paises para mostrar alfabeticamente 
+        this.countries.sort((a, b) => a.name.common.localeCompare(b.name.common)); 
       },
       (error: any) => {
         console.error('Error al cargar los datos de los países', error);

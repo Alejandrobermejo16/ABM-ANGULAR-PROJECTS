@@ -1,115 +1,181 @@
 /* Estilo para el título */
 .title {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin: 20px;
+  color: rgb(210, 204, 204);
 }
 
 /* Contenedor principal */
 .contenedor-padre {
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #003087;
+}
+
+/* Ajustes para el contenedor formulario */
+.contenedor-formulario {
+  width: 50%;
+  background-color: #b8b8b879;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  padding: 20px; /* Añade algo de espacio dentro del contenedor */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-height: 500px;
 }
 
 /* Estilo para el grupo de formularios */
 .form-group {
-    display: flex;
-    flex-direction: row; /* Los elementos estarán en una fila */
-    gap: 20px;  /* Espacio entre los pares de párrafo e input */
-    margin-bottom: 20px; /* Espacio inferior */
-    padding: 20px; /* Añade espacio dentro del contenedor */
-    background-color: blue;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    height: 50vh;
-    justify-content: center;
-    align-items: center;
-
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: white; /* Color de fondo gris claro */
+  border-radius: 10px; /* Bordes redondeados */
+  color: #333; /* Color del texto */
+  font-family: Arial, Helvetica, sans-serif;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Estilo para los grupos de campos */
 .field-group {
-    display: flex;
-    flex-direction: column; /* Los elementos estarán en una columna */
-    align-items: center; /* Centra los elementos horizontalmente */
-    gap: 5px;  /* Espacio entre el párrafo y el input */
-    padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
 }
 
 /* Contenedor para el input y el botón */
 .input-button-group {
-    display: flex;
-    align-items: center; /* Centra verticalmente el input y el botón */
-    gap: 20px; /* Espacio entre el input y el botón */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Estilo para el input */
 .input-amount {
-    text-align: center;
-    padding: 10px; /* Añade algo de espacio dentro del input */
-    width: 200px; /* Establece un ancho fijo para el input */
-    max-width: 100%; /* Asegura que no se expanda más allá del contenedor */
-    border-radius: 7%;
-    border: 3px solid grey;
+  text-align: center;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
 /* Estilo para el botón convertir */
 .convert-button {
-    margin-top: 40px;
-    padding: 10px 20px; /* Espacio dentro del botón */
-    background-color: rgb(24, 93, 115); /* Color de fondo del botón */
-    font-family: Arial, Helvetica, sans-serif;
-    color: white; /* Color del texto del botón */
-    border: 1px solid grey; /* Borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  padding: 10px 20px;
+  background-color: grey; /* Color azul del botón */
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 45px;
 }
 
-/* Estilo para el botón cambiar */
-.change-button {
-    padding: 10px 20px; /* Espacio dentro del botón */
-    background-color: rgb(24, 93, 115); /* Color de fondo del botón */
-    font-family: Arial, Helvetica, sans-serif;
-    color: white; /* Color del texto del botón */
-    border: 1px solid grey; /* Borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    margin-top: 40px;
+p {
+  font-family: "Times New Roman", Times, serif;
+
 }
 
 /* Estilo para la lista de países */
 .countries-list {
-    text-align: center; /* Centra el contenido dentro del div */
-    margin-top: 20px; /* Espacio entre el input y la lista de países */
+  display: grid; /* Usa grid layout */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(150px, 1fr)
+  ); /* Configura las columnas para que se ajusten automáticamente */
+  gap: 10px; /* Espacio entre los elementos */
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  background-color: rgb(235, 235, 12);
+  border-radius: 10px;
+  padding: 10px; /* Añade espacio dentro del contenedor */
+  max-height: 400px; /* Establece una altura máxima para el contenedor */
+  overflow-y: auto; /* Permite el scroll vertical si es necesario */
 }
 
 .countries-list p {
-    margin: 5px 0; /* Espacio entre los elementos de la lista */
+  margin: 5px 0;
+  background-color: white; /* Fondo blanco para cada país */
+  border-radius: 5px;
+  border: 1px solid #003087;
+  color: white;
+  background-color: #003087;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para cada país */
 }
 
 /* Media Queries para pantallas más pequeñas */
 @media (max-width: 768px) {
+    .contenedor-padre {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #003087; 
+    }
+  
+    .contenedor-formulario {
+      overflow-y: auto;
+      max-height: 100vh;
+      max-width: 99%;
+      background-color: #003087; 
+
+    }
+  
     .form-group {
-        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
-        gap: 10px; /* Reduce el espacio entre elementos */
-        height: 100%;
+      background-color: #b8b8b879;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
     }
-    
-    
+  
     .input-button-group {
-        flex-direction: column; /* Coloca los botones debajo del input */
-        gap: 10px; /* Reduce el espacio entre el input y los botones */
+      width: 100%;
     }
-
+  
     .input-amount {
-        width: 100%; /* El input ocupará el 100% del ancho disponible */
+      width: 100%;
+    }
+  
+    .convert-button {
+      width: 100%;
+      margin-top: 10px;
+    }
+  
+    .countries-list {
+      max-height: 380px; /* Ajuste para que la lista de países no ocupe demasiado espacio */
+      padding-bottom: 50%; 
     }
 
-    .convert-button,
-    .change-button {
-        width: 100%; /* Los botones ocuparán el 100% del ancho disponible */
-        margin-top: 10px; /* Añade margen superior para separación */
-    }
-}
+
+.countries-list p {
+    margin: 5px 0;
+    background-color: white; /* Fondo blanco para cada país */
+    border-radius: 5px;
+    border: 1px solid #003087;
+    color: white;
+    background-color: #003087;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para cada país */
+    font-size: 20px;
+  }
+  }

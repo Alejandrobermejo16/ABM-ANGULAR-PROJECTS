@@ -1,78 +1,83 @@
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<h1 class="title">ABM Forex Exchange</h1>
-
 <div class="contenedor-padre">
-  <div class="form-group">
-    <div class="field-group">
-      <p>IMPORTE:</p>
-      <input
-        type="text"
-        placeholder="Introduce cantidad"
-        id="amount"
-        name="amount"
-        class="input-amount"
-        required
-        aria-label="Cantidad a cambiar"
-      />
-    </div>
-    <div class="field-group">
-      <p> DE: </p>
-      <select
-        id="from-country"
-        name="from-country"
-        class="input-amount"
-        [(ngModel)]="selectValue1" 
-        required
-        aria-label="País origen"
-      >
-        <option value="" disabled selected>País origen</option>
-        <!-- Renderiza países dinámicamente -->
-        <option
-          *ngFor="let country of countries.slice(0, 5)"
-          [value]="country.cca3"
+  <h1 class="title">ABM Forex Exchange</h1>
+<div>
+
+
+  <div class="contenedor-formulario">
+    <div class="form-group">
+      <div class="field-group">
+        <p>IMPORTE:</p>
+        <input
+          type="text"
+          placeholder="Introduce cantidad"
+          id="amount"
+          name="amount"
+          class="input-amount"
+          required
+          aria-label="Cantidad a cambiar"
+        />
+      </div>
+      <div class="field-group">
+        <p>DE:</p>
+        <select
+          id="from-country"
+          name="from-country"
+          class="input-amount"
+          [(ngModel)]="selectValue1"
+          required
+          aria-label="País origen"
         >
-          {{ country.name.common }} ({{ country.cca3 }})
-        </option>
-      </select>
-    </div>
+          <option value="" disabled selected>País origen</option>
+          <!-- Renderiza países dinámicamente -->
+          <option
+            *ngFor="let country of countries"
+            [value]="country.cca3"
+          >
+            {{ country.name.common }} ({{ country.cca3 }})
+          </option>
+        </select>
+      </div>
 
-    <div class="input-button-group">
-      <button (click)="change()" class="change-button"><i class="fa-solid fa-repeat"></i></button>
-    </div>
+      <div class="input-button-group">
+        <button (click)="change()" class="convert-button">
+          <i class="fa-solid fa-repeat"></i>
+        </button>
+      </div>
 
-    <div class="field-group">
-      <p> A: </p>
-      <select
-        id="to-country"
-        name="to-country"
-        class="input-amount"
-        [(ngModel)]="selectValue2"  
-        required
-        aria-label="País destino"
-      >
-        <option value="" disabled selected>País destino</option>
-        <!-- Renderiza países dinámicamente -->
-        <option
-          *ngFor="let country of countries.slice(0, 5)"
-          [value]="country.cca3"
+      <div class="field-group">
+        <p>A:</p>
+        <select
+          id="to-country"
+          name="to-country"
+          class="input-amount"
+          [(ngModel)]="selectValue2"
+          required
+          aria-label="País destino"
         >
-          {{ country.name.common }} ({{ country.cca3 }})
-        </option>
-      </select>
+          <option value="" disabled selected>País destino</option>
+          <!-- Renderiza países dinámicamente -->
+          <option
+            *ngFor="let country of countries"
+            [value]="country.cca3"
+          >
+            {{ country.name.common }} ({{ country.cca3 }})
+          </option>
+        </select>
+      </div>
+      <button (click)="convert()" class="convert-button">Convertir</button>
     </div>
-    <button (click)="convert()" class="convert-button">Convertir</button>
 
+    <p style="text-align: center; font-size:26px; color: white">PAÍSES ADMITIDOS:</p>
+
+    <div class="countries-list">
+      <p *ngFor="let country of countries; let i = index">
+        {{ i + 1 }}. {{ country.name.common }} ({{ country.cca3 }})
+      </p>
+    </div>
+    
   </div>
 
-  <p style="text-align: center; color: grey">PAÍSES DISPONIBLES:</p>
-
-  <div class="countries-list">
-    <!-- Usa 'slice:0:5' para mostrar solo los primeros 5 países -->
-    <p *ngFor="let country of countries.slice(0, 5)">
-      {{ country.name.common }} ({{ country.cca3 }})
-    </p>
-  </div>
-</div>
