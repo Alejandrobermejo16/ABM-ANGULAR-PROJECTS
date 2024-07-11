@@ -3,20 +3,15 @@
 <div class="form-group">
   <div class="field-group">
     <p>IMPORTE:</p>
-    <select
+    <input
+      type="text"
+      placeholder="Introduce cantidad"
       id="amount"
       name="amount"
       class="input-amount"
       required
       aria-label="Cantidad a cambiar"
-    >
-      <!-- Agrega opciones aquí si es necesario -->
-      <option value="" disabled selected>Importe a cambiar</option>
-      <option value="100">100</option>
-      <option value="200">200</option>
-      <option value="300">300</option>
-      <!-- Puedes agregar más opciones aquí -->
-    </select>
+    />
   </div>
   <div class="field-group">
     <p>DE:</p>
@@ -29,11 +24,19 @@
     >
       <option value="" disabled selected>País origen</option>
       <!-- Renderiza países dinámicamente -->
-      <option *ngFor="let country of countries.slice(0, 5)" [value]="country.cca3">
+      <option
+        *ngFor="let country of countries.slice(0, 5)"
+        [value]="country.cca3"
+      >
         {{ country.name.common }} ({{ country.cca3 }})
       </option>
     </select>
   </div>
+  
+  <div class="input-button-group">
+    <button class="change-button"><i class="fa-solid fa-repeat"></i></button>
+  </div>
+
   <div class="field-group">
     <p>A:</p>
     <div class="input-button-group">
@@ -57,7 +60,7 @@
   </div>
 </div>
 
-<p style="text-align: center; color: grey;">PAÍSES DISPONIBLES:</p>
+<p style="text-align: center; color: grey">PAÍSES DISPONIBLES:</p>
 
 <div class="countries-list">
   <!-- Usa 'slice:0:5' para mostrar solo los primeros 5 países -->

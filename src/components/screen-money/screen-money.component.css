@@ -54,6 +54,18 @@
     cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
 }
 
+.change-button {
+    padding: 10px 20px; /* Espacio dentro del botón */
+    background-color: rgb(24, 93, 115); /* Color de fondo del botón */
+    font-family: Arial, Helvetica, sans-serif;
+    color: white; /* Color del texto del botón */
+    border: 1px solid grey; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: 40px;
+}
+
+
 /* Estilo opcional para la lista de países */
 .countries-list {
     text-align: center; /* Centra el contenido dentro del div */
