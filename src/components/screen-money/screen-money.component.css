@@ -1,23 +1,57 @@
 /* Estilo para el título */
 .title {
     text-align: center;
-    margin-bottom: 20px; /* Ajusta el espacio inferior según necesites */
+    margin-bottom: 20px;
 }
 
-/* Contenedor para el párrafo y el input */
+/* Contenedor para los pares de párrafo e input */
 .form-group {
     display: flex;
+    justify-content: center;
+    background-color: blue;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
     flex-direction: row; /* Los elementos estarán en una fila */
-    justify-content: center; /* Centra el contenido en el contenedor */
-    gap: 10px;  /* Espacio entre el párrafo y el input */
+    gap: 20px;  /* Espacio entre los pares de párrafo e input */
     margin-bottom: 20px; /* Espacio inferior */
+    padding: 20px; /* Añade espacio dentro del contenedor */
+}
+
+/* Contenedor para cada par de párrafo e input */
+.field-group {
+    display: flex;
+    flex-direction: column; /* Los elementos estarán en una columna */
+    align-items: center; /* Centra los elementos horizontalmente */
+    gap: 5px;  /* Espacio entre el párrafo y el input */
+    padding-bottom: 10px;
+}
+
+/* Contenedor para el input y el botón */
+.input-button-group {
+    display: flex;
+    align-items: center; /* Centra verticalmente el input y el botón */
+    gap: 20px; /* Espacio entre el input y el botón */
 }
 
 /* Estilo para el input */
 .input-amount {
+    text-align: center;
     padding: 10px; /* Añade algo de espacio dentro del input */
     width: 200px; /* Establece un ancho fijo para el input */
     max-width: 100%; /* Asegura que no se expanda más allá del contenedor */
+    border-radius: 7%;
+    border: 3px solid grey;
+}
+
+/* Estilo para el botón convertir */
+.convert-button {
+    padding: 10px 20px; /* Espacio dentro del botón */
+    background-color: rgb(24, 93, 115); /* Color de fondo del botón */
+    font-family: Arial, Helvetica, sans-serif;
+    color: white; /* Color del texto del botón */
+    border: 1px solid grey; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
 }
 
 /* Estilo opcional para la lista de países */

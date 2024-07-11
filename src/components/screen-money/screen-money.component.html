@@ -1,16 +1,60 @@
 <h1 class="title">ABM Forex Exchange</h1>
 
 <div class="form-group">
-  <p>INTRODUCE EL IMPORTE</p>
-  <input
-    type="text"
-    placeholder="Introduce la cantidad a cambiar"
-    id="amount"
-    name="amount"
-    class="input-amount"
-    required
-    aria-label="Cantidad a cambiar"
-  />
+  <div class="field-group">
+    <p>IMPORTE:</p>
+    <select
+      id="amount"
+      name="amount"
+      class="input-amount"
+      required
+      aria-label="Cantidad a cambiar"
+    >
+      <!-- Agrega opciones aquí si es necesario -->
+      <option value="" disabled selected>Importe a cambiar</option>
+      <option value="100">100</option>
+      <option value="200">200</option>
+      <option value="300">300</option>
+      <!-- Puedes agregar más opciones aquí -->
+    </select>
+  </div>
+  <div class="field-group">
+    <p>DE:</p>
+    <select
+      id="from-country"
+      name="from-country"
+      class="input-amount"
+      required
+      aria-label="País origen"
+    >
+      <option value="" disabled selected>País origen</option>
+      <!-- Renderiza países dinámicamente -->
+      <option *ngFor="let country of countries.slice(0, 5)" [value]="country.cca3">
+        {{ country.name.common }} ({{ country.cca3 }})
+      </option>
+    </select>
+  </div>
+  <div class="field-group">
+    <p>A:</p>
+    <div class="input-button-group">
+      <select
+        id="to-country"
+        name="to-country"
+        class="input-amount"
+        required
+        aria-label="País destino"
+      >
+        <option value="" disabled selected>País destino</option>
+        <!-- Aquí deberías incluir una lista de países disponibles -->
+        <option value="USA">Estados Unidos</option>
+        <option value="ARG">Argentina</option>
+        <option value="BRA">Brasil</option>
+        <option value="CAN">Canadá</option>
+        <!-- Agrega más países aquí -->
+      </select>
+      <button class="convert-button">Convertir</button>
+    </div>
+  </div>
 </div>
 
 <p style="text-align: center; color: grey;">PAÍSES DISPONIBLES:</p>
