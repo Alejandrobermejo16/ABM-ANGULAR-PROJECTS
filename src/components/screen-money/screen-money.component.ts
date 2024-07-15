@@ -77,7 +77,7 @@ export class ScreenMoneyComponent implements OnInit {
     }
   }
 
-  // Devuelve la URL de la bandera desde el diccionario
+  // Devuelve la URL de la bandera desde el diccionario 
   getFlagUrl(countryCode: string): string {
     return this.flagUrls[countryCode] || '';  
   }
