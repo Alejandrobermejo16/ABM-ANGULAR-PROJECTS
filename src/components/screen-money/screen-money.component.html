@@ -1,22 +1,19 @@
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
+<!-- src/app/components/screen-money/screen-money.component.html -->
 
 <div class="contenedor-padre">
   <h1 class="title">ABM Forex Exchange</h1>
-<div>
-
 
   <div class="contenedor-formulario">
     <div class="form-group">
       <div class="field-group">
         <p>IMPORTE:</p>
         <input
-          type="text"
+          type="number"
           placeholder="Introduce cantidad"
           id="amount"
           name="amount"
           class="input-amount"
+          [(ngModel)]="amount"
           required
           aria-label="Cantidad a cambiar"
         />
@@ -32,11 +29,12 @@
           aria-label="País origen"
         >
           <option value="" disabled selected>País origen</option>
-          <!-- Renderiza países dinámicamente -->
+          <!-- Renderiza países dinámicamente con banderas -->
           <option
             *ngFor="let country of countries"
             [value]="country.cca3"
           >
+            <img [src]="getFlagUrl(country.cca3)" alt="{{ country.name.common }} flag" class="flag-icon" />
             {{ country.name.common }} ({{ country.cca3 }})
           </option>
         </select>
@@ -59,11 +57,12 @@
           aria-label="País destino"
         >
           <option value="" disabled selected>País destino</option>
-          <!-- Renderiza países dinámicamente -->
+          <!-- Renderiza países dinámicamente con banderas -->
           <option
             *ngFor="let country of countries"
             [value]="country.cca3"
           >
+            <img [src]="getFlagUrl(country.cca3)" alt="{{ country.name.common }} flag" class="flag-icon" />
             {{ country.name.common }} ({{ country.cca3 }})
           </option>
         </select>
@@ -71,13 +70,17 @@
       <button (click)="convert()" class="convert-button">Convertir</button>
     </div>
 
-    <p style="text-align: center; font-size:26px; color: white">PAÍSES ADMITIDOS:</p>
+    <div *ngIf="convertedAmount !== null">
+      <h3 style="text-align: center; color: white">Cantidad Convertida: {{ convertedAmount | number:'1.2-2' }}</h3>
+    </div>
+
+    <p style="text-align: center; font-size: 26px; color: white">PAÍSES ADMITIDOS:</p>
 
     <div class="countries-list">
       <p *ngFor="let country of countries; let i = index">
+        <img [src]="getFlagUrl(country.cca3)" alt="{{ country.name.common }} flag" class="flag-icon" />
         {{ i + 1 }}. {{ country.name.common }} ({{ country.cca3 }})
       </p>
     </div>
-    
   </div>
-
+</div>
