@@ -79,7 +79,7 @@ export class ScreenMoneyComponent implements OnInit {
       if (fromCountry && toCountry) {
         const fromCurrency = Object.keys(fromCountry.currencies)[0];
         const toCurrency = Object.keys(toCountry.currencies)[0];
-
+        //se llama a la variable que tiene el servicio y dentro de esa variable a la funcion que hace la llamada pasandole los datos que hemos obtenido
         this.currencyExchangeService.convertCurrency(this.amount, fromCurrency, toCurrency).subscribe(
           (result) => {
             this.convertedAmount = result;
