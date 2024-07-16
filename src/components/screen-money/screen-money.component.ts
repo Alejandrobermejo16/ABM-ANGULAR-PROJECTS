@@ -1,5 +1,3 @@
-// src/app/components/screen-money/screen-money.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { LoadCountriesService } from '../../services/load-countries.service';
 import { CurrencyExchangeService } from '../../services/currency-exchange.service';
@@ -13,6 +11,12 @@ interface Country {
   cca3: string;
   flags: {
     png: string;
+  };
+  currencies: {
+    [key: string]: {
+      name: string;
+      symbol: string;
+    };
   };
 }
 
@@ -34,15 +38,17 @@ export class ScreenMoneyComponent implements OnInit {
   flagUrls: { [key: string]: string } = {};
 
   constructor(
+    //se guardan en variables los servicios para poder llamarlas con la suscripcion de una manera mas clara
     private loadCountriesService: LoadCountriesService,
     private currencyExchangeService: CurrencyExchangeService
   ) {}
 
+  //metodo de construccion de componente
   ngOnInit(): void {
     this.loadCountriesService.getData().subscribe(
       (data: Country[]) => {
         this.countries = data;
-        //ordena los paises para el select
+        // Ordena los países para el select
         this.countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
 
         // Crea el diccionario de banderas
@@ -58,20 +64,31 @@ export class ScreenMoneyComponent implements OnInit {
   }
 
   change() {
-    //Cambio  del valor de combos
+    // Cambio del valor de combos
     [this.selectValue1, this.selectValue2] = [this.selectValue2, this.selectValue1]; 
   }
 
+
+  //funcion de conversion de moneda
   convert() {
     if (this.selectValue1 && this.selectValue2 && this.amount > 0) {
-      this.currencyExchangeService.convertCurrency(this.amount, this.selectValue1, this.selectValue2).subscribe(
-        (result) => {
-          this.convertedAmount = result;
-        },
-        (error) => {
-          console.error('Error al realizar la conversión de divisas', error);
-        }
-      );
+      // Obtén los códigos de moneda de los países seleccionados
+      const fromCountry = this.countries.find(c => c.cca3 === this.selectValue1);
+      const toCountry = this.countries.find(c => c.cca3 === this.selectValue2);
+
+      if (fromCountry && toCountry) {
+        const fromCurrency = Object.keys(fromCountry.currencies)[0];
+        const toCurrency = Object.keys(toCountry.currencies)[0];
+
+        this.currencyExchangeService.convertCurrency(this.amount, fromCurrency, toCurrency).subscribe(
+          (result) => {
+            this.convertedAmount = result;
+          },
+          (error) => {
+            console.error('Error al realizar la conversión de divisas', error);
+          }
+        );
+      }
     } else {
       alert('Por favor, asegúrate de que todos los campos estén completos y que el importe sea positivo.');
     }

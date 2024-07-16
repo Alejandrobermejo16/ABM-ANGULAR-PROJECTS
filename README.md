@@ -25,3 +25,46 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+# ScreenMoneyComponent
+
+## Descripción
+
+El componente `ScreenMoneyComponent` permite a los usuarios seleccionar dos países y convertir una cantidad de dinero de la moneda del primer país a la moneda del segundo país utilizando dos APIs: `restcountries` para obtener información sobre los países y sus monedas, y `exchangerate-api` para obtener las tasas de cambio.
+
+## Funcionalidades
+
+- Carga y muestra una lista de países con sus banderas en dos dropdowns.
+- Permite ingresar una cantidad de dinero para convertir.
+- Intercambia los valores seleccionados en los dropdowns.
+- Realiza la conversión de moneda utilizando los códigos de las divisas de los países seleccionados.
+- Muestra el resultado de la conversión.
+
+## Archivos Principales
+
+- `screen-money.component.ts`: Contiene la lógica del componente.
+- `screen-money.component.html`: Contiene el template HTML del componente.
+- `screen-money.component.css`: Contiene los estilos del componente.
+
+## Servicios
+
+- `LoadCountriesService`: Servicio que se utiliza para cargar datos de países y obtener los códigos de las divisas.
+- `CurrencyExchangeService`: Servicio que se utiliza para realizar la conversión de divisas.
+
+## Ejemplo de Uso
+
+1. Selecciona un país de origen y un país de destino.
+2. Ingresa una cantidad de dinero.
+3. Haz clic en el botón "Convertir" para obtener el valor convertido.
+
+## Dependencias
+
+- `HttpClientModule` para realizar solicitudes HTTP.
+- `FormsModule` para la vinculación de datos en formularios.
+
+## Mejoras Futuras
+
+- Manejo de errores más robusto.
+- Soporte para más opciones de filtrado y búsqueda.
+- Mejora en el diseño y la usabilidad del componente.
