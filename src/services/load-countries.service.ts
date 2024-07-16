@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-interface Country {
+export interface Country {     //exportamos la interfaz para poder usarla en cualquier archivo e indicarle que tipo de variables esperamos recibir de la llamada de este servicio
   name: {
     common: string;
   };

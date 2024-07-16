@@ -1,24 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadCountriesService } from '../../services/load-countries.service';
+import { LoadCountriesService, Country } from '../../services/load-countries.service';
 import { CurrencyExchangeService } from '../../services/currency-exchange.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-interface Country {
-  name: {
-    common: string;
-  };
-  cca3: string;
-  flags: {
-    png: string;
-  };
-  currencies: {
-    [key: string]: {
-      name: string;
-      symbol: string;
-    };
-  };
-}
+
+//no es necesario ya que importamos la interfaz del propio servicio que indica que datos espera recibir de esa llamada
+
+// interface Country {
+//   name: {
+//     common: string;
+//   };
+//   cca3: string;
+//   flags: {
+//     png: string;
+//   };
+//   currencies: {
+//     [key: string]: {
+//       name: string;
+//       symbol: string;
+//     };
+//   };
+// }
 
 @Component({
   selector: 'app-screen-money',
