@@ -34,7 +34,7 @@ export class ScreenMoneyComponent implements OnInit {
   countries: Country[] = [];
   selectValue1: string = '';
   selectValue2: string = '';
-  amount: number = 0;
+  amount: number = 1;
   convertedAmount: number | null = null;
 
   // Diccionario para almacenar las banderas
