@@ -1,0 +1,57 @@
+/* Contenedor principal del menú */
+.principalMenu {
+    min-height: 100vh; /* La altura mínima será el 100% del alto del viewport */
+    width: 100%;
+    background-color: rgba(248, 0, 0, 0.801);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Menú de navegación */
+.tabBar {
+    position: fixed; /* Mantiene el menú en una posición fija */
+    top: 0;          /* Alinea el menú en la parte superior */
+    left: 0;         /* Alinea el menú al borde izquierdo */
+    width: 100%;     /* Asegura que el menú ocupe todo el ancho de la pantalla */
+    height: 10%;     /* Ajusta la altura del menú según tus necesidades */
+    background-color: rgb(97, 95, 95); /* Fondo del menú */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2%;         /* Espacio entre los elementos del menú */
+    z-index: 1000;   /* Asegura que el menú esté encima de otros elementos */    
+}
+
+/* Botones del menú */
+.botonMenu {
+    background-color: white;
+}
+
+.contenedorbajo{
+    height: 50%;
+    width: 50%;
+    /* background-color: blueviolet; */
+    margin-top: 15%;
+    padding: 30px;
+    
+}
+
+.carruselcontenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: yellow;
+    text-align: center;
+}
+
+.carrusel{
+    display: flex;
+    justify-content: center;
+    background-color: aqua;
+    padding: 10px;
+
+}
+
+  
