@@ -44,6 +44,7 @@
     align-items: center;
     background-color: yellow;
     text-align: center;
+    padding-top: 2%;
 }
 
 .carrusel{
@@ -54,4 +55,16 @@
 
 }
 
-  
+
+    
+
+@media (max-width: 768px) {
+    *{
+        width: 100%;
+        height: auto;
+        font-size: 15px;
+    }
+    .contenedorbajo{
+        width: 100%;
+    }
+}
