@@ -4,9 +4,7 @@ import {ResumeDesignerComponent} from '../components/resume-designer/resume-desi
 import {AppComponent} from '../app/app.component';
 
 export const routes: Routes = [
-  { path: '', component: AppComponent },
   { path: 'Screen-Money', component: ScreenMoneyComponent },
   { path: 'ResumeDesignerComponent', component: ResumeDesignerComponent },
-  { path: '**', redirectTo: '' } 
 
 ];
