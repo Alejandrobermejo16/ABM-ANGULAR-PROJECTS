@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .parraf{
@@ -25,7 +26,8 @@
     justify-content: center;
     align-items: center;
     gap: 2%;         /* Espacio entre los elementos del menú */
-    z-index: 1000;   /* Asegura que el menú esté encima de otros elementos */    
+    z-index: 1000;   /* Asegura que el menú esté encima de otros elementos */
+    /* margin-bottom: 30%;     */
 }
 
 /* Botones del menú */

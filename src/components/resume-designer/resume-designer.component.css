@@ -1,0 +1,9 @@
+.Contenedor-Padre{
+    width: 100%;
+    background-color: yellow;
+}
+.carruselcontenedorcvs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

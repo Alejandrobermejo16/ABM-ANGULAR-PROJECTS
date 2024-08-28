@@ -1,26 +1,25 @@
 <!-- app.component.html -->
 <router-outlet></router-outlet>
 
-<div class="principalMenu">
-  <div class="tabBar">
-    <button [routerLink]="['/']" mat-button class="botonMenu">HOME</button>
-    <button mat-button [matMenuTriggerFor]="aboveMenu" class="botonMenu">PROYECTOS</button>
-    <mat-menu #aboveMenu="matMenu" yPosition="above">
-      <button mat-menu-item [routerLink]="['/Screen-Money']" class="botonMenu">CAMBIO DIVISA</button>
-      <button mat-menu-item [routerLink]="['/ResumeDesignerComponent']" class="botonMenu">DISEÑO CURRICULUMS</button>
-    </mat-menu>
-    <button mat-button [matMenuTriggerFor]="beforeMenu" class="botonMenu">BEFORE</button>
-    <mat-menu #beforeMenu="matMenu" xPosition="before">
-      <button mat-menu-item class="botonMenu" [routerLink]="['/someRoute']">Go to Some Route</button>
-      <button mat-menu-item class="botonMenu">Item 2</button>
-    </mat-menu>
-    <button mat-button [matMenuTriggerFor]="afterMenu" class="botonMenu">AFTER</button>
-    <mat-menu #afterMenu="matMenu" xPosition="after">
-      <button mat-menu-item class="botonMenu">Item 1</button>
-      <button mat-menu-item class="botonMenu">Item 2</button>
-    </mat-menu>
-  </div>
-
+<div class="tabBar">
+  <button [routerLink]="['/']" mat-button class="botonMenu">HOME</button>
+  <button mat-button [matMenuTriggerFor]="aboveMenu" class="botonMenu">PROYECTOS</button>
+  <mat-menu #aboveMenu="matMenu" yPosition="above">
+    <button mat-menu-item [routerLink]="['/Screen-Money']" class="botonMenu">CAMBIO DIVISA</button>
+    <button mat-menu-item [routerLink]="['/ResumeDesignerComponent']" class="botonMenu">DISEÑO CURRICULUMS</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="beforeMenu" class="botonMenu">BEFORE</button>
+  <mat-menu #beforeMenu="matMenu" xPosition="before">
+    <button mat-menu-item class="botonMenu" [routerLink]="['/someRoute']">Go to Some Route</button>
+    <button mat-menu-item class="botonMenu">Item 2</button>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="afterMenu" class="botonMenu">AFTER</button>
+  <mat-menu #afterMenu="matMenu" xPosition="after">
+    <button mat-menu-item class="botonMenu">Item 1</button>
+    <button mat-menu-item class="botonMenu">Item 2</button>
+  </mat-menu>
+</div>
+<div class="principalMenu" *ngIf="isSliderVisible">
   <div class="contenedorbajo" *ngIf="isSliderVisible">
     <p class="parraf" style="color: white; font-weight: bold; text-align: center;">¡Bienvenido!</p>
     <p class="parraf" style="color: white; font-weight: bold; text-align: center;">¡Descubre Nuestros Proyectos Innovadores!</p>
