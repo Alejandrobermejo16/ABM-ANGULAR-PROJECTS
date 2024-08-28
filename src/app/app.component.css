@@ -2,12 +2,16 @@
 .principalMenu {
     min-height: 100vh; /* La altura mínima será el 100% del alto del viewport */
     width: 100%;
-    background-color: rgba(248, 0, 0, 0.801);
+    background-color: rgb(248, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.parraf{
+    font-size: 24px;
+   
+}
 
 /* Menú de navegación */
 .tabBar {
@@ -16,7 +20,7 @@
     left: 0;         /* Alinea el menú al borde izquierdo */
     width: 100%;     /* Asegura que el menú ocupe todo el ancho de la pantalla */
     height: 10%;     /* Ajusta la altura del menú según tus necesidades */
-    background-color: rgb(97, 95, 95); /* Fondo del menú */
+    background-color: rgb(15, 14, 14); /* Fondo del menú */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,9 +35,9 @@
 
 .contenedorbajo{
     height: 50%;
-    width: 50%;
+    width: 80%;
     /* background-color: blueviolet; */
-    margin-top: 15%;
+    margin-top: 8%;
     padding: 30px;
     
 }
@@ -45,6 +49,7 @@
     background-color: yellow;
     text-align: center;
     padding-top: 2%;
+    overflow: hidden;
 }
 
 .carrusel{
@@ -66,5 +71,14 @@
     }
     .contenedorbajo{
         width: 100%;
+    }
+    .contenedorbajo{
+        margin-top: 15%;
+        
+        
+    }
+    .parraf{
+        font-size: 20px;
+       
     }
 }
