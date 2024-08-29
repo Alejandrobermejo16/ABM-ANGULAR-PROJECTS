@@ -10,8 +10,12 @@
 }
 
 .parraf{
-    font-size: 24px;
+    font-size: 34px;
    
+}
+
+.carousel-caption .d-none .d-md-block{
+display: flex;
 }
 
 /* Menú de navegación */
@@ -48,6 +52,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     background-color: yellow;
     text-align: center;
     padding-top: 2%;
