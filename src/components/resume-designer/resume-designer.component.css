@@ -1,6 +1,8 @@
 .Contenedor-Padre{
     width: 100%;
     background-color: yellow;
+    padding: 10%;
+    text-align: center;
 }
 .carruselcontenedorcvs{
     display: flex;
@@ -10,6 +12,16 @@
     gap: 20px;
 }
 
+
 .card-body{
     background-color: white;
+
+}
+
+@media (max-width: 768px) {
+    .Contenedor-Padre{
+        
+        padding: 20%;
+        text-align: center;
+    }
 }
