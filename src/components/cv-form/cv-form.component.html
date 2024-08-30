@@ -1,25 +1,20 @@
-<div class="contenedor-padre-formulario-cv">
-    <!-- Iterar sobre cada pregunta -->
-    <div class="formulario-cv" *ngFor="let question of questions">
-      <label [for]="question.id">{{ question.label }}</label>
-      <div [ngSwitch]="question.id">
-        <!-- Input tipo texto por defecto -->
-        <input *ngSwitchDefault [id]="question.id" [placeholder]="question.placeholder" type="text" />
-        
-        <!-- Input tipo fecha si el id es 'fecha' -->
-        <input *ngSwitchCase="'fecha'" [id]="question.id" [placeholder]="question.placeholder" type="date" />
-      </div>
+<div class="formulario">
+  <div class="borde-formulario">
+    <h3 *ngIf="currentTitle">{{ currentTitle.title }}</h3>
+    <div class="options-container">
+      <ng-container *ngFor="let question of questionsToShow">
+        <button class="option" (click)="goToNextPage()">
+          {{ question.label }}
+        </button>
+      </ng-container>
     </div>
-  
-    <!-- Botón de envío y paginación fuera del bucle *ngFor -->
-    <div class="form-footer">
-      <input style="max-width: 60px ;" type="submit" value="Enviar" (click)="onSubmit()">
+    <div class="paginador">
       <pagination 
         [totalItems]="totalItems"
-        [maxSize]="5"
+        [maxSize]="4"
         [boundaryLinks]="true"  
         (pageChanged)="onPageChanged($event)">
       </pagination>
     </div>
   </div>
-  
+</div>

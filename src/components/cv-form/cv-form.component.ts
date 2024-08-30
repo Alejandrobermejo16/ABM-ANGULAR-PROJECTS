@@ -2,7 +2,17 @@ import { Component } from '@angular/core';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';  // Importa FormsModule
+import {APP_CONSTANTS} from '../../app/constants/constants';
 
+interface Question {
+  label: string;
+  placeholder: string;
+  id: string;
+}
+
+interface TitleQuestion {
+  title: string;
+}
 
 @Component({
   selector: 'app-cv-form',
@@ -13,56 +23,43 @@ import { FormsModule } from '@angular/forms';  // Importa FormsModule
 })
 export class CvFormComponent {
   currentPage = 1;
-  totalItems = 30;
-
-  questions = [
-    { label: 'Introduce tu nombre completo', placeholder: 'Introduce tu nombre completo', id: 'nombre' },
-    { label: 'Introduce tu fecha de nacimiento', placeholder: 'Introduce tu fecha de nacimiento', id: 'fecha' },
-    { label: 'Introduce tu formación académica', placeholder: 'Introduce tu formación académica', id: 'formacion' },
-    { label: 'Introduce tu experiencia laboral', placeholder: 'Introduce tu experiencia laboral', id: 'experiencia' }
+  totalItems = 30; // Esto debería ser el número total de preguntas que estás manejando
+  title_questions: TitleQuestion[] = [
+    { title: "¿Cuánta experiencia laboral tienes?" },
+    { title: "¿Estás estudiando?" },
+    // Agrega más títulos según el número de grupos de preguntas que tengas
   ];
 
-  formationOptions = [
-    { value: 'desarrollador', label: 'Desarrollador' },
-    { value: 'diseñador', label: 'Diseñador' },
-    // Agrega más opciones según sea necesario
-  ];
+  
 
-  experienceOptions = [
-    { value: 'junior', label: 'Junior' },
-    { value: 'senior', label: 'Senior' },
-    // Agrega más opciones según sea necesario
-  ];
+  questionsToShow: Question[] = [];
+  currentTitle: TitleQuestion | null = null;
 
-  selectedFormation: string | undefined;
-  selectedExperience: string | undefined;
-
-  onSubmit(): void {
-    console.log('Formulario enviado');
-    this.goToNextPage();
-  }
-
-  goToNextPage(): void {
-    if (this.currentPage < Math.ceil(this.totalItems / 10)) {
-      this.currentPage++;
-      console.log(`Navegando a la página ${this.currentPage}`);
-    }
+  ngOnInit() {
+    this.updateContentToShow();
   }
 
   onPageChanged(event: any): void {
     this.currentPage = event.page;
-    console.log(`Página actual cambiada a ${this.currentPage}`);
+    this.updateContentToShow();
   }
 
-  onFormationChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedFormation = selectElement.value;
-    console.log(`Formación seleccionada: ${this.selectedFormation}`);
+  updateContentToShow(): void {
+    const index = this.currentPage - 1; // Restar 1 para ajustar el índice basado en 0
+    if (index >= 0 && index < APP_CONSTANTS.QUESTIONS.length) {
+      this.questionsToShow = APP_CONSTANTS.QUESTIONS[index]; // Mostrar preguntas del grupo correspondiente
+      this.currentTitle = this.title_questions[index] || null; // Mostrar título correspondiente
+    } else {
+      this.questionsToShow = []; // No mostrar preguntas si la página no está en el rango
+      this.currentTitle = null; // No mostrar título si la página no está en el rango
+    }
   }
 
-  onExperienceChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedExperience = selectElement.value;
-    console.log(`Experiencia seleccionada: ${this.selectedExperience}`);
+  goToNextPage(): void {
+    if (this.currentPage < this.title_questions.length) {
+      this.currentPage += 1;
+      this.updateContentToShow();
+    }
   }
 }
+
