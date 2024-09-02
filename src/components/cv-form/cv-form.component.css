@@ -1,4 +1,4 @@
- .formulario {
+.formulario {
   width: 100%;
   height: 100%;
   border: 3px solid black;
@@ -13,10 +13,9 @@
   border: 3px solid red;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Espacio entre elementos */
-  align-items: center;
+  justify-content: center; /* Centra verticalmente el contenido */
+  align-items: center; /* Centra horizontalmente el contenido */
 }
-
 
 .options-container {
   display: grid;
@@ -25,11 +24,38 @@
   gap: 10px; /* Espacio entre los cuadrados */
   width: 100%;
   height: 100%;
+  align-items: center; /* Centra verticalmente dentro de cada celda de la cuadrícula */
+  justify-items: center; /* Centra horizontalmente dentro de cada celda de la cuadrícula */
+}
+
+.option,
+input {
+  border: 4px solid black;
+  background-color: lightgray;
+  box-sizing: border-box; /* Incluye padding y border en el tamaño total del elemento */
 }
 
 .option {
-  border: 4px solid black;
-  background-color: lightgray;
+  width: 100%; /* Ajusta para llenar el espacio disponible en la celda */
+  height: 100%; /* Ajusta para llenar el espacio disponible en la celda */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centra el contenido dentro del botón */
+}
+
+input {
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  height: 100%; /* Ocupa toda la altura del contenedor */
+  padding: 0; /* Elimina el padding interno */
+  text-align: center; /* Centra el texto horizontalmente */
+  box-sizing: border-box; /* Asegura que padding y border se incluyan en el tamaño total del campo */
+}
+
+input.descripción {
+  grid-column: span 2; /* Ocupa 2 columnas de la cuadrícula */
+  grid-row: span 2; /* Ocupa 2 filas de la cuadrícula */
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  height: 100%; /* Ocupa toda la altura del contenedor */
 }
 
 .paginador {
@@ -37,11 +63,10 @@
 }
 
 @media (max-width: 768px) {
-    h3 {
-      font-size: 4vw; /* Tamaño de fuente relativo al ancho del viewport */
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    
-  }}
-
+  h3 {
+    font-size: 4vw; /* Tamaño de fuente relativo al ancho del viewport */
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+}

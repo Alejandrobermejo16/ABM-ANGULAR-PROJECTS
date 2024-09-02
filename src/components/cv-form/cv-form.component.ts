@@ -4,12 +4,15 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { APP_CONSTANTS } from '../../app/constants/constants';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner'; // Importa NgxSpinnerService
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+
+
 
 interface Question {
   label: string;
   placeholder: string;
   id: string;
+  description?: boolean; 
 }
 
 interface TitleQuestion {
@@ -32,7 +35,7 @@ export class CvFormComponent {
   questionsToShow: Question[] = [];
   currentTitle: TitleQuestion | null = null;
 
-  // Inyecta el Router y NgxSpinnerService en el constructor
+  // Inyecta el Router y NgxSpinnerService en el constructor para poder usar los metodos que tienen
   constructor(private router: Router, private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
