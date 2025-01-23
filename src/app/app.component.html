@@ -1,10 +1,10 @@
 <!-- app.component.html -->
 <router-outlet></router-outlet>
-
 <div class="tabBar">
   <button [routerLink]="['/']" mat-button class="botonMenu">HOME</button>
   <button mat-button [matMenuTriggerFor]="aboveMenu" class="botonMenu">PROYECTOS</button>
   <mat-menu #aboveMenu="matMenu" yPosition="above">
+    <button mat-menu-item [routerLink]="['/Playground']" class="botonMenu">PLAYGROUND</button>
     <button mat-menu-item [routerLink]="['/Screen-Money']" class="botonMenu">CAMBIO DIVISA</button>
     <button mat-menu-item [routerLink]="['/ResumeDesignerComponent']" class="botonMenu">DISEÑO CURRICULUMS</button>
     <button mat-menu-item [routerLink]="['/CvFormComponent']" class="botonMenu">Formulario CV</button> 
@@ -40,16 +40,16 @@
         <div class="card-body">
           <h5 class="card-title">ABM CAMBIO DIVISA</h5>
           <p class="card-text">El proyecto consiste en desarrollar un sistema automatizado para el cambio de monedas, que permita a los usuarios intercambiar diferentes tipos de monedas de manera rápida y eficiente</p>
-          <a href="#" class="btn btn-primary">Leer más</a>
+          <a href="/Screen-Money" class="btn btn-primary" >Ver más</a>
         </div>
       </div>
   
       <div class="card" style="width: 80%;">
-        <img src="https://miro.medium.com/v2/resize:fit:1400/1*v6ucd36pXcbCjHSC1A4HTg.png" class="card-img-top" alt="Descripción de la imagen">
+        <img src="/angularPlayground.jpg" class="card-img-top" alt="Descripción de la imagen">
         <div class="card-body">
-          <h5 class="card-title">Título</h5>
-          <p class="card-text">Descripción de la imagen. Este es un breve texto que describe lo que se muestra en la foto.</p>
-          <a href="#" class="btn btn-primary">Leer más</a>
+          <h5 class="card-title">Angular Playground</h5>
+          <p class="card-text">Espacio diseñado para la práctica continua de los conceptos de Angular, fomentando su actualización y dominio</p>
+          <a href="/Playground" class="btn btn-primary">Ver más</a>
         </div>
       </div>
   

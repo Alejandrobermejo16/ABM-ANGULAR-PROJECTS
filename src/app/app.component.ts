@@ -7,7 +7,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { filter } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -33,5 +32,4 @@ export class AppComponent {
       this.isSliderVisible = this.router.url === '/';
     });
   }
-
 }

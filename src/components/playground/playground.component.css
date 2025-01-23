@@ -1,0 +1,19 @@
+.formulario {
+  width: 100%;
+  height: 100%;
+  border: 3px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+@media (max-width: 768px) {
+  h3 {
+    font-size: 4vw; /* Tamaño de fuente relativo al ancho del viewport */
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+}

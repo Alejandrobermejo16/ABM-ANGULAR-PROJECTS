@@ -1,0 +1,6 @@
+<div class="formulario">
+  <h1>Formulario</h1>
+  <input [(ngModel)]="valueName" [placeholder]="holder">
+  <button [disabled]="disabled" (click)="changeName(valueName)">Cambiar valor</button>
+  <p *ngIf="!disabled">{{valueName}}</p>
+</div>
