@@ -2,7 +2,7 @@
 .principalMenu {
     min-height: 100vh; /* La altura mínima será el 100% del alto del viewport */
     width: 100%;
-    background-color: rgb(248, 0, 0);
+    background: linear-gradient(to left, rgb(248, 0, 0), rgb(180, 0, 0));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,7 +52,7 @@ display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: yellow;
+    background: linear-gradient(to left, #ffff00, #ffcc00);
     text-align: center;
     padding-top: 2%;
     overflow: hidden;

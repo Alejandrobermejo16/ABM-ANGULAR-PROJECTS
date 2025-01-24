@@ -5,8 +5,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
+#buttonShowHiddenValue{
+  margin-top: 20px;
+}
 
 
 @media (max-width: 768px) {

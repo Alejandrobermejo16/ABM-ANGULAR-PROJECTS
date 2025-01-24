@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 @Component({
-  selector: 'app-playground-component',
+  selector: 'app-info-angular-component',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './playground.component.html',
-  styleUrls: ['./playground.component.css'],
+  templateUrl: './info-angular.component.html',
+  styleUrls: ['./info-angular.component.css'],
   
 })
-export class Playground implements OnInit {
+export class InfoAngular implements OnInit {
   valueName: string | undefined;
   holder: string | undefined;
   disabled: boolean = false;
