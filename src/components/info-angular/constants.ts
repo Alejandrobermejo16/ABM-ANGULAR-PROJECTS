@@ -3,6 +3,7 @@ export const IMAGES_PATH = [
     {"title":"DEFINICIÓN DE TIPOS DE VARIABLES", "path":"angularInfo/1-Definicion_tipo_variable.png"},
     {"title":"INICIALIZACIÓN DE VARIABLES EN EL CONSTRUCTOR", "path":"angularInfo/2-ExplicacionConstructor.png"},
     {"title":"ASIGNACIÓN DE VALORES EN EL CICLO DE VIDA OnInit", "path":"angularInfo/3-Asignaciondevaloresenvariablesoninit.png"},
-
+    {"title":"Props hacia hijos y bindeo", "path":"angularInfo/4-Pasarpropsahijosybindearvalue.png"},
+   
     
 ];
