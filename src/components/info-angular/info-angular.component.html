@@ -1,7 +1,12 @@
 <div class="divForm">
+  <h1 class="dinamicTitle">{{dinamicTitle}}</h1>
   <div class="Carrusel">
-    <button class="CarruselButton left">Anterior</button>
-    <div class="CarruselImage"></div>
-    <button class="CarruselButton right">Posterior</button>
+    <button class="CarruselButton left" (click)="changeImage(-1)">Anterior</button>
+    <div class="CarruselImage">
+      <img [src]="image" alt="Carrusel Image" />
+    </div>
+    <button class="CarruselButton right" (click)="changeImage(1)">Siguiente</button>
   </div>
+  <p class="cont">{{page}} / {{totalPages}}</p>
+  
 </div>
