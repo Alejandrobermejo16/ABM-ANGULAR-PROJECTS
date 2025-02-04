@@ -10,12 +10,12 @@
     <button mat-menu-item [routerLink]="['/ResumeDesignerComponent']" class="botonMenu">DISEÑO CURRICULUMS</button>
     <button mat-menu-item [routerLink]="['/CvFormComponent']" class="botonMenu">Formulario CV</button> 
   </mat-menu>
-  <button mat-button [matMenuTriggerFor]="beforeMenu" class="botonMenu">BEFORE</button>
+  <button mat-button [matMenuTriggerFor]="beforeMenu" class="botonMenu">PROXIMAMENTE</button>
   <mat-menu #beforeMenu="matMenu" xPosition="before">
     <button mat-menu-item class="botonMenu" [routerLink]="['/someRoute']">Go to Some Route</button>
     <button mat-menu-item class="botonMenu">Item 2</button>
   </mat-menu>
-  <button mat-button [matMenuTriggerFor]="afterMenu" class="botonMenu">AFTER</button>
+  <button mat-button [matMenuTriggerFor]="afterMenu" class="botonMenu">PROXIMAMENTE</button>
   <mat-menu #afterMenu="matMenu" xPosition="after">
     <button mat-menu-item class="botonMenu">Item 1</button>
     <button mat-menu-item class="botonMenu">Item 2</button>
