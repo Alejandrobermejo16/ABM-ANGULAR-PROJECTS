@@ -4,6 +4,7 @@ import {ResumeDesignerComponent} from '../components/resume-designer/resume-desi
 import {CvFormComponent} from '../components/cv-form/cv-form.component';
 import {Playground} from '../components/playground/playground.component';
 import { InfoAngular } from '../components/info-angular/info-angular.component';
+import {CvTemplateComponent} from '../components/resume-designer/cv-template/cv-template.component';
 
 export const routes: Routes = [
   { path: 'Screen-Money', component: ScreenMoneyComponent },
@@ -11,6 +12,5 @@ export const routes: Routes = [
   { path: 'CvFormComponent', component: CvFormComponent },
   { path: 'Playground', component: Playground },
   { path: 'InfoAngular', component: InfoAngular },
-
-
+  { path: 'CvTemplateComponent', component: CvTemplateComponent },
 ];

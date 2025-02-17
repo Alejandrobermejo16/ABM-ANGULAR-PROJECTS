@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { register as registerSwiperElements} from 'swiper/element/bundle';
-
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-resume-designer',
   standalone: true,
-  imports: [CommonModule, FormsModule, CarouselModule, MatButtonModule, MatMenuModule],
+  imports: [CommonModule, FormsModule, CarouselModule, 
+            MatButtonModule, MatMenuModule, RouterModule, 
+            RouterOutlet],
   templateUrl: './resume-designer.component.html',
   styleUrl: './resume-designer.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
