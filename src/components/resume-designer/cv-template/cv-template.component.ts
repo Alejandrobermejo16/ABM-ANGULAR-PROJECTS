@@ -2,10 +2,11 @@ import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { FormsModule } from '@angular/forms';
+import { CvTypeComponent } from '../cv-type/cv-type.component';
 @Component({
   selector: 'app-cv-template',
   standalone: true,
-  imports: [CommonModule,ProgressbarModule,FormsModule],
+  imports: [CommonModule,ProgressbarModule,FormsModule,CvTypeComponent],
   templateUrl: './cv-template.html',
   styleUrl: './cv-template.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
