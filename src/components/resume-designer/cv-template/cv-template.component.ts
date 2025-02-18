@@ -13,25 +13,28 @@ import { CvTypeComponent } from '../cv-type/cv-type.component';
 })
 
 export class CvTemplateComponent implements OnInit  {
-  fields: Array<string> | undefined;
+  fields: any = {};
   value: number = 0;
   labelSubmit: string = 'Siguiente';
+  FIELDS_DATA = 5;
+  
 
   onProgressChange(value:number){
+    let fields_results = this.fields;
     this.value += 20;
     if(this.value > 100){
       this.value = 0;
       this.labelSubmit = 'Enviar';
     }
-    return this.value;
+    return this.value, fields_results;
   }
 
   ngOnInit(): void {
   }
 
   constructor() {
-    this.fields = ['Personal', 'Educación', 'Experiencia', 'Habilidades', 'Idiomas'];
-    this.value = this.fields ?  1 * 100 / this.fields.length : 0;
+    this.fields = {};
+    this.value = this.fields ?  1 * 100 / this.FIELDS_DATA : 0;
     console.log(this.value);
   }
 }

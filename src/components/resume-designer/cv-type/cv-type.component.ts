@@ -16,15 +16,14 @@ export class CvTypeComponent implements OnInit  {
   @Input() telephone: string = '';
   @Input() email: string = '';
   @Input() linkedin: string = '';
-  @Input() fields: Array<string> | undefined;
+  @Input() fields: object = {};
   editField(){
     console.log('editField');
   }
 
   ngOnInit(): void {
-
   }
-
+  
   constructor() {
   }
 }

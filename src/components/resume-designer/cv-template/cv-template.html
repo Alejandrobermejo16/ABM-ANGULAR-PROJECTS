@@ -1,34 +1,60 @@
-
 <div class="Contenedor-Padre">
   <div class="Info-Header">
     <h1>Información de Contacto</h1>
-    <progressbar [value]="value" (change)="onProgressChange(value)">{{value}}%</progressbar>
+    <progressbar [value]="value" (change)="onProgressChange(value)"
+      >{{value}}%</progressbar
+    >
   </div>
   <div class="Info-Body">
     <div class="Info-Labels">
-        <label for="name">Nombre</label>
-        <input type="text" id="name" placeholder="Ingresa tu nombre">
-        
-        <label for="email">Correo Electrónico</label>
-        <input type="email" id="email" placeholder="Ingresa tu correo electrónico">
-        
-        <label for="phone">Teléfono</label>
-        <input type="tel" id="phone" placeholder="Ingresa tu número de teléfono de Contacto">
-        
-        <label for="name">Linkedin</label>
-        <input type="text" id="name" placeholder="Ingresa tu perfil de Linkedin ej:www.linkedin.com/in/nombreapellido
-        ">
+      <label for="name">Nombre</label>
+      <input
+        type="text"
+        id="name"
+        placeholder="Ingresa tu nombre"
+        [(ngModel)]="fields.name"
+      />
 
-        <div class="bottom-info">
-          <button (click)="onProgressChange(value)">{{labelSubmit}}</button>
-        </div>
+      <label for="email">Correo Electrónico</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Ingresa tu correo electrónico"
+        [(ngModel)]="fields.email"
+      />
 
+      <label for="phone">Teléfono</label>
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Ingresa tu número de teléfono de Contacto"
+        [(ngModel)]="fields.telephone"
+      />
+
+      <label for="name">Linkedin</label>
+      <input
+        type="text"
+        id="name"
+        placeholder="Ingresa tu perfil de Linkedin ej:www.linkedin.com/in/nombreapellido
+        "
+        [(ngModel)]="fields.linkedin"
+      />
+
+      <div class="bottom-info">
+        <button (click)="onProgressChange(value)">{{labelSubmit}}</button>
       </div>
+    </div>
     <div class="Info-Result">
-        <div class="template-data">
-            <app-cv-type></app-cv-type>
-        </div>
+      <div class="template-data">
+        <app-cv-type
+          [fields]="fields"
+          [name]="fields.name"
+          [telephone]="fields.telephone"
+          [email]="fields.email"
+          [linkedin]="fields.linkedin"
+        >
+        </app-cv-type>
+      </div>
     </div>
   </div>
 </div>
-
