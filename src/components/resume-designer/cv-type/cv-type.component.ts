@@ -1,4 +1,4 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { FormsModule } from '@angular/forms';
@@ -12,9 +12,17 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class CvTypeComponent implements OnInit  {
-  
+  @Input() name: string = '';
+  @Input() telephone: string = '';
+  @Input() email: string = '';
+  @Input() linkedin: string = '';
+  @Input() fields: Array<string> | undefined;
+  editField(){
+    console.log('editField');
+  }
 
   ngOnInit(): void {
+
   }
 
   constructor() {
