@@ -19,6 +19,11 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "baseUrl": ".",
+    "paths": {
+      "pantheon-ui": ["../Pantheon-libraries/dist/pantheon-ui"],
+      "@pantheon/core": ["../Pantheon-libraries/projects/core"]
+    },
     "lib": [
       "ES2022",
       "dom"

@@ -8,6 +8,14 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    // Initialize Pantheon libraries global state before Angular bootstrapping
+    // This ensures custom element registrations and module dependencies are available during component initialization
+    if (typeof window !== 'undefined') {
+      window.PANTHEON_LIBS_LOADED = true;
+    }
+  </script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>

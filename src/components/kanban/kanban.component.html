@@ -1,0 +1,48 @@
+<div *ngIf="!isLoggedIn">
+  <initial-login (loginSuccess)="onLoginSuccess($event)"></initial-login>
+</div>
+
+<div *ngIf="isLoggedIn">
+  <pantehon-grid-panel-header [columns]="columns" [menuAux]="true" [iconMenu]="'menu'"
+    (extraMenuClick)="isMenuOpen = !isMenuOpen">
+  </pantehon-grid-panel-header>
+
+  <pantehon-grid-panel [dataColumns]="dataColumns" [gridTemplateColumns]="'repeat(dataColumns.length, 1fr)'"
+    [itemTemplate]="cardTpl" (taskMoved)="onTaskMoved($event)">
+  </pantehon-grid-panel>
+
+  <ng-template #cardTpl let-item let-columnIndex="columnIndex">
+    <pantehon-card [data]="item" [isCompleted]="columnIndex === 3" (click)="openCard(item)"></pantehon-card>
+  </ng-template>
+
+  <pantehon-window id="info-modal" [(show)]="showModal" [titleBtnClose]="'Cerrar'" [variant]="'info'" [size]="'sm'"
+    [titleBtnNext]="'Siguiente'">
+    <div title>Detalles de la Tarea</div>
+    <div body *ngIf="selectedTask">
+      <p><strong>Título:</strong> {{ selectedTask.title }}</p>
+      <p><strong>Descripción:</strong> {{ selectedTask.description }}</p>
+      <p><strong>Estado:</strong> {{ selectedTask.status }}</p>
+    </div>
+  </pantehon-window>
+
+  <pantehon-window id="create-tasks-modal" [(show)]="createTaskWindow" [titleBtnClose]="'Cerrar'" [variant]="'info'" [size]="'sm'"
+    [titleBtnNext]="'Crear'" (onAction)="handleCreateTask()">
+    <div title>Crear Nueva Tarea</div>
+    <div body>
+      <mat-form-field appearance="fill" class="pantheon-math-field">
+        <mat-label>Título</mat-label>
+        <input [(ngModel)]="taskTitle" matInput placeholder="Introduce el título de la tarea">
+        <mat-icon (click)="clearInput('taskTitle')" matSuffix>clear</mat-icon>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill" class="pantheon-math-field">
+        <mat-label>Descripción</mat-label>
+        <input [(ngModel)]="taskDescription" matInput placeholder="Introduce la descripción de la tarea">
+        <mat-icon (click)="clearInput('taskDescription')" matSuffix>clear</mat-icon>
+      </mat-form-field>
+    </div>
+  </pantehon-window>
+
+  <pantheon-side-action-panel [open]="isMenuOpen" (close)="isMenuOpen = false" [actions]="fieldActions">
+  </pantheon-side-action-panel>
+</div>
