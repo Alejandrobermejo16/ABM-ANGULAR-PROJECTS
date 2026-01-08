@@ -1,6 +1,7 @@
-<!-- app.component.html -->
 <router-outlet></router-outlet>
-<div class="tabBar">
+
+<!-- Menú principal -->
+<div class="tabBar" *ngIf="showMenu">
   <button [routerLink]="['/']" mat-button class="botonMenu">HOME</button>
   <button mat-button [matMenuTriggerFor]="aboveMenu" class="botonMenu">PROYECTOS</button>
   <mat-menu #aboveMenu="matMenu" yPosition="above">
@@ -21,12 +22,14 @@
     <button mat-menu-item class="botonMenu">Item 2</button>
   </mat-menu>
 </div>
-<div class="principalMenu" *ngIf="isSliderVisible">
-  <div class="contenedorbajo" *ngIf="isSliderVisible">
 
+<!-- Slider de bienvenida -->
+<div class="principalMenu" *ngIf="isSliderVisible && showMenu">
+  <div class="contenedorbajo">
     <div class="carruselcontenedor">
       <p class="parraf" style="color: black; font-weight: bold; text-align: center;">¡Bienvenido!</p>
-    <p class="parraf" style="color: black; font-weight: bold; text-align: center;">¡Descubre Nuestros Proyectos Innovadores!</p>
+      <p class="parraf" style="color: black; font-weight: bold; text-align: center;">¡Descubre Nuestros Proyectos Innovadores!</p>
+
       <div class="card" style="width: 80%;">
         <img src="https://miro.medium.com/v2/resize:fit:1400/1*v6ucd36pXcbCjHSC1A4HTg.png" class="card-img-top" alt="Descripción de la imagen">
         <div class="card-body">
@@ -35,7 +38,7 @@
           <a href="/InfoAngular" class="btn btn-primary">Leer más</a>
         </div>
       </div>
-  
+
       <div class="card" style="width: 80%;">
         <img src="/CambioMoneda.jpg" class="card-img-top" alt="Descripción de la imagen">
         <div class="card-body">
@@ -44,7 +47,7 @@
           <a href="/Screen-Money" class="btn btn-primary" >Ver más</a>
         </div>
       </div>
-  
+
       <div class="card" style="width: 80%;">
         <img src="/angularPlayground.jpg" class="card-img-top" alt="Descripción de la imagen">
         <div class="card-body">
@@ -53,8 +56,7 @@
           <a href="/Playground" class="btn btn-primary">Ver más</a>
         </div>
       </div>
-  
+
     </div>
   </div>
 </div>
-
