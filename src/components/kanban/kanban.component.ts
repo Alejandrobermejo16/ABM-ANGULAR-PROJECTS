@@ -6,7 +6,6 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { GridPanelModule, GridPanelHeaderModule, CardModule, WindowModule, SideActionPanelModule } from 'pantheon-ui';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 
 export interface Action {
@@ -46,11 +45,6 @@ const STATUS_MAP: Record<string, string> = {
     MatFormFieldModule, 
     MatInputModule, 
     MatIconModule,
-    GridPanelModule,
-    GridPanelHeaderModule,
-    CardModule,
-    WindowModule,
-    SideActionPanelModule,
     InitialLoginComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -130,7 +124,7 @@ export class KanbanComponent implements OnInit {
   }
 
   // Eventos
-  protected onTaskMoved(event: { task: any, fromIndex: number, toIndex: number }) {
+  protected onTaskMoved(event: any) {
     // TODO: Integrar backend API para actualizar estado
     const newStatus = this.columns[event.toIndex];
     // this.restService.patch('updateTaskStatus', {
