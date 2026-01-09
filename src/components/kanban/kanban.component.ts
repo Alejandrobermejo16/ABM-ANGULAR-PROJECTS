@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { GridPanelModule, GridPanelHeaderModule, CardModule, WindowModule, SideActionPanelModule } from 'pantheon-ui';
-import { PantheonRestService } from '@pantheon/core';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 
 export interface Action {
@@ -81,8 +80,7 @@ export class KanbanComponent implements OnInit {
   constructor(
     private ngZone: NgZone, 
     @Inject(PLATFORM_ID) platformId: Object,
-    private http: HttpClient,
-    private restService: PantheonRestService
+    private http: HttpClient
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
     this.dataColumns = this.columns.map(name => ({ name, items: [] }));
@@ -109,35 +107,39 @@ export class KanbanComponent implements OnInit {
 
   // Cargar tareas
   private loadTasks(): void {
-    this.restService.get<{ tasks: TaskInterface[] }>('getTasks', { userEmail: this.userEmail })
-      .then((response: any) => {
-        if (response?.tasks) {
-          const columnsMap: Record<string, TaskInterface[]> = {
-            'Ready To Start': [],
-            'In Progress': [],
-            'Ready to verify/Deploy': [],
-            'Deployed': []
-          };
-          response.tasks.forEach((task: TaskInterface) => {
-            const statusKey = task.status?.toLowerCase();
-            const columnName = STATUS_MAP[statusKey];
-            if (columnName) columnsMap[columnName].push(task);
-          });
-          this.dataColumns = Object.keys(columnsMap).map(key => ({ name: key, items: columnsMap[key] }));
-        }
-      })
-      .catch((err: any) => console.error('Error cargando tareas:', err));
+    // TODO: Integrar backend API para obtener tareas
+    // this.restService.get<{ tasks: TaskInterface[] }>('getTasks', { userEmail: this.userEmail })
+    //   .then((response: any) => {
+    //     if (response?.tasks) {
+    //       const columnsMap: Record<string, TaskInterface[]> = {
+    //         'Ready To Start': [],
+    //         'In Progress': [],
+    //         'Ready to verify/Deploy': [],
+    //         'Deployed': []
+    //       };
+    //       response.tasks.forEach((task: TaskInterface) => {
+    //         const statusKey = task.status?.toLowerCase();
+    //         const columnName = STATUS_MAP[statusKey];
+    //         if (columnName) columnsMap[columnName].push(task);
+    //       });
+    //       this.dataColumns = Object.keys(columnsMap).map(key => ({ name: key, items: columnsMap[key] }));
+    //     }
+    //   })
+    //   .catch((err: any) => console.error('Error cargando tareas:', err));
+    console.log('Loading tasks for user:', this.userEmail);
   }
 
   // Eventos
   protected onTaskMoved(event: { task: any, fromIndex: number, toIndex: number }) {
+    // TODO: Integrar backend API para actualizar estado
     const newStatus = this.columns[event.toIndex];
-    this.restService.patch('updateTaskStatus', {
-      taskId: event.task._id,
-      status: newStatus
-    })
-      .then(() => console.log('Tarea actualizada'))
-      .catch((err: any) => console.error('Error actualizando tarea:', err));
+    // this.restService.patch('updateTaskStatus', {
+    //   taskId: event.task._id,
+    //   status: newStatus
+    // })
+    //   .then(() => console.log('Tarea actualizada'))
+    //   .catch((err: any) => console.error('Error actualizando tarea:', err));
+    console.log('Task moved to:', newStatus);
   }
 
   private openCreateModal() { 
@@ -151,13 +153,19 @@ export class KanbanComponent implements OnInit {
 
   private async createNewTask() {
     try {
-      const newTask = await this.restService.post('createTasks', {
+      // TODO: Integrar backend API para crear tarea
+      // const newTask = await this.restService.post('createTasks', {
+      //   title: this.taskTitle,
+      //   description: this.taskDescription,
+      //   userEmail: this.userEmail,
+      //   status: 'Ready To Start'
+      // });
+      console.log('Creating task:', {
         title: this.taskTitle,
         description: this.taskDescription,
         userEmail: this.userEmail,
         status: 'Ready To Start'
       });
-      console.log('Task created:', newTask);
       this.createTaskWindow = false;
       this.taskTitle = '';
       this.taskDescription = '';
