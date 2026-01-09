@@ -2,7 +2,6 @@ import { Component, ViewChild, ViewEncapsulation, NgZone, OnInit, PLATFORM_ID, I
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +19,7 @@ declare const google: any;
   styleUrls: ['./initial-login.component.css'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, MatIconModule]
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule]
 })
 export class InitialLoginComponent implements OnInit {
   public userEmail = '';
