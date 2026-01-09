@@ -21,7 +21,7 @@
     "useDefineForClassFields": false,
     "baseUrl": ".",
     "paths": {
-      "pantheon-libraries": ["../Pantheon-libraries/dist/pantheon-ui"]
+      "pantheon-libraries": ["./node_modules/pantheon-libraries/dist/pantheon-ui"]
     },
     "lib": [
       "ES2022",
