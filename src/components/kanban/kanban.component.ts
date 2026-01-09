@@ -1,12 +1,12 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { GridPanelModule, GridPanelHeaderModule, CardModule, WindowModule, SideActionPanelModule } from 'pantheon-libraries';
+import { PantheonBaseComponent, PantheonRestService } from 'pantheon-libraries/core';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 
 export interface Action {
@@ -52,7 +52,7 @@ const STATUS_MAP: Record<string, string> = {
     InitialLoginComponent
   ]
 })
-export class KanbanComponent implements OnInit {
+export class KanbanComponent extends PantheonBaseComponent {
   
   title = 'kanban-board';
   showModal = false;
@@ -75,8 +75,9 @@ export class KanbanComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
-    private http: HttpClient
+    private restService: PantheonRestService
   ) {
+    super();
     this.isBrowser = isPlatformBrowser(platformId);
     this.dataColumns = this.columns.map(name => ({ name, items: [] }));
   }
@@ -85,7 +86,7 @@ export class KanbanComponent implements OnInit {
     this.loadUserFromSession();
     if (this.userEmail) {
       this.isLoggedIn = true;
-      this.loadTasks();
+      super.ngOnInit(); // La clase base llama initCall automáticamente
     }
   }
 
@@ -97,44 +98,39 @@ export class KanbanComponent implements OnInit {
   onLoginSuccess(userData: any) {
     this.userEmail = userData.email;
     this.isLoggedIn = true;
-    this.loadTasks();
+    super.ngOnInit(); // La clase base llama initCall automáticamente
   }
 
-  // Cargar tareas
-  private loadTasks(): void {
-    // TODO: Integrar backend API para obtener tareas
-    // this.restService.get<{ tasks: TaskInterface[] }>('getTasks', { userEmail: this.userEmail })
-    //   .then((response: any) => {
-    //     if (response?.tasks) {
-    //       const columnsMap: Record<string, TaskInterface[]> = {
-    //         'Ready To Start': [],
-    //         'In Progress': [],
-    //         'Ready to verify/Deploy': [],
-    //         'Deployed': []
-    //       };
-    //       response.tasks.forEach((task: TaskInterface) => {
-    //         const statusKey = task.status?.toLowerCase();
-    //         const columnName = STATUS_MAP[statusKey];
-    //         if (columnName) columnsMap[columnName].push(task);
-    //       });
-    //       this.dataColumns = Object.keys(columnsMap).map(key => ({ name: key, items: columnsMap[key] }));
-    //     }
-    //   })
-    //   .catch((err: any) => console.error('Error cargando tareas:', err));
-    console.log('Loading tasks for user:', this.userEmail);
+  protected getModule(): string { return 'getTasks'; }
+  protected getResource(): string { return ''; }
+  protected getRequestMethod(): string { return 'GET'; }
+  protected getDefaultBody(): any { return { userEmail: this.userEmail }; }
+
+  protected dataAfterRequest(data: any): void {
+    if (data?.tasks) {
+      const columnsMap: Record<string, TaskInterface[]> = {
+        'Ready To Start': [],
+        'In Progress': [],
+        'Ready to verify/Deploy': [],
+        'Deployed': []
+      };
+      data.tasks.forEach((task: TaskInterface) => {
+        const statusKey = task.status?.toLowerCase();
+        const columnName = STATUS_MAP[statusKey];
+        if (columnName) columnsMap[columnName].push(task);
+      });
+      this.dataColumns = Object.keys(columnsMap).map(key => ({ name: key, items: columnsMap[key] }));
+    }
   }
 
-  // Eventos
   protected onTaskMoved(event: any) {
-    // TODO: Integrar backend API para actualizar estado
     const newStatus = this.columns[event.toIndex];
-    // this.restService.patch('updateTaskStatus', {
-    //   taskId: event.task._id,
-    //   status: newStatus
-    // })
-    //   .then(() => console.log('Tarea actualizada'))
-    //   .catch((err: any) => console.error('Error actualizando tarea:', err));
-    console.log('Task moved to:', newStatus);
+    this.restService.patch('updateTaskStatus', {
+      taskId: event.task._id,
+      status: newStatus
+    })
+      .then(() => console.log('Tarea actualizada'))
+      .catch((err: any) => console.error('Error actualizando tarea:', err));
   }
 
   private openCreateModal() { 
@@ -147,27 +143,28 @@ export class KanbanComponent implements OnInit {
   }
 
   private async createNewTask() {
+    console.log('createNewTask iniciado', { title: this.taskTitle, description: this.taskDescription, userEmail: this.userEmail });
+    
+    if (!this.taskTitle || !this.taskDescription) {
+      console.warn('Faltan campos requeridos');
+      return;
+    }
+
     try {
-      // TODO: Integrar backend API para crear tarea
-      // const newTask = await this.restService.post('createTasks', {
-      //   title: this.taskTitle,
-      //   description: this.taskDescription,
-      //   userEmail: this.userEmail,
-      //   status: 'Ready To Start'
-      // });
-      console.log('Creating task:', {
+      const newTask = await this.restService.post('createTasks', {
         title: this.taskTitle,
         description: this.taskDescription,
         userEmail: this.userEmail,
         status: 'Ready To Start'
       });
+      console.log('Task created:', newTask);
       this.createTaskWindow = false;
       this.taskTitle = '';
       this.taskDescription = '';
-      // Recargar tareas
-      this.loadTasks();
+      super.ngOnInit(); // Recargar tareas usando clase base
     } catch (error) {
       console.error('Error creando tarea:', error);
+      this.createTaskWindow = false;
     }
   }
 

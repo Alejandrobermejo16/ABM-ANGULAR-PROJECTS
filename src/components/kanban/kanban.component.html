@@ -26,7 +26,7 @@
   </pantehon-window>
 
   <pantehon-window id="create-tasks-modal" [(show)]="createTaskWindow" [titleBtnClose]="'Cerrar'" [variant]="'info'" [size]="'sm'"
-    [titleBtnNext]="'Crear'" (onAction)="handleCreateTask()">
+    [titleBtnNext]="'Crear'" [onAction]="handleCreateTask">
     <div title>Crear Nueva Tarea</div>
     <div body>
       <mat-form-field appearance="fill" class="pantheon-math-field">
