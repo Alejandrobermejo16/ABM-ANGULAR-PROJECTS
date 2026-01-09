@@ -6,6 +6,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { GridPanelModule, GridPanelHeaderModule, CardModule, WindowModule, SideActionPanelModule } from 'pantheon-libraries';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 
 export interface Action {
@@ -45,6 +46,11 @@ const STATUS_MAP: Record<string, string> = {
     MatFormFieldModule, 
     MatInputModule, 
     MatIconModule,
+    GridPanelModule,
+    GridPanelHeaderModule,
+    CardModule,
+    WindowModule,
+    SideActionPanelModule,
     InitialLoginComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
