@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation, NgZone, OnInit, PLATFORM_ID, Inject, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject, EventEmitter, Output } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +17,6 @@ declare const google: any;
   selector: 'initial-login',
   templateUrl: './initial-login.component.html',
   styleUrls: ['./initial-login.component.css'],
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule]
 })
@@ -28,7 +27,6 @@ export class InitialLoginComponent implements OnInit {
   @Output() loginSuccess = new EventEmitter<UserData>();
 
   constructor(
-    private ngZone: NgZone, 
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation, NgZone, OnInit, PLATFORM_ID, Inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +37,6 @@ const STATUS_MAP: Record<string, string> = {
   selector: 'app-kanban',
   templateUrl: './kanban.component.html',
   styleUrls: ['./kanban.component.css'],
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     CommonModule, 
@@ -51,9 +50,7 @@ const STATUS_MAP: Record<string, string> = {
     WindowModule,
     SideActionPanelModule,
     InitialLoginComponent
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: []
+  ]
 })
 export class KanbanComponent implements OnInit {
   
@@ -77,7 +74,6 @@ export class KanbanComponent implements OnInit {
   ];
 
   constructor(
-    private ngZone: NgZone, 
     @Inject(PLATFORM_ID) platformId: Object,
     private http: HttpClient
   ) {
