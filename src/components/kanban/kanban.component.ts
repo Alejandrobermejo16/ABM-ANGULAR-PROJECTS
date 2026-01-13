@@ -1,4 +1,4 @@
-import { Component, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, PLATFORM_ID, Inject, ViewEncapsulation } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -36,7 +36,8 @@ const STATUS_MAP: Record<string, string> = {
 @Component({
   selector: 'app-kanban',
   templateUrl: './kanban.component.html',
-  styleUrls: ['./kanban.component.css'],
+  styleUrls: ['./kanban.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     CommonModule, 
@@ -86,7 +87,7 @@ export class KanbanComponent extends PantheonBaseComponent {
     this.loadUserFromSession();
     if (this.userEmail) {
       this.isLoggedIn = true;
-      super.ngOnInit(); // La clase base llama initCall automáticamente
+      super.ngOnInit();
     }
   }
 
@@ -98,7 +99,7 @@ export class KanbanComponent extends PantheonBaseComponent {
   onLoginSuccess(userData: any) {
     this.userEmail = userData.email;
     this.isLoggedIn = true;
-    super.ngOnInit(); // La clase base llama initCall automáticamente
+    super.ngOnInit();
   }
 
   protected getModule(): string { return 'getTasks'; }
@@ -161,7 +162,7 @@ export class KanbanComponent extends PantheonBaseComponent {
       this.createTaskWindow = false;
       this.taskTitle = '';
       this.taskDescription = '';
-      super.ngOnInit(); // Recargar tareas usando clase base
+      super.ngOnInit();
     } catch (error) {
       console.error('Error creando tarea:', error);
       this.createTaskWindow = false;
@@ -177,4 +178,5 @@ export class KanbanComponent extends PantheonBaseComponent {
     if (field === 'taskTitle') this.taskTitle = '';
     if (field === 'taskDescription') this.taskDescription = '';
   }
+
 }

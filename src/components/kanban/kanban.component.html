@@ -12,7 +12,9 @@
   </pantehon-grid-panel>
 
   <ng-template #cardTpl let-item let-columnIndex="columnIndex">
-    <pantehon-card [data]="item" [isCompleted]="columnIndex === 3" (click)="openCard(item)"></pantehon-card>
+    <pantehon-card [data]="item" [isCompleted]="columnIndex === 3" (click)="openCard(item)" [dateType]="'month-year'">
+      <mat-icon extra class="delete-icon">delete</mat-icon>
+    </pantehon-card>
   </ng-template>
 
   <pantehon-window id="info-modal" [(show)]="showModal" [titleBtnClose]="'Cerrar'" [variant]="'info'" [size]="'sm'"
