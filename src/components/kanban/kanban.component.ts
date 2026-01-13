@@ -66,6 +66,7 @@ export class KanbanComponent extends PantheonBaseComponent {
   taskDescription = '';
   userEmail = '';
   isLoggedIn = false;
+  showModalDelete = false;
   private isBrowser = false;
 
   fieldActions: Action[] = [
@@ -179,4 +180,23 @@ export class KanbanComponent extends PantheonBaseComponent {
     if (field === 'taskDescription') this.taskDescription = '';
   }
 
+  protected deleteTask(item: TaskInterface): void { 
+    this.showModalDelete = true;
+    this.selectedTask = item;
+  }
+
+  handleDeleteTask = async () => {
+    if (!this.selectedTask?._id) return;
+
+    try {
+      await this.restService.delete(`deleteTasks/${this.selectedTask._id}`);
+      console.log('Tarea eliminada');
+      this.showModalDelete = false;
+      this.selectedTask = null;
+      super.ngOnInit();
+    } catch (err) {
+      console.error('Error eliminando tarea:', err);
+      this.showModalDelete = false;
+    }
+  }
 }

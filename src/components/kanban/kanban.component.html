@@ -13,7 +13,7 @@
 
   <ng-template #cardTpl let-item let-columnIndex="columnIndex">
     <pantehon-card [data]="item" [isCompleted]="columnIndex === 3" (click)="openCard(item)" [dateType]="'month-year'">
-      <mat-icon extra class="delete-icon">delete</mat-icon>
+      <mat-icon extra class="delete-icon" (click)="deleteTask(item); $event.stopPropagation()">delete</mat-icon>
     </pantehon-card>
   </ng-template>
 
@@ -42,6 +42,16 @@
         <input [(ngModel)]="taskDescription" matInput placeholder="Introduce la descripción de la tarea">
         <mat-icon (click)="clearInput('taskDescription')" matSuffix>clear</mat-icon>
       </mat-form-field>
+    </div>
+  </pantehon-window>
+
+  <pantehon-window id="delete-modal" [(show)]="showModalDelete" [titleBtnClose]="'Cancelar'" [variant]="'danger'" [size]="'sm'"
+    [titleBtnNext]="'Eliminar'" [onAction]="handleDeleteTask">
+    <div title>¿Estás seguro?</div>
+    <div body *ngIf="selectedTask">
+      <p>Estás a punto de eliminar la siguiente tarea:</p>
+      <p><strong>{{ selectedTask.title }}</strong></p>
+      <p>{{ selectedTask.description }}</p>
     </div>
   </pantehon-window>
 
