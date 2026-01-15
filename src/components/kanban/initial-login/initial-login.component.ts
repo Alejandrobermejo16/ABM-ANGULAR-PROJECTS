@@ -56,13 +56,16 @@ export class InitialLoginComponent implements OnInit {
     const payload = JSON.parse(atob(token.split('.')[1]));
     const email = payload.email;
 
-    sessionStorage.setItem('userEmail', email);
+    if (this.isBrowser && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('userEmail', email);
+    }
     this.userEmail = email;
     
     this.loginSuccess.emit({ email });
   }
 
   private loadUserFromSession() {
+    if (!this.isBrowser || typeof sessionStorage === 'undefined') return;
     const email = sessionStorage.getItem('userEmail');
     if (email) this.userEmail = email;
   }

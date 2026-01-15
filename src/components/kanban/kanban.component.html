@@ -17,15 +17,11 @@
     </pantehon-card>
   </ng-template>
 
-  <pantehon-window id="info-modal" [(show)]="showModal" [titleBtnClose]="'Cerrar'" [variant]="'info'" [size]="'sm'"
-    [titleBtnNext]="'Siguiente'">
-    <div title>Detalles de la Tarea</div>
-    <div body *ngIf="selectedTask">
-      <p><strong>Título:</strong> {{ selectedTask.title }}</p>
-      <p><strong>Descripción:</strong> {{ selectedTask.description }}</p>
-      <p><strong>Estado:</strong> {{ selectedTask.status }}</p>
-    </div>
-  </pantehon-window>
+  <app-task-details-modal 
+    [(show)]="showModal" 
+    [task]="selectedTask"
+    (editTask)="onEditTask($event)">
+  </app-task-details-modal>
 
   <pantehon-window id="create-tasks-modal" [(show)]="createTaskWindow" [titleBtnClose]="'Cerrar'" [variant]="'info'" [size]="'sm'"
     [titleBtnNext]="'Crear'" [onAction]="handleCreateTask">

@@ -1,0 +1,380 @@
+.modal-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  @media (min-width: 640px) {
+    align-items: center;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 0;
+}
+
+.modal-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 48rem; // Aumentado de 28rem a 48rem (768px)
+  min-height: 60vh; // Altura mínima
+  background: #111418;
+  border-radius: 0.75rem 0.75rem 0 0;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+  @media (min-width: 640px) {
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 85vh; // Limitar altura máxima
+    overflow-y: auto; // Scroll si el contenido es muy largo
+  }
+}
+
+.modal-handle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: #111418;
+}
+
+.handle-button {
+  display: flex;
+  height: 1.5rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.handle {
+  height: 6px;
+  width: 3rem;
+  border-radius: 9999px;
+  background: #3b4754;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  background: #111418;
+  padding: 0 1rem 0.5rem;
+  justify-content: space-between;
+}
+
+.close-button,
+.more-button {
+  display: flex;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+
+  mat-icon {
+    font-size: 24px;
+  }
+}
+
+.close-button {
+  justify-content: flex-start;
+}
+
+.more-button {
+  justify-content: flex-end;
+  border-radius: 0.5rem;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.modal-title {
+  color: white;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  flex: 1;
+  text-align: center;
+}
+
+.modal-body {
+  padding: 0 2rem 2rem;
+  
+  @media (min-width: 640px) {
+    padding: 0 3rem 3rem;
+  }
+}
+
+.task-title {
+  color: white;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  padding-top: 1rem;
+  margin-bottom: 0;
+}
+
+.chips-container {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.status-chip {
+  display: flex;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+  border: 1px solid;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+}
+
+.status-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+}
+
+.date-chip {
+  display: flex;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  background: #283039;
+  padding: 0 0.75rem;
+}
+
+.chip-icon {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  width: 14px;
+  height: 14px;
+}
+
+.date-text {
+  color: #d1d5db;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0;
+}
+
+.section {
+  margin-top: 1.5rem;
+}
+
+.section-title {
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  padding-bottom: 0.5rem;
+  margin: 0;
+}
+
+.description-text {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: #283039;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.user-email {
+  color: #d1d5db;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.actions-container {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.edit-button {
+  flex: 1;
+  background: #137fec;
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgba(19, 127, 236, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.share-button {
+  width: 3.5rem;
+  background: #283039;
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  mat-icon {
+    font-size: 20px;
+  }
+}
+
+.safe-area {
+  height: 1.5rem;
+  background: #111418;
+  
+  @media (min-width: 640px) {
+    display: none;
+  }
+}
+
+.assign-button{
+    cursor:pointer;
+    color:#137fec;
+}
+
+.section-divider{
+    display:flex;
+    align-items:center;
+    justify-content: end;
+    gap:8px;
+    margin-top:16px;
+    margin-bottom:8px;
+
+    mat-icon{
+        color: white;
+        background-color: #0b5df5;
+        border-radius: 50%;
+        font-size: 16px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+        .person-class {
+            color: #34c759;
+        }
+    
+    .assign-label {
+        color: #137fec;
+        font-weight: 600;
+    }
+
+    .asign-person {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 100%;
+        transition: background-color 0.2s;
+        padding: 4px 8px;
+        border-radius: 4px;
+        
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    .assign-name {
+        color: white;
+        overflow: hidden;
+        text-overflow: ellipsis;  //para cortar texto largo (correo...)
+        white-space: nowrap;   //no deja pasar a la siguiente linea el texto
+        max-width: 300px;
+    }
+}.assign-action {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.clear-assign-icon {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(11, 93, 245, 0.4);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(11, 93, 245, 0.3);
+  }
+}

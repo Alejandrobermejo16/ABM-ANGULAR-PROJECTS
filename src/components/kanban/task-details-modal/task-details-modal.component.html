@@ -1,0 +1,88 @@
+<div *ngIf="show" class="modal-container">
+  <!-- Backdrop -->
+  <div class="modal-backdrop" (click)="close()"></div>
+
+  <!-- Modal -->
+  <div class="modal-content">
+    <!-- Handle (Mobile indicator) -->
+    <div class="modal-handle-container">
+      <button class="handle-button">
+        <div class="handle"></div>
+      </button>
+    </div>
+
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="close-button" (click)="close()">
+        <mat-icon>close</mat-icon>
+      </div>
+      <h2 class="modal-title">Detalles Tarea</h2>
+      <div class="more-button">
+        <mat-icon>more_horiz</mat-icon>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="modal-body" *ngIf="task">
+      <!-- Task Title -->
+    <div class="section-divider">
+        <ng-container *ngIf="asignedPerson; else asignarme">
+            <span class="assign-label">Persona asignada:</span>
+            <div class="asign-person">
+                <span class="assign-name">{{ asignedPerson }}</span>
+                <mat-icon>info</mat-icon>
+                <mat-icon class="clear-assign-icon">edit</mat-icon>
+            </div>
+        </ng-container>
+        <ng-template #asignarme>
+            <span class="assign-label assign-action" (click)="assignPerson()">Asignarme a mí</span>
+        </ng-template>
+    </div>
+      <h2 class="task-title">{{ task.title }}</h2>
+
+      <!-- Status Chips -->
+      <div class="chips-container">
+        <div class="status-chip" [style.background]="statusConfig.bg" [style.border-color]="statusConfig.color + '50'">
+          <div class="status-dot" [style.background]="statusConfig.color"></div>
+          <p class="status-text" [style.color]="statusConfig.color">{{ statusConfig.label }}</p>
+        </div>
+        
+        <div class="date-chip" *ngIf="task.createdAt">
+          <mat-icon class="chip-icon">calendar_today</mat-icon>
+          <p class="date-text">{{ task.createdAt | date: 'MMM dd' }}</p>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="section">
+        <h3 class="section-title">Description</h3>
+        <p class="description-text">{{ task.description }}</p>
+      </div>
+
+      <!-- Assigned User -->
+      <div class="section">
+        <h3 class="section-title">Created to</h3>
+        <div class="user-info">
+          <div class="user-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <p class="user-email">{{ task.userEmail }}</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="actions-container">
+        <button class="edit-button" (click)="onEdit()">
+          <mat-icon>edit</mat-icon>
+          Edit Task
+        </button>
+        <button class="share-button">
+          <mat-icon>share</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Safe area (mobile) -->
+    <div class="safe-area"></div>
+  </div>
+</div>

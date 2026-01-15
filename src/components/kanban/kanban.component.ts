@@ -8,21 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { GridPanelModule, GridPanelHeaderModule, CardModule, WindowModule, SideActionPanelModule } from 'pantheon-libraries';
 import { PantheonBaseComponent, PantheonRestService } from 'pantheon-libraries/core';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
+import { TaskDetailsModalComponent } from './task-details-modal/task-details-modal.component';
+import { TaskInterface, Action, CreateTaskResponse } from './task-details-modal/interface';
 
-export interface Action {
-  label: string;
-  icon?: string;
-  type?: 'default' | 'danger' | 'primary';
-  callback: () => void;
-}
-
-export interface TaskInterface {
-  _id?: string;
-  title: string;
-  description: string;
-  status: string;
-  userEmail?: string;
-}
 
 declare const google: any;
 
@@ -50,7 +38,8 @@ const STATUS_MAP: Record<string, string> = {
     CardModule,
     WindowModule,
     SideActionPanelModule,
-    InitialLoginComponent
+    InitialLoginComponent,
+    TaskDetailsModalComponent
   ]
 })
 export class KanbanComponent extends PantheonBaseComponent {
@@ -93,6 +82,7 @@ export class KanbanComponent extends PantheonBaseComponent {
   }
 
   private loadUserFromSession() {
+    if (!this.isBrowser || typeof sessionStorage === 'undefined') return;
     const email = sessionStorage.getItem('userEmail');
     if (email) this.userEmail = email;
   }
@@ -125,14 +115,20 @@ export class KanbanComponent extends PantheonBaseComponent {
     }
   }
 
-  protected onTaskMoved(event: any) {
-    const newStatus = this.columns[event.toIndex];
-    this.restService.patch('updateTaskStatus', {
-      taskId: event.task._id,
-      status: newStatus
-    })
-      .then(() => console.log('Tarea actualizada'))
-      .catch((err: any) => console.error('Error actualizando tarea:', err));
+  protected async onTaskMoved(event: any) {
+    const task = event.task;
+    const toColumnIndex = event.toIndex;
+    const newStatus = this.columns[toColumnIndex];
+    task.status = newStatus;
+    try {
+      await this.restService.patch('updateTaskStatus', {
+        taskId: task._id,
+        status: newStatus
+      });
+      console.log('Tarea actualizada');
+    } catch (err) {
+      console.error('Error actualizando tarea:', err);
+    }
   }
 
   private openCreateModal() { 
@@ -153,17 +149,38 @@ export class KanbanComponent extends PantheonBaseComponent {
     }
 
     try {
-      const newTask = await this.restService.post('createTasks', {
+      const apiResponse = await this.restService.post<CreateTaskResponse>('createTasks', {
         title: this.taskTitle,
         description: this.taskDescription,
         userEmail: this.userEmail,
         status: 'Ready To Start'
       });
-      console.log('Task created:', newTask);
+
+      // La API desplegada devuelve { message, taskId }.
+      // Normalizamos para que el UI tenga siempre title/description/status y pinte la card.
+      const newTask: TaskInterface = {
+        _id: apiResponse?._id ?? apiResponse?.taskId,
+        title: apiResponse?.title ?? this.taskTitle,
+        description: apiResponse?.description ?? this.taskDescription,
+        status: apiResponse?.status ?? 'Ready To Start',
+        userEmail: apiResponse?.userEmail ?? this.userEmail,
+        createdAt: apiResponse?.createdAt ?? new Date().toISOString(),
+        assignedUserEmail: apiResponse?.assignedUserEmail
+      };
+
+      console.log('Task created (normalized):', newTask);
+
+      // Actualizar la vista creando nuevas referencias
+      this.dataColumns = this.dataColumns.map((col, index) => {
+        if (index === 0) {
+          return { ...col, items: [...col.items, newTask] };
+        }
+        return col;
+      });
+      
       this.createTaskWindow = false;
       this.taskTitle = '';
       this.taskDescription = '';
-      super.ngOnInit();
     } catch (error) {
       console.error('Error creando tarea:', error);
       this.createTaskWindow = false;
@@ -185,15 +202,24 @@ export class KanbanComponent extends PantheonBaseComponent {
     this.selectedTask = item;
   }
 
+  onEditTask(task: TaskInterface): void {
+    console.log('Edit task:', task);
+    this.showModal = false;
+  }
+
   handleDeleteTask = async () => {
     if (!this.selectedTask?._id) return;
 
     try {
       await this.restService.delete(`deleteTasks/${this.selectedTask._id}`);
       console.log('Tarea eliminada');
+      
+      this.dataColumns.forEach(column => {
+        column.items = column.items.filter(task => task._id !== this.selectedTask?._id);
+      });
+      
       this.showModalDelete = false;
       this.selectedTask = null;
-      super.ngOnInit();
     } catch (err) {
       console.error('Error eliminando tarea:', err);
       this.showModalDelete = false;
