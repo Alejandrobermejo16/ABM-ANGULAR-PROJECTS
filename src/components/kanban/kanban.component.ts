@@ -10,7 +10,9 @@ import { PantheonBaseComponent, PantheonRestService } from 'pantheon-libraries/c
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 import { TaskDetailsModalComponent } from './task-details-modal/task-details-modal.component';
 import { TaskInterface, Action, CreateTaskResponse } from './task-details-modal/interface';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
 
 declare const google: any;
 
@@ -33,13 +35,16 @@ const STATUS_MAP: Record<string, string> = {
     MatFormFieldModule, 
     MatInputModule, 
     MatIconModule,
+    MatSelectModule,
     GridPanelModule,
     GridPanelHeaderModule,
     CardModule,
     WindowModule,
     SideActionPanelModule,
     InitialLoginComponent,
-    TaskDetailsModalComponent
+    TaskDetailsModalComponent,
+    MatSlideToggleModule,
+    MatButtonModule
   ]
 })
 export class KanbanComponent extends PantheonBaseComponent {
@@ -57,11 +62,15 @@ export class KanbanComponent extends PantheonBaseComponent {
   isLoggedIn = false;
   showModalDelete = false;
   private isBrowser = false;
+  autoDeleteEnabled = false;
+  deleteDaysOptions = ['1','3','7','14','custom'];
+  selectedDeleteDays: string = '0';
+  customDeleteDays: number | null = null;
 
   fieldActions: Action[] = [
     { label: 'Añadir tarea', icon: '➕', type: 'primary', callback: () => this.openCreateModal() },
     { label: 'Editar', icon: '✏️', type: 'default', callback: () => console.log('Editar acción') },
-    { label: 'Eliminar', icon: '🗑', type: 'danger', callback: () => console.log('Eliminar acción') }
+    { label: 'Eliminar', icon: '🗑', type: 'danger', callback: () => console.log('Eliminar acción') },
   ];
 
   constructor(
@@ -224,5 +233,25 @@ export class KanbanComponent extends PantheonBaseComponent {
       console.error('Error eliminando tarea:', err);
       this.showModalDelete = false;
     }
+  }
+
+  saveAutoDeleteSettings() {
+    const days = this.selectedDeleteDays === 'custom' 
+      ? this.customDeleteDays 
+      : parseInt(this.selectedDeleteDays, 10);
+    
+    if (!days || days <= 0) {
+      console.warn('Días inválidos para borrado automático');
+      return;
+    }
+
+    // Guardar en sessionStorage (o enviar al backend)
+    if (this.isBrowser && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('autoDeleteEnabled', String(this.autoDeleteEnabled));
+      sessionStorage.setItem('autoDeleteDays', String(days));
+    }
+
+    console.log('Configuración guardada:', { enabled: this.autoDeleteEnabled, days });
+    // TODO: Implementar lógica de borrado automático en backend
   }
 }

@@ -1,10 +1,8 @@
-/* Estilos para Material Form Fields en modales */
 .pantheon-math-field {
     width: 100%;
     margin-bottom: 16px;
 }
 
-/* Sobrescribir estilos de componentes Pantheon */
 ::ng-deep .menus {
     position: absolute;
     top: 12px;
@@ -12,7 +10,6 @@
     z-index: 10;
 }
 
-/* Ajustes generales para el componente */
 :host {
     display: block;
     width: 100%;
@@ -34,4 +31,52 @@ pantehon-grid-panel-header .header-container .menus {
 
 .delete-icon:hover {
   color: rgb(179, 177, 177);
+}
+
+.auto-delete-toggle-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #1e293b;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  
+
+  ::ng-deep mat-slide-toggle {
+    .mdc-switch {
+      --mdc-switch-selected-track-color: #3b82f6;
+      --mdc-switch-selected-handle-color: #3b82f6;
+    }
+    
+    .mdc-label {
+      color: white;
+      font-size: 14px;
+    }
+  }
+}
+
+.auto-delete-config {
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(30, 41, 59, 0.10);
+  padding: 16px;
+  border: 1px solid #e0e7ef;
+
+  .toggle-description {
+    color: #1e293b;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+
+  .info-message {
+    display: flex;
+    align-items: center;
+    .mat-icon {
+      overflow: clip;
+      margin-right: 6px;
+    }
+  }
 }

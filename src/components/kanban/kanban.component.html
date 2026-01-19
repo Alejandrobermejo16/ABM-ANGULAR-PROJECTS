@@ -23,8 +23,8 @@
     (editTask)="onEditTask($event)">
   </app-task-details-modal>
 
-  <pantehon-window id="create-tasks-modal" [(show)]="createTaskWindow" [titleBtnClose]="'Cerrar'" [variant]="'info'" [size]="'sm'"
-    [titleBtnNext]="'Crear'" [onAction]="handleCreateTask">
+  <pantehon-window id="create-tasks-modal" [(show)]="createTaskWindow" [titleBtnClose]="'Cerrar'" [variant]="'info'"
+    [size]="'sm'" [titleBtnNext]="'Crear'" [onAction]="handleCreateTask">
     <div title>Crear Nueva Tarea</div>
     <div body>
       <mat-form-field appearance="fill" class="pantheon-math-field">
@@ -41,8 +41,8 @@
     </div>
   </pantehon-window>
 
-  <pantehon-window id="delete-modal" [(show)]="showModalDelete" [titleBtnClose]="'Cancelar'" [variant]="'danger'" [size]="'sm'"
-    [titleBtnNext]="'Eliminar'" [onAction]="handleDeleteTask">
+  <pantehon-window id="delete-modal" [(show)]="showModalDelete" [titleBtnClose]="'Cancelar'" [variant]="'danger'"
+    [size]="'sm'" [titleBtnNext]="'Eliminar'" [onAction]="handleDeleteTask">
     <div title>¿Estás seguro?</div>
     <div body *ngIf="selectedTask">
       <p>Estás a punto de eliminar la siguiente tarea:</p>
@@ -52,5 +52,56 @@
   </pantehon-window>
 
   <pantheon-side-action-panel [open]="isMenuOpen" (close)="isMenuOpen = false" [actions]="fieldActions">
+    <div class="auto-delete-config">
+      <h3 class="config-title">
+        <mat-icon class="title-icon">schedule</mat-icon>
+        Política de limpieza automática
+      </h3>
+
+      <div class="toggle-section">
+        <mat-slide-toggle [(ngModel)]="autoDeleteEnabled" color="primary">
+          <span class="toggle-label">Activar borrado automático</span>
+        </mat-slide-toggle>
+        <p class="toggle-description">Borrar tareas completadas automáticamente</p>
+      </div>
+
+      <div class="config-content" *ngIf="autoDeleteEnabled">
+        <mat-form-field appearance="outline" class="days-select">
+          <mat-label>Borrado automático en:</mat-label>
+          <mat-select name="deleteDays" [(ngModel)]="selectedDeleteDays">
+            <mat-option *ngFor="let d of deleteDaysOptions" [value]="d">
+              {{ d === 'custom' ? 'Personalizado...' : (d === '1' ? '1 día' : d + ' días') }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>event</mat-icon>
+        </mat-form-field>
+
+        <div class="custom-input-wrapper" *ngIf="selectedDeleteDays === 'custom'">
+          <mat-form-field appearance="outline" class="custom-days">
+            <mat-label>Días personalizados</mat-label>
+            <input matInput type="number" min="1" [(ngModel)]="customDeleteDays" placeholder="Ej: 15" />
+            <mat-icon matSuffix>edit_calendar</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="info-message">
+          <mat-icon class="info-icon">info</mat-icon>
+          <p>Las tareas completadas se eliminarán automáticamente después de 
+            <strong>{{selectedDeleteDays === 'custom' ? (customDeleteDays || '?') : selectedDeleteDays}}</strong> 
+            día{{(selectedDeleteDays === '1' || customDeleteDays === 1) ? '' : 's'}}
+          </p>
+        </div>
+
+        <button 
+          mat-raised-button 
+          color="primary" 
+          class="save-button"
+          [disabled]="selectedDeleteDays === '0' || (selectedDeleteDays === 'custom' && (!customDeleteDays || customDeleteDays <= 0))" 
+          (click)="saveAutoDeleteSettings()">
+          <mat-icon>save</mat-icon>
+          Guardar configuración
+        </button>
+      </div>
+    </div>
   </pantheon-side-action-panel>
 </div>
