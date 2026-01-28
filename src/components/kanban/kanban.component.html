@@ -14,6 +14,11 @@
   <ng-template #cardTpl let-item let-columnIndex="columnIndex">
     <pantehon-card [data]="item" [isCompleted]="columnIndex === 3" (click)="openCard(item)" [dateType]="'month-year'">
       <mat-icon extra class="delete-icon" (click)="deleteTask(item); $event.stopPropagation()">delete</mat-icon>
+      <span extra *ngIf="item.autoDeleteDate" 
+            class="delete-countdown-badge"
+            [matTooltip]="'Auto-borrado en ' + getDaysRemaining(item.autoDeleteDate) + (getDaysRemaining(item.autoDeleteDate) === 1 ? ' día' : ' días')">
+        {{ getDaysRemaining(item.autoDeleteDate) }}
+      </span>
     </pantehon-card>
   </ng-template>
 
@@ -90,18 +95,14 @@
             <strong>{{selectedDeleteDays === 'custom' ? (customDeleteDays || '?') : selectedDeleteDays}}</strong> 
             día{{(selectedDeleteDays === '1' || customDeleteDays === 1) ? '' : 's'}}
           </p>
-        </div>
-
-        <button 
-          mat-raised-button 
-          color="primary" 
-          class="save-button"
-          [disabled]="selectedDeleteDays === '0' || (selectedDeleteDays === 'custom' && (!customDeleteDays || customDeleteDays <= 0))" 
-          (click)="saveAutoDeleteSettings()">
-          <mat-icon>save</mat-icon>
-          Guardar configuración
-        </button>
+        </div>  
       </div>
+      <button mat-raised-button color="primary" class="save-button"
+        [disabled]="autoDeleteEnabled && (selectedDeleteDays === '0' || (selectedDeleteDays === 'custom' && (!customDeleteDays || customDeleteDays <= 0)))"
+        (click)="saveAutoDeleteSettings()">
+        <mat-icon>save</mat-icon>
+        Guardar configuración
+      </button>
     </div>
   </pantheon-side-action-panel>
 </div>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { GridPanelModule, GridPanelHeaderModule, CardModule, WindowModule, SideActionPanelModule } from 'pantheon-libraries';
 import { PantheonBaseComponent, PantheonRestService } from 'pantheon-libraries/core';
@@ -44,7 +45,8 @@ const STATUS_MAP: Record<string, string> = {
     InitialLoginComponent,
     TaskDetailsModalComponent,
     MatSlideToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule
   ]
 })
 export class KanbanComponent extends PantheonBaseComponent {
@@ -119,8 +121,12 @@ export class KanbanComponent extends PantheonBaseComponent {
         const statusKey = task.status?.toLowerCase();
         const columnName = STATUS_MAP[statusKey];
         if (columnName) columnsMap[columnName].push(task);
+        if (task.autoDeleteDate) {
+          this.autoDeleteEnabled = true;
+        }
       });
       this.dataColumns = Object.keys(columnsMap).map(key => ({ name: key, items: columnsMap[key] }));
+      this.getTaskForDelete(data?.tasks);
     }
   }
 
@@ -164,9 +170,7 @@ export class KanbanComponent extends PantheonBaseComponent {
         userEmail: this.userEmail,
         status: 'Ready To Start'
       });
-
-      // La API desplegada devuelve { message, taskId }.
-      // Normalizamos para que el UI tenga siempre title/description/status y pinte la card.
+      
       const newTask: TaskInterface = {
         _id: apiResponse?._id ?? apiResponse?.taskId,
         title: apiResponse?.title ?? this.taskTitle,
@@ -179,7 +183,6 @@ export class KanbanComponent extends PantheonBaseComponent {
 
       console.log('Task created (normalized):', newTask);
 
-      // Actualizar la vista creando nuevas referencias
       this.dataColumns = this.dataColumns.map((col, index) => {
         if (index === 0) {
           return { ...col, items: [...col.items, newTask] };
@@ -216,6 +219,17 @@ export class KanbanComponent extends PantheonBaseComponent {
     this.showModal = false;
   }
 
+  getDaysRemaining(autoDeleteDate: string | undefined): number | null {
+    if (!autoDeleteDate) return null;
+    
+    const now = new Date();
+    const deleteDate = new Date(autoDeleteDate);
+    const diffTime = deleteDate.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    return diffDays > 0 ? diffDays : 0;
+  }
+
   handleDeleteTask = async () => {
     if (!this.selectedTask?._id) return;
 
@@ -235,23 +249,58 @@ export class KanbanComponent extends PantheonBaseComponent {
     }
   }
 
-  saveAutoDeleteSettings() {
-    const days = this.selectedDeleteDays === 'custom' 
-      ? this.customDeleteDays 
+  async saveAutoDeleteSettings() {
+    const days = this.selectedDeleteDays === 'custom'
+      ? this.customDeleteDays
       : parseInt(this.selectedDeleteDays, 10);
-    
-    if (!days || days <= 0) {
-      console.warn('Días inválidos para borrado automático');
-      return;
-    }
 
-    // Guardar en sessionStorage (o enviar al backend)
-    if (this.isBrowser && typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem('autoDeleteEnabled', String(this.autoDeleteEnabled));
-      sessionStorage.setItem('autoDeleteDays', String(days));
+    try {
+      if (this.autoDeleteEnabled) {
+        await this.restService.post('sendDeletePolicityTask', {
+          userEmail: this.userEmail,
+          deletedDays: days
+        });
+      }
+      else {
+        await this.restService.post('disabledPolicityDeleteTask', {
+          userEmail: this.userEmail,
+        });
+        this.autoDeleteEnabled = false;
+      }
+      super.ngOnInit();
+      this.createTaskWindow = false;
+    } catch (error: any) {
+      console.error('Error creating task:', error);
+      this.createTaskWindow = false;
     }
-
-    console.log('Configuración guardada:', { enabled: this.autoDeleteEnabled, days });
-    // TODO: Implementar lógica de borrado automático en backend
   }
-}
+
+  private async getTaskForDelete(data: any) {
+    const tasksArray: TaskInterface[] = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.tasks)
+        ? data.tasks
+        : [];
+
+    const deployedWithAutoDelete = tasksArray.filter(t =>
+      t?.autoDeleteDate != null &&
+      !isNaN(new Date(t.autoDeleteDate).getTime()) &&
+      t?.status?.toLowerCase() === 'deployed'
+    );
+
+    const dueTasks = deployedWithAutoDelete.filter(t => {
+      const daysRemaining = this.getDaysRemaining(t.autoDeleteDate);
+      return daysRemaining !== null && daysRemaining <= 1;
+    });
+
+    const dueTaskIds = dueTasks.map(t => String(t._id)).filter(Boolean);
+    if (dueTaskIds.length === 0) return;
+
+    try {
+      await this.restService.post('deleteTasks', { taskIds: dueTaskIds });
+    } catch (err) {
+      console.error('Error eliminando tareas vencidas:', err);
+    }
+  }
+  }
+
