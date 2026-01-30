@@ -1,6 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { PantheonRestService } from 'pantheon-libraries/core';
 import { TaskInterface } from './interface';
 
@@ -9,18 +12,24 @@ import { TaskInterface } from './interface';
 @Component({
     selector: 'app-task-details-modal',
     standalone: true,
-    imports: [CommonModule, MatIconModule],
+    imports: [CommonModule, MatIconModule, FormsModule, MatFormFieldModule, MatInputModule],
     templateUrl: './task-details-modal.component.html',
     styleUrls: ['./task-details-modal.component.scss']
 })
 export class TaskDetailsModalComponent {
     private _task: TaskInterface | null = null;
+    public isEditMode: boolean = false;
+    public editedTitle: string = '';
+    public editedDescription: string = '';
     
     @Input() 
     set task(value: TaskInterface | null) {
         this._task = value;
         if (value) {
             this.asignedPerson = value.assignedUserEmail || null;
+            this.editedTitle = value.title || '';
+            this.editedDescription = value.description || '';
+            this.isEditMode = false;
             console.log("prueba", value);
         }
     }
@@ -41,12 +50,44 @@ export class TaskDetailsModalComponent {
 
     close() {
         this.show = false;
+        this.isEditMode = false;
         this.showChange.emit(false);
     }
 
-    onEdit() {
-        if (this.task) {
-            this.editTask.emit(this.task);
+    toggleEditMode() {
+        this.isEditMode = !this.isEditMode;
+        if (!this.isEditMode && this.task) {
+            // Reset to original values if canceling
+            this.editedTitle = this.task.title || '';
+            this.editedDescription = this.task.description || '';
+        }
+    }
+
+    async onEdit() {
+        if (!this.isEditMode) {
+            // Enter edit mode
+            this.isEditMode = true;
+        } else {
+            // Save changes
+            if (this.task) {
+                try {
+                    await this.restService.patch('updateTask', {
+                        taskId: this.task._id,
+                        title: this.editedTitle,
+                        description: this.editedDescription
+                    });
+                    
+                    // Update local task
+                    this.task.title = this.editedTitle;
+                    this.task.description = this.editedDescription;
+                    
+                    this.editTask.emit(this.task);
+                    this.isEditMode = false;
+                    console.log('Tarea actualizada');
+                } catch (error) {
+                    console.error('Error actualizando tarea:', error);
+                }
+            }
         }
     }
 

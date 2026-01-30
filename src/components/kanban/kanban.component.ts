@@ -15,6 +15,7 @@ import { TaskInterface, Action, CreateTaskResponse } from './task-details-modal/
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule, MatCheckboxChange} from '@angular/material/checkbox';
 
 declare const google: any;
 
@@ -48,6 +49,7 @@ const STATUS_MAP: Record<string, string> = {
     MatSlideToggleModule,
     MatButtonModule,
     MatTooltipModule,
+    MatCheckboxModule,
     LoaderComponent
   ]
 })
@@ -71,12 +73,20 @@ export class KanbanComponent extends PantheonBaseComponent {
   public selectedDeleteDays: string = '0';
   public customDeleteDays: number | null = null;
   public isLoading: boolean = false;
+  public isMultiSelectMode: boolean = false;
+  public selectedTaskIds: Set<string> = new Set();
 
   public fieldActions: Action[] = [
     { label: 'Añadir tarea', icon: '➕', type: 'primary', callback: () => this.openCreateModal() },
-    { label: 'Editar', icon: '✏️', type: 'default', callback: () => console.log('Editar acción') },
-    { label: 'Eliminar', icon: '🗑', type: 'danger', callback: () => console.log('Eliminar acción') },
+    { label: 'Eliminar', icon: '🗑', type: 'danger', callback: () => this.toggleMultiSelectMode() },
   ];
+
+  public prioritys = [
+    { label: 'Baja', value: 'baja' },
+    { label: 'Media', value: 'media' },
+    { label: 'Alta', value: 'alta' }
+  ];
+  public taskPriority: string = 'baja';
 
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
@@ -308,5 +318,25 @@ export class KanbanComponent extends PantheonBaseComponent {
       console.error('Error eliminando tareas vencidas:', err);
     }
   }
+
+  toggleMultiSelectMode(): void {
+    this.isMultiSelectMode = !this.isMultiSelectMode;
+    if (!this.isMultiSelectMode) {
+      this.selectedTaskIds.clear();
+    }
+    this.isMenuOpen = false;
   }
+
+  toggleTaskSelection(taskId: string, event: MatCheckboxChange): void {
+    if (event.checked) {
+      this.selectedTaskIds.add(taskId);
+    } else {
+      this.selectedTaskIds.delete(taskId);
+    }
+  }
+
+  isTaskSelected(taskId: string): boolean {
+    return this.selectedTaskIds.has(taskId);
+  }
+}
 

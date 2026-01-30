@@ -378,3 +378,94 @@
     box-shadow: 0 2px 4px rgba(11, 93, 245, 0.3);
   }
 }
+
+/* Edit mode form fields */
+.edit-field {
+  width: 100%;
+  margin-top: 0.5rem;
+  
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background: #1e293b !important;
+      border-radius: 0.5rem;
+    }
+    
+    .mdc-text-field--outlined {
+      .mdc-notched-outline {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+      }
+      
+      &:hover .mdc-notched-outline {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: rgba(255, 255, 255, 0.2) !important;
+        }
+      }
+      
+      &.mdc-text-field--focused .mdc-notched-outline {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-color: #137fec !important;
+          border-width: 2px !important;
+        }
+      }
+    }
+    
+    .mat-mdc-input-element,
+    .mat-mdc-form-field-input-control {
+      color: white !important;
+      caret-color: #137fec;
+    }
+    
+    .mat-mdc-form-field-label,
+    .mdc-floating-label {
+      color: rgba(255, 255, 255, 0.6) !important;
+    }
+    
+    .mat-mdc-form-field-label.mdc-floating-label--float-above {
+      color: #137fec !important;
+    }
+    
+    textarea.mat-mdc-input-element {
+      resize: vertical;
+      min-height: 80px;
+    }
+  }
+}
+
+.cancel-button {
+  flex: 0.4;
+  background: #283039;
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9375rem;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background: #2d3642;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}

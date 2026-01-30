@@ -22,15 +22,34 @@ pantehon-grid-panel-header .header-container .menus {
   z-index: 10;
 }
 
-.delete-icon{
+::ng-deep .bookmark {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  color: #f59e0b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 20px !important;
+  margin: 0 !important;
+  z-index: 5;
+  
+  &:hover {
+    color: #d97706;
+    transform: scale(1.1);
+  }
+}
+
+.delete-icon {
   position: absolute;
   top: 8px;
   right: 8px;
   cursor: pointer;
-}
-
-.delete-icon:hover {
-  color: rgb(179, 177, 177);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    color: #ef4444;
+    transform: scale(1.1);
+  }
 }
 
 .delete-countdown-badge {
@@ -102,6 +121,66 @@ pantehon-grid-panel-header .header-container .menus {
     .mat-icon {
       overflow: clip;
       margin-right: 6px;
+    }
+  }
+}
+
+.delete-warning-text {
+  color: #9ca3af;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.delete-task-title {
+  margin: 1rem 0;
+  
+  strong {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+}
+
+.delete-task-description {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0.5rem;
+  border-left: 3px solid #ef4444;
+}
+
+.p-modal{
+    color: #f59e0b;
+  }
+
+.task-checkbox {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  
+  ::ng-deep {
+    .mdc-checkbox {
+      .mdc-checkbox__background {
+        border-color: #4f46e5 !important;
+        background-color: transparent !important;
+      }
+      
+      &.mdc-checkbox--selected {
+        .mdc-checkbox__background {
+          background-color: #4f46e5 !important;
+          border-color: #4f46e5 !important;
+        }
+      }
+    }
+    
+    .mdc-checkbox__ripple {
+      display: none;
     }
   }
 }
