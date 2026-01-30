@@ -1,7 +1,6 @@
 <div *ngIf="!isLoggedIn">
   <initial-login (loginSuccess)="onLoginSuccess($event)"></initial-login>
 </div>
-
 <div *ngIf="isLoggedIn">
   <pantehon-grid-panel-header [columns]="columns" [menuAux]="true" [iconMenu]="'menu'"
     (extraMenuClick)="isMenuOpen = !isMenuOpen">
@@ -105,4 +104,5 @@
       </button>
     </div>
   </pantheon-side-action-panel>
+  <pantheon-loader [show]="isLoading" [text]="'Cargando...'"></pantheon-loader>
 </div>

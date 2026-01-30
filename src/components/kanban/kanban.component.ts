@@ -6,7 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { GridPanelModule, GridPanelHeaderModule, CardModule, WindowModule, SideActionPanelModule } from 'pantheon-libraries';
+import { GridPanelModule, GridPanelHeaderModule, CardModule, WindowModule, SideActionPanelModule, LoaderComponent
+ } from 'pantheon-libraries';
 import { PantheonBaseComponent, PantheonRestService } from 'pantheon-libraries/core';
 import { InitialLoginComponent } from './initial-login/initial-login.component';
 import { TaskDetailsModalComponent } from './task-details-modal/task-details-modal.component';
@@ -46,30 +47,32 @@ const STATUS_MAP: Record<string, string> = {
     TaskDetailsModalComponent,
     MatSlideToggleModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    LoaderComponent
   ]
 })
 export class KanbanComponent extends PantheonBaseComponent {
   
-  title = 'kanban-board';
-  showModal = false;
-  selectedTask: TaskInterface | null = null;
-  columns: Array<string> = ['Ready To Start', 'In Progress', 'Ready to verify/Deploy', 'Deployed'];
-  dataColumns: Array<{ name: string; items: TaskInterface[] }> = [];
-  isMenuOpen = false;
-  createTaskWindow = false;
-  taskTitle = '';
-  taskDescription = '';
-  userEmail = '';
-  isLoggedIn = false;
-  showModalDelete = false;
-  private isBrowser = false;
-  autoDeleteEnabled = false;
-  deleteDaysOptions = ['1','3','7','14','custom'];
-  selectedDeleteDays: string = '0';
-  customDeleteDays: number | null = null;
+  public title: string = 'kanban-board';
+  public showModal: boolean = false;
+  public selectedTask: TaskInterface | null = null;
+  public columns: string[] = ['Ready To Start', 'In Progress', 'Ready to verify/Deploy', 'Deployed'];
+  public dataColumns: Array<{ name: string; items: TaskInterface[] }> = [];
+  public isMenuOpen: boolean = false;
+  public createTaskWindow: boolean = false;
+  public taskTitle: string = '';
+  public taskDescription: string = '';
+  public userEmail: string = '';
+  public isLoggedIn: boolean = false;
+  public showModalDelete: boolean = false;
+  private isBrowser: boolean = false;
+  public autoDeleteEnabled: boolean = false;
+  public deleteDaysOptions: string[] = ['1','3','7','14','custom'];
+  public selectedDeleteDays: string = '0';
+  public customDeleteDays: number | null = null;
+  public isLoading: boolean = false;
 
-  fieldActions: Action[] = [
+  public fieldActions: Action[] = [
     { label: 'Añadir tarea', icon: '➕', type: 'primary', callback: () => this.openCreateModal() },
     { label: 'Editar', icon: '✏️', type: 'default', callback: () => console.log('Editar acción') },
     { label: 'Eliminar', icon: '🗑', type: 'danger', callback: () => console.log('Eliminar acción') },
@@ -88,6 +91,7 @@ export class KanbanComponent extends PantheonBaseComponent {
     this.loadUserFromSession();
     if (this.userEmail) {
       this.isLoggedIn = true;
+      this.isLoading = true;
       super.ngOnInit();
     }
   }
@@ -98,9 +102,10 @@ export class KanbanComponent extends PantheonBaseComponent {
     if (email) this.userEmail = email;
   }
 
-  onLoginSuccess(userData: any) {
+  public onLoginSuccess(userData: any) {
     this.userEmail = userData.email;
     this.isLoggedIn = true;
+    this.isLoading = true;
     super.ngOnInit();
   }
 
@@ -128,6 +133,7 @@ export class KanbanComponent extends PantheonBaseComponent {
       this.dataColumns = Object.keys(columnsMap).map(key => ({ name: key, items: columnsMap[key] }));
       this.getTaskForDelete(data?.tasks);
     }
+    this.isLoading = false;
   }
 
   protected async onTaskMoved(event: any) {
