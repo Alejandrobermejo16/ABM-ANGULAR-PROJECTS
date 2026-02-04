@@ -285,6 +285,7 @@ export class KanbanComponent extends PantheonBaseComponent {
       }
       super.ngOnInit();
       this.createTaskWindow = false;
+      this.isMenuOpen = false;
     } catch (error: any) {
       console.error('Error creating task:', error);
       this.createTaskWindow = false;
