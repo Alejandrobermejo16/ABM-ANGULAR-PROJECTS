@@ -15,6 +15,7 @@ export interface TaskInterface {
     createdAt?: string;
     asignedPerson?: string;
     assignedUserEmail?: string;
+    priority?: string;
 }
 
 

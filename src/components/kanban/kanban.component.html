@@ -12,7 +12,11 @@
 
   <ng-template #cardTpl let-item let-columnIndex="columnIndex">
     <pantehon-card [data]="item" [isCompleted]="columnIndex === 3" (click)="openCard(item)" [dateType]="'month-year'">      
-      <mat-icon extra class="bookmark" (click)="deleteTask(item); $event.stopPropagation()">bookmark</mat-icon>
+      <mat-icon 
+      *ngIf="!item.autoDeleteDate"
+      extra 
+                class="bookmark priority-{{item.priority || 'baja'}}"
+                (click)="deleteTask(item); $event.stopPropagation()">bookmark</mat-icon>
       <mat-checkbox extra *ngIf="isMultiSelectMode" 
                     class="task-checkbox"
                     [checked]="isTaskSelected(item._id)"
@@ -79,9 +83,9 @@
 
       <div class="toggle-section">
         <mat-slide-toggle [(ngModel)]="autoDeleteEnabled" color="primary">
-          <span class="toggle-label">Activar borrado automático</span>
+          <span class="toggle-label">{{!autoDeleteEnabled ? 'Activar borrado automático' : 'Desactivar borrado automático'}}</span>
         </mat-slide-toggle>
-        <p class="toggle-description">Borrar tareas completadas automáticamente</p>
+        <p class="toggle-description">{{!autoDeleteEnabled ? 'Borrar tareas completadas automáticamente' : 'Si desactivas esta opción, todas las tareas que tienes disponibles para borrarse automáticamente se mantendrán con el flujo habitual'}}</p>
       </div>
 
       <div class="config-content" *ngIf="autoDeleteEnabled">

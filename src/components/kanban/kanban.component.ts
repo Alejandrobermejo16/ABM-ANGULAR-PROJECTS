@@ -184,7 +184,8 @@ export class KanbanComponent extends PantheonBaseComponent {
         title: this.taskTitle,
         description: this.taskDescription,
         userEmail: this.userEmail,
-        status: 'Ready To Start'
+        status: 'Ready To Start',
+        priority: this.taskPriority
       });
       
       const newTask: TaskInterface = {
@@ -194,7 +195,8 @@ export class KanbanComponent extends PantheonBaseComponent {
         status: apiResponse?.status ?? 'Ready To Start',
         userEmail: apiResponse?.userEmail ?? this.userEmail,
         createdAt: apiResponse?.createdAt ?? new Date().toISOString(),
-        assignedUserEmail: apiResponse?.assignedUserEmail
+        assignedUserEmail: apiResponse?.assignedUserEmail,
+        priority: apiResponse?.priority ?? this.taskPriority
       };
 
       console.log('Task created (normalized):', newTask);
@@ -209,6 +211,7 @@ export class KanbanComponent extends PantheonBaseComponent {
       this.createTaskWindow = false;
       this.taskTitle = '';
       this.taskDescription = '';
+      this.taskPriority = 'baja';
     } catch (error) {
       console.error('Error creando tarea:', error);
       this.createTaskWindow = false;

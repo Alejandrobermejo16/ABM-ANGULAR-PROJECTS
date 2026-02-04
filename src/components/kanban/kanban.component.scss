@@ -22,19 +22,43 @@ pantehon-grid-panel-header .header-container .menus {
   z-index: 10;
 }
 
-::ng-deep .bookmark {
+.bookmark {
   position: absolute;
   top: 8px;
   left: 8px;
-  color: #f59e0b;
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 20px !important;
   margin: 0 !important;
   z-index: 5;
+}
+
+.priority-baja,
+.priority-low {
+  color: #1f2937 !important;
   
   &:hover {
-    color: #d97706;
+    color: #111827 !important;
+    transform: scale(1.1);
+  }
+}
+
+.priority-media,
+.priority-medium {
+  color: #f59e0b !important;
+  
+  &:hover {
+    color: #d97706 !important;
+    transform: scale(1.1);
+  }
+}
+
+.priority-alta,
+.priority-high {
+  color: #ef4444 !important;
+  
+  &:hover {
+    color: #dc2626 !important;
     transform: scale(1.1);
   }
 }
@@ -56,7 +80,7 @@ pantehon-grid-panel-header .header-container .menus {
   position: absolute;
   top: 8px;
   left: 8px;
-  background: #f59e0b;
+  background: #564d3e;
   color: white;
   font-size: 14px;
   font-weight: 700;
