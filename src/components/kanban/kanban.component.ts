@@ -172,7 +172,6 @@ export class KanbanComponent extends PantheonBaseComponent {
   }
 
   private async createNewTask() {
-    console.log('createNewTask iniciado', { title: this.taskTitle, description: this.taskDescription, userEmail: this.userEmail });
     
     if (!this.taskTitle || !this.taskDescription) {
       console.warn('Faltan campos requeridos');
@@ -198,8 +197,6 @@ export class KanbanComponent extends PantheonBaseComponent {
         assignedUserEmail: apiResponse?.assignedUserEmail,
         priority: apiResponse?.priority ?? this.taskPriority
       };
-
-      console.log('Task created (normalized):', newTask);
 
       this.dataColumns = this.dataColumns.map((col, index) => {
         if (index === 0) {
@@ -234,7 +231,6 @@ export class KanbanComponent extends PantheonBaseComponent {
   }
 
   onEditTask(task: TaskInterface): void {
-    console.log('Edit task:', task);
     this.showModal = false;
   }
 
@@ -254,7 +250,6 @@ export class KanbanComponent extends PantheonBaseComponent {
 
     try {
       await this.restService.delete(`deleteTasks/${this.selectedTask._id}`);
-      console.log('Tarea eliminada');
       
       this.dataColumns.forEach(column => {
         column.items = column.items.filter(task => task._id !== this.selectedTask?._id);

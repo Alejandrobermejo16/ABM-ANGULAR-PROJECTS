@@ -67,6 +67,18 @@
         </mat-form-field>
       </div>
 
+      <!-- priority -->
+      <div class="section">
+        <h3 class="section-title">Priority</h3>
+        <p class="description-text" *ngIf="!isEditMode">{{ task.priority }}</p>
+        <mat-form-field appearance="outline" class="edit-field" *ngIf="isEditMode">
+          <mat-label>Priority</mat-label>
+          <mat-select [(ngModel)]="editedPriority" rows="4" placeholder="Priority of the task">
+            <mat-option class="status-text" *ngFor="let priority of prioritys" [value]="priority.value">{{ priority.label }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <!-- Assigned User -->
       <div class="section">
         <h3 class="section-title">Created to</h3>

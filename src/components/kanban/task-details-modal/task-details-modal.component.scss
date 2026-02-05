@@ -469,3 +469,15 @@
     transform: scale(0.95);
   }
 }
+
+.mat-mdc-select-value {
+  color: white !important;
+}
+
+.mat-mdc-select-value-text {
+  color: white !important;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: white !important;
+}
