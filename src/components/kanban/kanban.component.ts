@@ -1,7 +1,7 @@
 import { Component, PLATFORM_ID, Inject, ViewEncapsulation } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -16,8 +16,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule, MatCheckboxChange} from '@angular/material/checkbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-declare const google: any;
 
 const STATUS_MAP: Record<string, string> = {
   'ready to start': 'Ready To Start',
@@ -50,7 +50,9 @@ const STATUS_MAP: Record<string, string> = {
     MatButtonModule,
     MatTooltipModule,
     MatCheckboxModule,
-    LoaderComponent
+    LoaderComponent,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ]
 })
 export class KanbanComponent extends PantheonBaseComponent {
@@ -75,6 +77,7 @@ export class KanbanComponent extends PantheonBaseComponent {
   public isLoading: boolean = false;
   public isMultiSelectMode: boolean = false;
   public selectedTaskIds: Set<string> = new Set();
+  public showDelete: boolean = false;
 
   public fieldActions: Action[] = [
     { label: 'Añadir tarea', icon: '➕', type: 'primary', callback: () => this.openCreateModal() },
@@ -87,6 +90,8 @@ export class KanbanComponent extends PantheonBaseComponent {
     { label: 'Alta', value: 'alta' }
   ];
   public taskPriority: string = 'baja';
+  public labelOptions = [""];
+  public editedLabel: string = '';
 
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
@@ -110,6 +115,20 @@ export class KanbanComponent extends PantheonBaseComponent {
     if (!this.isBrowser || typeof sessionStorage === 'undefined') return;
     const email = sessionStorage.getItem('userEmail');
     if (email) this.userEmail = email;
+    this.loadCombos();
+  }
+
+  private async loadCombos() {
+    try {
+      const response: any = await this.restService.get('getLabels');
+      if (response?.labels && Array.isArray(response.labels)) {
+        this.labelOptions = response.labels;
+      } else {
+        this.labelOptions = [""];
+      }
+    } catch (err) {
+      this.labelOptions = [""];
+    }
   }
 
   public onLoginSuccess(userData: any) {
@@ -178,6 +197,17 @@ export class KanbanComponent extends PantheonBaseComponent {
       return;
     }
 
+    if(this.editedLabel !== ''){
+     try {
+      const newLabel = this.editedLabel.trim();
+      await this.restService.post('createLabel', { label: newLabel });
+      this.labelOptions.push(newLabel);
+      this.editedLabel = '';
+     } catch (error) {
+      console.error('Error creando etiqueta:', error);
+     }
+    }
+
     try {
       const apiResponse = await this.restService.post<CreateTaskResponse>('createTasks', {
         title: this.taskTitle,
@@ -230,6 +260,25 @@ export class KanbanComponent extends PantheonBaseComponent {
     this.selectedTask = item;
   }
 
+  public deleteSelectedTasks(): void {
+    if (this.selectedTaskIds.size === 0) return;
+
+    this.selectedTask = null;
+    this.showModalDelete = true;
+  }
+
+  public getSelectedTasksTitles(): string[] {
+    const titles: string[] = [];
+    this.dataColumns.forEach(column => {
+      column.items.forEach(task => {
+        if (task._id && this.selectedTaskIds.has(task._id)) {
+          titles.push(task.title);
+        }
+      });
+    });
+    return titles;
+  }
+
   onEditTask(task: TaskInterface): void {
     this.showModal = false;
   }
@@ -246,19 +295,31 @@ export class KanbanComponent extends PantheonBaseComponent {
   }
 
   handleDeleteTask = async () => {
-    if (!this.selectedTask?._id) return;
-
     try {
-      await this.restService.delete(`deleteTasks/${this.selectedTask._id}`);
-      
-      this.dataColumns.forEach(column => {
-        column.items = column.items.filter(task => task._id !== this.selectedTask?._id);
-      });
+      if (this.selectedTask?._id) {
+        // Eliminar una sola tarea
+        await this.restService.delete(`deleteTasks/${this.selectedTask._id}`);
+        
+        this.dataColumns.forEach(column => {
+          column.items = column.items.filter(task => task._id !== this.selectedTask?._id);
+        });
+      } else if (this.selectedTaskIds.size > 0) {
+        const taskIdsArray = Array.from(this.selectedTaskIds);
+        await this.restService.post('deleteTasks', { taskIds: taskIdsArray });
+        
+        this.dataColumns.forEach(column => {
+          column.items = column.items.filter(task => !task._id || !this.selectedTaskIds.has(task._id));
+        });
+        
+        this.selectedTaskIds.clear();
+        this.isMultiSelectMode = false;
+        this.showDelete = false;
+      }
       
       this.showModalDelete = false;
       this.selectedTask = null;
     } catch (err) {
-      console.error('Error eliminando tarea:', err);
+      console.error('Error eliminando tarea(s):', err);
       this.showModalDelete = false;
     }
   }
@@ -322,6 +383,7 @@ export class KanbanComponent extends PantheonBaseComponent {
     this.isMultiSelectMode = !this.isMultiSelectMode;
     if (!this.isMultiSelectMode) {
       this.selectedTaskIds.clear();
+      this.showDelete = false;
     }
     this.isMenuOpen = false;
   }
@@ -332,10 +394,18 @@ export class KanbanComponent extends PantheonBaseComponent {
     } else {
       this.selectedTaskIds.delete(taskId);
     }
+    this.showDelete = this.selectedTaskIds.size > 0;
   }
 
   isTaskSelected(taskId: string): boolean {
     return this.selectedTaskIds.has(taskId);
+  }
+
+  public changeLabelField(): void {
+    this.labelOptions = [""];
+    let array = this.labelOptions.filter(option => option.toLowerCase().startsWith(`${this.editedLabel.toLowerCase()}`));
+    array = array.length === 0 ? ['No existen resultados'] : array;
+    this.labelOptions = array.length > 0 ? array : this.labelOptions;
   }
 }
 

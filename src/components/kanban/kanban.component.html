@@ -6,6 +6,12 @@
     (extraMenuClick)="isMenuOpen = !isMenuOpen">
   </pantehon-grid-panel-header>
 
+  <div class="div-delete-button" *ngIf="showDelete">
+    <button mat-fab color="primary" class="delete-button" (click)="deleteSelectedTasks()">
+      <mat-icon>delete</mat-icon>eliminar
+    </button>
+  </div>
+
   <pantehon-grid-panel [dataColumns]="dataColumns" [gridTemplateColumns]="'repeat(dataColumns.length, 1fr)'"
     [itemTemplate]="cardTpl" (taskMoved)="onTaskMoved($event)">
   </pantehon-grid-panel>
@@ -42,17 +48,32 @@
     [size]="'md'" [titleBtnNext]="'Crear'" [onAction]="handleCreateTask">
     <div title>Crear Nueva Tarea</div>
     <div body>
+      <!-- Field Título -->
       <mat-form-field appearance="fill" class="pantheon-math-field">
         <mat-label>Título</mat-label>
         <input [required]="true" [(ngModel)]="taskTitle" matInput placeholder="Introduce el título de la tarea">
         <mat-icon (click)="clearInput('taskTitle')" matSuffix>clear</mat-icon>
       </mat-form-field>
       <br>
+      <!-- Field Descripción -->
       <mat-form-field appearance="fill" class="pantheon-math-field">
         <mat-label>Descripción</mat-label>
         <input [required]="true" [(ngModel)]="taskDescription" matInput placeholder="Introduce la descripción de la tarea">
         <mat-icon (click)="clearInput('taskDescription')" matSuffix>clear</mat-icon>
       </mat-form-field>
+
+      <!-- Field Etiqueta con Busqueda en vivo  -->
+      <mat-form-field appearance="fill" class="pantheon-math-field">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of labelOptions" [value]="option">{{ option }}</mat-option>
+          </mat-autocomplete>
+          <mat-form-field appearance="outline" class="edit-field">
+            <mat-label>Etiqueta</mat-label>
+            <input matInput (input)="changeLabelField()" [(ngModel)]="editedLabel" placeholder="Etiqueta de la tarea" [matAutocomplete]="auto">
+          </mat-form-field>
+      </mat-form-field>
+
+      <!-- Field Prioridad -->
       <mat-form-field appearance="fill" class="pantheon-math-field">
         <mat-label>Prioridad</mat-label>
         <mat-select [(ngModel)]="taskPriority">
@@ -67,10 +88,20 @@
   <pantehon-window id="delete-modal" [(show)]="showModalDelete" [titleBtnClose]="'Cancelar'" [variant]="'danger'"
     [size]="'md'" [titleBtnNext]="'Eliminar'" [onAction]="handleDeleteTask">
     <div title>¿Estás seguro?</div>
+    <!--for single deleted task-->
     <div body *ngIf="selectedTask">
       <p class="delete-warning-text">Estás a punto de eliminar la siguiente tarea:</p>
       <p class="delete-task-title"><strong>{{ selectedTask.title }}</strong></p>
       <p class="delete-task-description">{{ selectedTask.description }}</p>
+    </div>
+    <!--for mutiple deleted tasks-->
+    <div body *ngIf="!selectedTask && selectedTaskIds.size > 0">
+      <p class="delete-warning-text">Estás a punto de eliminar {{ selectedTaskIds.size }} tarea(s):</p>
+      <ul class="delete-tasks-list">
+        <li *ngFor="let title of getSelectedTasksTitles()" class="delete-task-title">
+          <strong>{{ title }}</strong>
+        </li>
+      </ul>
     </div>
   </pantehon-window>
 

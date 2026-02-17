@@ -1,1 +1,54 @@
-<div id="googleSignInButton"></div>
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo-container">
+        <mat-icon class="logo-icon">task_alt</mat-icon>
+      </div>
+      <h1 class="welcome-title">Bienvenido</h1>
+      <p class="welcome-subtitle">Inicia sesión para gestionar tus tareas</p>
+    </div>
+
+    <div class="login-body">
+      <div class="features-list">
+        <div class="feature-item">
+          <mat-icon class="feature-icon">check_circle</mat-icon>
+          <span>Organiza tus proyectos</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon class="feature-icon">group</mat-icon>
+          <span>Colabora con tu equipo</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon class="feature-icon">insights</mat-icon>
+          <span>Seguimiento en tiempo real</span>
+        </div>
+      </div>
+
+      <div class="divider">
+        <span class="divider-text">Continuar con</span>
+      </div>
+
+      <div id="googleSignInButton" class="google-button-wrapper"></div>
+
+      <p class="terms-text">
+        Al continuar, aceptas nuestros
+        <a href="#" class="terms-link" (click)="openTerms($event)">Términos de Servicio</a> y
+        <a href="#" class="terms-link" (click)="openPrivacy($event)">Política de Privacidad</a>
+      </p>
+    </div>
+
+    <div class="login-footer">
+      <div class="particles"></div>
+    </div>
+  </div>
+
+  <div class="background-animation">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+  </div>
+
+  <!-- Modales -->
+  <app-terms-modal [(show)]="showTermsModal" [type]="'terms'"></app-terms-modal>
+  <app-terms-modal [(show)]="showPrivacyModal" [type]="'privacy'"></app-terms-modal>
+</div>

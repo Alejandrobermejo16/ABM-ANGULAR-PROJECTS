@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PantheonRestService } from 'pantheon-libraries/core';
 import { TaskInterface } from './interface';
 import { MatSelectModule } from '@angular/material/select';
@@ -12,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
     selector: 'app-task-details-modal',
     standalone: true,
-    imports: [CommonModule, MatIconModule, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule],
+    imports: [CommonModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatAutocompleteModule],
     templateUrl: './task-details-modal.component.html',
     styleUrls: ['./task-details-modal.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -28,6 +29,8 @@ export class TaskDetailsModalComponent {
         { label: 'Media', value: 'media' },
         { label: 'Alta', value: 'alta' }
     ];
+    protected filteredUsers: string[] = [''];
+    protected userControl = new FormControl('');
     @Input() 
     set task(value: TaskInterface | null) {
         this._task = value;
@@ -47,8 +50,6 @@ export class TaskDetailsModalComponent {
     @Output() showChange = new EventEmitter<boolean>();
     @Output() editTask = new EventEmitter<TaskInterface>();
     asignedPerson: string | null = null;
-
-
     constructor(
         private restService: PantheonRestService
     ) {

@@ -178,6 +178,24 @@ pantehon-grid-panel-header .header-container .menus {
   border-left: 3px solid #ef4444;
 }
 
+
+.div-delete-button{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+button.delete-button.mdc-fab.mat-mdc-fab-base.mat-mdc-fab.mat-primary.mat-mdc-button-base {
+    width: 100px;
+    margin: 16px;
+}
+.delete-button {
+  background-color: #ef4444 !important;
+  color: white !important;
+  
+  &:hover {
+    background-color: #dc2626 !important;
+  }
+}
 .p-modal{
     color: #f59e0b;
   }

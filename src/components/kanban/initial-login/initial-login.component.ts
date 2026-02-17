@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { TermsModalComponent } from '../terms-modal/terms-modal.component';
 
 
 export interface UserData {
@@ -18,11 +19,13 @@ declare const google: any;
   templateUrl: './initial-login.component.html',
   styleUrls: ['./initial-login.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule]
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, TermsModalComponent]
 })
 export class InitialLoginComponent implements OnInit {
   public userEmail = '';
   private isBrowser = false;
+  public showTermsModal = false;
+  public showPrivacyModal = false;
   
   @Output() loginSuccess = new EventEmitter<UserData>();
 
@@ -68,6 +71,16 @@ export class InitialLoginComponent implements OnInit {
     if (!this.isBrowser || typeof sessionStorage === 'undefined') return;
     const email = sessionStorage.getItem('userEmail');
     if (email) this.userEmail = email;
+  }
+
+  openTerms(event: Event) {
+    event.preventDefault();
+    this.showTermsModal = true;
+  }
+
+  openPrivacy(event: Event) {
+    event.preventDefault();
+    this.showPrivacyModal = true;
   }
 
 }

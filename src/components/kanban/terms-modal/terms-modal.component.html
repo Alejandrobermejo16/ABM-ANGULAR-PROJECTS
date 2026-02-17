@@ -1,0 +1,180 @@
+<div *ngIf="show" class="modal-overlay" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ type === 'terms' ? 'Términos de Servicio' : 'Política de Privacidad' }}</h2>
+      <button class="close-button" (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <!-- Términos de Servicio -->
+      <div *ngIf="type === 'terms'" class="content">
+        <p class="last-update">Última actualización: 17 de febrero de 2026</p>
+        
+        <h3>1. Aceptación de los Términos</h3>
+        <p>Al acceder y utilizar esta aplicación de gestión de tareas, aceptas estar sujeto a estos términos de servicio. Si no estás de acuerdo con alguno de estos términos, por favor no utilices nuestro servicio.</p>
+        
+        <h3>2. Descripción del Servicio</h3>
+        <p>Nuestra plataforma proporciona herramientas para la gestión y organización de tareas personales y colaborativas. El servicio incluye:</p>
+        <ul>
+          <li>Creación y gestión de tareas con diferentes estados</li>
+          <li>Asignación de prioridades y etiquetas</li>
+          <li>Colaboración en equipo</li>
+          <li>Seguimiento en tiempo real del progreso</li>
+          <li>Políticas de borrado automático configurables</li>
+        </ul>
+        
+        <h3>3. Cuenta de Usuario</h3>
+        <p>Para utilizar nuestro servicio, debes:</p>
+        <ul>
+          <li>Iniciar sesión mediante Google Authentication</li>
+          <li>Proporcionar información precisa y actualizada</li>
+          <li>Mantener la seguridad de tu cuenta</li>
+          <li>Notificarnos inmediatamente de cualquier uso no autorizado</li>
+        </ul>
+        
+        <h3>4. Uso Aceptable</h3>
+        <p>Te comprometes a no utilizar el servicio para:</p>
+        <ul>
+          <li>Actividades ilegales o fraudulentas</li>
+          <li>Distribuir malware o contenido dañino</li>
+          <li>Intentar acceder a sistemas o datos sin autorización</li>
+          <li>Interferir con el funcionamiento normal del servicio</li>
+          <li>Violar los derechos de propiedad intelectual</li>
+        </ul>
+        
+        <h3>5. Contenido del Usuario</h3>
+        <p>Mantienes todos los derechos sobre el contenido que creas en la plataforma. Al usar nuestro servicio, nos otorgas una licencia limitada para almacenar, procesar y mostrar tu contenido exclusivamente para proporcionar el servicio.</p>
+        
+        <h3>6. Disponibilidad del Servicio</h3>
+        <p>Nos esforzamos por mantener el servicio disponible 24/7, pero no garantizamos:</p>
+        <ul>
+          <li>Acceso ininterrumpido</li>
+          <li>Funcionamiento libre de errores</li>
+          <li>Ausencia de mantenimientos programados</li>
+        </ul>
+        
+        <h3>7. Modificaciones del Servicio</h3>
+        <p>Nos reservamos el derecho de modificar, suspender o discontinuar el servicio en cualquier momento, con o sin previo aviso.</p>
+        
+        <h3>8. Limitación de Responsabilidad</h3>
+        <p>El servicio se proporciona "tal cual" sin garantías de ningún tipo. No seremos responsables por pérdidas de datos, interrupciones del servicio o daños indirectos.</p>
+        
+        <h3>9. Terminación</h3>
+        <p>Podemos suspender o terminar tu acceso al servicio si:</p>
+        <ul>
+          <li>Violas estos términos</li>
+          <li>Participas en actividades fraudulentas</li>
+          <li>Lo solicitamos por requisitos legales</li>
+        </ul>
+        
+        <h3>10. Cambios en los Términos</h3>
+        <p>Podemos actualizar estos términos ocasionalmente. Te notificaremos sobre cambios significativos y tu uso continuado constituye aceptación de los nuevos términos.</p>
+        
+        <h3>11. Contacto</h3>
+        <p>Para preguntas sobre estos términos, contacta con nosotros a través de nuestros canales oficiales de soporte.</p>
+      </div>
+      
+      <!-- Política de Privacidad -->
+      <div *ngIf="type === 'privacy'" class="content">
+        <p class="last-update">Última actualización: 17 de febrero de 2026</p>
+        
+        <h3>1. Información que Recopilamos</h3>
+        <p>Recopilamos la siguiente información cuando utilizas nuestro servicio:</p>
+        <ul>
+          <li><strong>Información de Cuenta:</strong> Email, nombre y foto de perfil proporcionados por Google Authentication</li>
+          <li><strong>Contenido del Usuario:</strong> Tareas, descripciones, etiquetas, prioridades y estados que crees</li>
+          <li><strong>Datos de Uso:</strong> Información sobre cómo utilizas la aplicación, incluyendo acciones realizadas y tiempo de uso</li>
+          <li><strong>Información Técnica:</strong> Dirección IP, tipo de navegador, dispositivo y datos de sesión</li>
+        </ul>
+        
+        <h3>2. Cómo Utilizamos tu Información</h3>
+        <p>Utilizamos la información recopilada para:</p>
+        <ul>
+          <li>Proporcionar y mantener el servicio</li>
+          <li>Personalizar tu experiencia de usuario</li>
+          <li>Mejorar la funcionalidad de la aplicación</li>
+          <li>Comunicarnos contigo sobre actualizaciones y cambios</li>
+          <li>Detectar y prevenir fraude o uso inadecuado</li>
+          <li>Cumplir con obligaciones legales</li>
+        </ul>
+        
+        <h3>3. Almacenamiento de Datos</h3>
+        <p>Tus datos se almacenan de forma segura utilizando:</p>
+        <ul>
+          <li>Bases de datos MongoDB con encriptación</li>
+          <li>Servidores seguros con protección contra accesos no autorizados</li>
+          <li>Copias de seguridad regulares para prevenir pérdida de datos</li>
+        </ul>
+        
+        <h3>4. Compartir Información</h3>
+        <p>No vendemos tu información personal. Solo compartimos datos con:</p>
+        <ul>
+          <li><strong>Proveedores de Servicios:</strong> Google (autenticación), Vercel (hosting)</li>
+          <li><strong>Colaboradores:</strong> Usuarios con quienes compartes tareas explícitamente</li>
+          <li><strong>Autoridades Legales:</strong> Cuando sea requerido por ley</li>
+        </ul>
+        
+        <h3>5. Seguridad de los Datos</h3>
+        <p>Implementamos medidas de seguridad como:</p>
+        <ul>
+          <li>Transmisión de datos mediante HTTPS/SSL</li>
+          <li>Autenticación segura mediante Google OAuth 2.0</li>
+          <li>Control de acceso basado en roles</li>
+          <li>Monitoreo continuo de seguridad</li>
+        </ul>
+        
+        <h3>6. Retención de Datos</h3>
+        <p>Conservamos tu información mientras:</p>
+        <ul>
+          <li>Mantengas una cuenta activa</li>
+          <li>Sea necesario para proporcionar el servicio</li>
+          <li>Cumplamos con obligaciones legales</li>
+        </ul>
+        <p>Las tareas pueden eliminarse automáticamente según las políticas configuradas.</p>
+        
+        <h3>7. Tus Derechos</h3>
+        <p>Tienes derecho a:</p>
+        <ul>
+          <li><strong>Acceder:</strong> Ver qué datos tenemos sobre ti</li>
+          <li><strong>Rectificar:</strong> Corregir datos inexactos</li>
+          <li><strong>Eliminar:</strong> Solicitar la eliminación de tu cuenta y datos</li>
+          <li><strong>Exportar:</strong> Obtener una copia de tus datos</li>
+          <li><strong>Oponerte:</strong> Rechazar ciertos usos de tus datos</li>
+        </ul>
+        
+        <h3>8. Cookies y Tecnologías Similares</h3>
+        <p>Utilizamos cookies y almacenamiento local para:</p>
+        <ul>
+          <li>Mantener tu sesión iniciada</li>
+          <li>Recordar preferencias</li>
+          <li>Analizar el uso de la aplicación</li>
+        </ul>
+        
+        <h3>9. Privacidad de Menores</h3>
+        <p>Nuestro servicio no está dirigido a menores de 13 años. No recopilamos intencionalmente información de menores.</p>
+        
+        <h3>10. Transferencias Internacionales</h3>
+        <p>Tus datos pueden procesarse en servidores ubicados en diferentes países. Aseguramos niveles adecuados de protección según las leyes aplicables.</p>
+        
+        <h3>11. Cambios en esta Política</h3>
+        <p>Te notificaremos sobre cambios significativos en esta política mediante email o notificación en la aplicación.</p>
+        
+        <h3>12. Contacto y Solicitudes</h3>
+        <p>Para ejercer tus derechos o hacer preguntas sobre privacidad, contáctanos a través de:</p>
+        <ul>
+          <li>Email: alejandrobermejomendez170712&#64;gmail.com</li>
+          <li>Formulario de contacto en la aplicación</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="accept-button" (click)="close()">
+        <mat-icon>check</mat-icon>
+        Entendido
+      </button>
+    </div>
+  </div>
+</div>
