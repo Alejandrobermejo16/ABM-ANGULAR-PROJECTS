@@ -90,7 +90,8 @@ export class KanbanComponent extends PantheonBaseComponent {
     { label: 'Alta', value: 'alta' }
   ];
   public taskPriority: string = 'baja';
-  public labelOptions = [""];
+  public labelOptions: string[] = [];
+  public allLabelOptions: string[] = [];
   public editedLabel: string = '';
 
   constructor(
@@ -122,12 +123,15 @@ export class KanbanComponent extends PantheonBaseComponent {
     try {
       const response: any = await this.restService.get('getLabels');
       if (response?.labels && Array.isArray(response.labels)) {
-        this.labelOptions = response.labels;
+        this.allLabelOptions = response.labels;
+        this.labelOptions = [...response.labels];
       } else {
-        this.labelOptions = [""];
+        this.allLabelOptions = [];
+        this.labelOptions = [];
       }
     } catch (err) {
-      this.labelOptions = [""];
+      this.allLabelOptions = [];
+      this.labelOptions = [];
     }
   }
 
@@ -402,10 +406,44 @@ export class KanbanComponent extends PantheonBaseComponent {
   }
 
   public changeLabelField(): void {
-    this.labelOptions = [""];
-    let array = this.labelOptions.filter(option => option.toLowerCase().startsWith(`${this.editedLabel.toLowerCase()}`));
-    array = array.length === 0 ? ['No existen resultados'] : array;
-    this.labelOptions = array.length > 0 ? array : this.labelOptions;
+    const query = (this.editedLabel || '').trim();
+    
+    if (!query) {
+      this.labelOptions = [...this.allLabelOptions];
+      return;
+    }
+
+    const filtered = this.allLabelOptions.filter(option =>
+      option.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (filtered.length === 0) {
+      this.labelOptions = [`Crear "${query}"`];
+    } else {
+      this.labelOptions = filtered;
+    }
+  }
+
+  public async onLabelSelected(value: string): Promise<void> {
+    if (value.startsWith('Crear "')) {
+      const newLabel = value.replace(/^Crear "/, '').replace(/"$/, '');
+      
+      try {
+        const response: any = await this.restService.post('createLabel', { label: newLabel });
+        
+        if (response?.label) {
+          this.allLabelOptions.push(newLabel);
+          this.labelOptions = [...this.allLabelOptions];
+          this.editedLabel = newLabel;
+        }
+      } catch (error) {
+        console.error('❌ Error creando etiqueta:', error);
+        this.allLabelOptions.push(newLabel);
+        this.editedLabel = newLabel;
+      }
+    } else {
+      this.editedLabel = value;
+    }
   }
 }
 

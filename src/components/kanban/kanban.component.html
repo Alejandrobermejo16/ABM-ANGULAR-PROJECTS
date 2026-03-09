@@ -64,13 +64,17 @@
 
       <!-- Field Etiqueta con Busqueda en vivo  -->
       <mat-form-field appearance="fill" class="pantheon-math-field">
-        <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of labelOptions" [value]="option">{{ option }}</mat-option>
-          </mat-autocomplete>
-          <mat-form-field appearance="outline" class="edit-field">
-            <mat-label>Etiqueta</mat-label>
-            <input matInput (input)="changeLabelField()" [(ngModel)]="editedLabel" placeholder="Etiqueta de la tarea" [matAutocomplete]="auto">
-          </mat-form-field>
+        <mat-label>Grupo</mat-label>
+        <input matInput (input)="changeLabelField()" [(ngModel)]="editedLabel" placeholder="Etiqueta de la tarea"
+          [matAutocomplete]="auto">
+        <mat-icon matSuffix>label</mat-icon>
+
+        <mat-autocomplete #auto="matAutocomplete" [autoActiveFirstOption]="true" (optionSelected)="onLabelSelected($event.option.value)">
+          <mat-option *ngFor="let option of labelOptions" [value]="option">
+            <mat-icon *ngIf="option.startsWith('Crear')" class="create-label-icon">add_circle</mat-icon>
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
 
       <!-- Field Prioridad -->

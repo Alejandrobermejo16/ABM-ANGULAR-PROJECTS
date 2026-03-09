@@ -226,3 +226,21 @@ button.delete-button.mdc-fab.mat-mdc-fab-base.mat-mdc-fab.mat-primary.mat-mdc-bu
     }
   }
 }
+
+.create-label-icon {
+  color: #10b981 !important;
+  margin-right: 8px;
+  vertical-align: middle;
+  font-size: 20px !important;
+}
+
+::ng-deep .mat-mdc-autocomplete-panel {
+  .mat-mdc-option:has(.create-label-icon) {
+    background: rgba(16, 185, 129, 0.1) !important;
+    font-weight: 500;
+    
+    &:hover {
+      background: rgba(16, 185, 129, 0.2) !important;
+    }
+  }
+}
