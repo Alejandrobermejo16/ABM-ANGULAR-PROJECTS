@@ -11,6 +11,51 @@
       <mat-icon>delete</mat-icon>eliminar
     </button>
   </div>
+ <!-- filtros -->
+  <div class="groupFilters">
+    <p class="filter-label">Suscribirse a:</p>
+    
+    <div class="subscription-section">
+      <mat-form-field appearance="outline" class="group-field">
+        <mat-label>Buscar grupo</mat-label>
+        <input matInput 
+               (input)="changeGroupField()" 
+               [(ngModel)]="editedGroup" 
+               placeholder="Ej: Helena, Zeus..."
+               [matAutocomplete]="autoGroups">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-autocomplete #autoGroups="matAutocomplete" 
+                        [autoActiveFirstOption]="true" 
+                        (optionSelected)="onGroupSelected($event.option.value)">
+        <mat-option *ngFor="let option of groupOptions" [value]="option">
+          <mat-icon class="option-icon">group</mat-icon>
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+
+      <button mat-raised-button color="primary" 
+              class="add-group-btn" 
+              (click)="suscribeToGroups(editedGroup)"
+              [disabled]="!editedGroup">
+        <mat-icon>add</mat-icon>
+        Suscribirse
+      </button>
+    </div>
+
+    <div class="subscribed-groups">
+      <div *ngFor="let group of userGroups" class="group-badge">
+        <mat-icon class="badge-icon">label</mat-icon>
+        <span>{{ group }}</span>
+        <mat-icon class="remove-icon" 
+                  (click)="unsuscribeFromGroup(group)"
+                  matTooltip="Desuscribirse">
+          close
+        </mat-icon>
+      </div>
+    </div>
+  </div>
 
   <pantehon-grid-panel [dataColumns]="dataColumns" [gridTemplateColumns]="'repeat(dataColumns.length, 1fr)'"
     [itemTemplate]="cardTpl" (taskMoved)="onTaskMoved($event)">

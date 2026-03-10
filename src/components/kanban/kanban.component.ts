@@ -78,6 +78,8 @@ export class KanbanComponent extends PantheonBaseComponent {
   public isMultiSelectMode: boolean = false;
   public selectedTaskIds: Set<string> = new Set();
   public showDelete: boolean = false;
+  public userGroups = [];
+  public selectedLabel: string = '';
 
   public fieldActions: Action[] = [
     { label: 'Añadir tarea', icon: '➕', type: 'primary', callback: () => this.openCreateModal() },
@@ -93,6 +95,8 @@ export class KanbanComponent extends PantheonBaseComponent {
   public labelOptions: string[] = [];
   public allLabelOptions: string[] = [];
   public editedLabel: string = '';
+  public editedGroup: string = '';
+  public groupOptions: string[] = [];
 
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
@@ -103,12 +107,84 @@ export class KanbanComponent extends PantheonBaseComponent {
     this.dataColumns = this.columns.map(name => ({ name, items: [] }));
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.loadUserFromSession();
     if (this.userEmail) {
       this.isLoggedIn = true;
       this.isLoading = true;
+      await this.loadUserGroups();
       super.ngOnInit();
+    }
+  }
+
+  private async loadUserGroups() {
+    try {
+      const response: any = await this.restService.get('getUserGroups', { userEmail: this.userEmail });
+      this.userGroups = response.groups || [];
+      return this.userGroups;
+    } catch (err) {
+      console.error('Error cargando grupos de usuario:', err);
+      this.userGroups = [];
+      return this.userGroups;
+    }
+  }
+
+  public async changeGroupField(): Promise<void> {
+    const query = (this.editedGroup || '').trim();
+
+    if (!query) {
+      this.groupOptions = [];
+      return;
+    }
+
+    try {
+      const response: any = await this.restService.get(`searchGroups?query=${query}`);
+
+      if (response?.groups && Array.isArray(response.groups)) {
+        this.groupOptions = response.groups;
+      } else {
+        this.groupOptions = [];
+      }
+    } catch (err) {
+      this.groupOptions = [];
+    }
+  }
+
+  public onGroupSelected(value: string): void {
+    this.editedGroup = value;
+  }
+
+  public async unsuscribeFromGroup(group: string) {
+    try {
+      await this.restService.post('unsubscribeFromGroup', {
+        userEmail: this.userEmail,
+        group: group
+      });
+
+      this.userGroups = this.userGroups.filter(g => g !== group);
+      const groupsJson = encodeURIComponent(JSON.stringify(this.userGroups));
+      const response: any = await this.restService.get(`getTasks?userEmail=${this.userEmail}&groups=${groupsJson}`);
+      if (response?.tasks) {
+        this.dataAfterRequest(response);
+      }
+    } catch (err) {
+    }
+  }
+
+  public async suscribeToGroups(group: string) {
+    try {
+      await this.restService.post('subscribeToGroup', { userEmail: this.userEmail, group: group.trim() });
+      await this.loadUserGroups();
+
+      const groupsJson = encodeURIComponent(JSON.stringify(this.userGroups));
+      const response: any = await this.restService.get(`getTasks?userEmail=${this.userEmail}&groups=${groupsJson}`);
+      if (response?.tasks) {
+        this.dataAfterRequest(response);
+      }
+
+      this.editedGroup = '';
+      this.groupOptions = [];
+    } catch (err) {
     }
   }
 
@@ -141,11 +217,6 @@ export class KanbanComponent extends PantheonBaseComponent {
     this.isLoading = true;
     super.ngOnInit();
   }
-
-  protected getModule(): string { return 'getTasks'; }
-  protected getResource(): string { return ''; }
-  protected getRequestMethod(): string { return 'GET'; }
-  protected getDefaultBody(): any { return { userEmail: this.userEmail }; }
 
   protected dataAfterRequest(data: any): void {
     if (data?.tasks) {
@@ -201,22 +272,12 @@ export class KanbanComponent extends PantheonBaseComponent {
       return;
     }
 
-    if(this.editedLabel !== ''){
-     try {
-      const newLabel = this.editedLabel.trim();
-      await this.restService.post('createLabel', { label: newLabel });
-      this.labelOptions.push(newLabel);
-      this.editedLabel = '';
-     } catch (error) {
-      console.error('Error creando etiqueta:', error);
-     }
-    }
-
     try {
       const apiResponse = await this.restService.post<CreateTaskResponse>('createTasks', {
         title: this.taskTitle,
         description: this.taskDescription,
         userEmail: this.userEmail,
+        taskGroups: this.editedLabel ? [this.editedLabel] : [],
         status: 'Ready To Start',
         priority: this.taskPriority
       });
@@ -301,7 +362,6 @@ export class KanbanComponent extends PantheonBaseComponent {
   handleDeleteTask = async () => {
     try {
       if (this.selectedTask?._id) {
-        // Eliminar una sola tarea
         await this.restService.delete(`deleteTasks/${this.selectedTask._id}`);
         
         this.dataColumns.forEach(column => {
@@ -430,6 +490,7 @@ export class KanbanComponent extends PantheonBaseComponent {
       
       try {
         const response: any = await this.restService.post('createLabel', { label: newLabel });
+        this.selectedLabel = newLabel
         
         if (response?.label) {
           this.allLabelOptions.push(newLabel);
@@ -437,13 +498,22 @@ export class KanbanComponent extends PantheonBaseComponent {
           this.editedLabel = newLabel;
         }
       } catch (error) {
-        console.error('❌ Error creando etiqueta:', error);
         this.allLabelOptions.push(newLabel);
         this.editedLabel = newLabel;
       }
     } else {
       this.editedLabel = value;
     }
+  }
+
+  protected getModule(): string { return 'getTasks'; }
+  protected getResource(): string { return ''; }
+  protected getRequestMethod(): string { return 'GET'; }
+  protected getDefaultBody(): any { 
+    return { 
+      userEmail: this.userEmail,
+      groups: encodeURIComponent(JSON.stringify(this.userGroups))
+    }; 
   }
 }
 
