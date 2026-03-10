@@ -3,6 +3,59 @@
     margin-bottom: 16px;
 }
 
+.card-groups-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+  margin-left: 32px;
+
+  .card-group-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px 2px 4px;
+    border-radius: 12px;
+    line-height: 1.4;
+
+    .card-group-icon {
+      font-size: 12px;
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+.card-owner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  color: #92400e;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px 2px 4px;
+  border-radius: 12px;
+  margin-bottom: 4px;
+  margin-left: 32px;
+  max-width: calc(100% - 32px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  .card-owner-icon {
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+}
+
 .groupFilters {
   display: flex;
   flex-direction: column;
@@ -472,4 +525,8 @@ button.delete-button.mdc-fab.mat-mdc-fab-base.mat-mdc-fab.mat-primary.mat-mdc-bu
       background: rgba(16, 185, 129, 0.2) !important;
     }
   }
+}
+
+div#mat-autocomplete-0 {
+    max-height: 150px;
 }
