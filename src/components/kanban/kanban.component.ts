@@ -250,7 +250,9 @@ export class KanbanComponent extends PantheonBaseComponent {
         taskId: task._id,
         status: newStatus
       });
-      console.log('Tarea actualizada');
+      if (newStatus.toLowerCase() !== 'deployed') {
+        task.autoDeleteDate = undefined;
+      }
     } catch (err) {
       console.error('Error actualizando tarea:', err);
     }

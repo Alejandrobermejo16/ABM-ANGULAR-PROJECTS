@@ -75,7 +75,7 @@
                     (click)="$event.stopPropagation()">
       </mat-checkbox>
       <mat-icon class="delete-icon" (click)="deleteTask(item); $event.stopPropagation()">delete</mat-icon>
-      <span extra *ngIf="item.autoDeleteDate" 
+      <span extra *ngIf="item.autoDeleteDate && item.status === 'Deployed'" 
             class="delete-countdown-badge"
             [matTooltip]="'Auto-borrado en ' + getDaysRemaining(item.autoDeleteDate) + (getDaysRemaining(item.autoDeleteDate) === 1 ? ' día' : ' días')">
         {{ getDaysRemaining(item.autoDeleteDate) }}
