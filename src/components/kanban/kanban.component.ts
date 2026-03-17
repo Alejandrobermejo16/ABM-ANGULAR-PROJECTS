@@ -364,14 +364,15 @@ export class KanbanComponent extends PantheonBaseComponent {
   handleDeleteTask = async () => {
     try {
       if (this.selectedTask?._id) {
-        await this.restService.delete(`deleteTasks/${this.selectedTask._id}`);
+        const taskIdsArray = [this.selectedTask._id];
+        await this.restService.post('deleteTasks', { taskIds: taskIdsArray, userEmail: this.userEmail });
         
         this.dataColumns.forEach(column => {
           column.items = column.items.filter(task => task._id !== this.selectedTask?._id);
         });
       } else if (this.selectedTaskIds.size > 0) {
         const taskIdsArray = Array.from(this.selectedTaskIds);
-        await this.restService.post('deleteTasks', { taskIds: taskIdsArray });
+        await this.restService.post('deleteTasks', { taskIds: taskIdsArray, userEmail: this.userEmail });
         
         this.dataColumns.forEach(column => {
           column.items = column.items.filter(task => !task._id || !this.selectedTaskIds.has(task._id));
@@ -439,7 +440,7 @@ export class KanbanComponent extends PantheonBaseComponent {
     if (dueTaskIds.length === 0) return;
 
     try {
-      await this.restService.post('deleteTasks', { taskIds: dueTaskIds });
+      await this.restService.post('deleteTasks', { taskIds: dueTaskIds, userEmail: this.userEmail });
     } catch (err) {
       console.error('Error eliminando tareas vencidas:', err);
     }
