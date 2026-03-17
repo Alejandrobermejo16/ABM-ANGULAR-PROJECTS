@@ -135,7 +135,7 @@ app-task-details-modal {
   }
 
   .status-dot {width: 8px;height: 8px;border-radius: 9999px;}
-  .status-text {font-size: 0.875rem;font-weight: 600;line-height: normal;margin: 0;}
+  .status-text {font-size: 0.875rem;font-weight: 600;line-height: normal;margin: 0}
 
   .date-chip {
     display: flex;
@@ -425,7 +425,7 @@ app-task-details-modal {
   }
 
   .mat-mdc-select-value {color: white !important;}
-  .mat-mdc-select-value-text {color: white !important;}
+  .mat-mdc-select-value-text {color: rgb(61, 60, 60) !important;}
   .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {color: white !important;}
 
   .mat-mdc-form-field {
