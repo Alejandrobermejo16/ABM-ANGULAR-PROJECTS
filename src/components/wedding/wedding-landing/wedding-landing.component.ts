@@ -38,7 +38,7 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   private intervalId1: any;
   private intervalId2: any;
   private intervalId3: any;
-  private videoPlayed = false;
+  videoPlayed = false;
 
   ngOnInit() {
     // Solo ejecutar intervalos en el navegador, no en SSR
