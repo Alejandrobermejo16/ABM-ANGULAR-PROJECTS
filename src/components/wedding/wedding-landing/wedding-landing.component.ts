@@ -11,7 +11,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChecked {
   
   @ViewChild('videoPlayer', { static: false }) videoPlayer?: ElementRef<HTMLVideoElement>;
-  private videoInitialized = false;
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
   
@@ -61,10 +60,9 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
     this.intervalId2 = setInterval(() => {
       const nextIndex = (this.currentIndex2 + 1) % this.galeria2.length;
       
-      // Si el siguiente item es un video, detener el intervalo y resetear flag
+      // Si el siguiente item es un video, detener el intervalo
       if (this.galeria2[nextIndex].type === 'video') {
         clearInterval(this.intervalId2);
-        this.videoInitialized = false; // Resetear para permitir reproducción
       }
       
       this.currentIndex2 = nextIndex;
@@ -80,16 +78,20 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
     }
   }
   
-  ngAfterViewChecked() {
-    // Cuando el video aparece en el DOM, iniciarlo manualmente solo una vez
-    if (this.videoPlayer && !this.videoInitialized && isPlatformBrowser(this.platformId)) {
-      const video = this.videoPlayer.nativeElement;
-      if (video.readyState >= 2) {
-        this.videoInitialized = true;
-        video.currentTime = 4; // Empezar en el segundo 4
+  onVideoLoaded(event: Event) {
+    // Cuando el video esté cargado, configurar tiempo inicial y reproducir
+    if (isPlatformBrowser(this.platformId)) {
+      const video = event.target as HTMLVideoElement;
+      // Pequeño timeout para asegurar que el video esté completamente listo
+      setTimeout(() => {
+        video.currentTime = 4;
         video.play().catch(err => console.log('Error playing video:', err));
-      }
+      }, 100);
     }
+  }
+  
+  ngAfterViewChecked() {
+    // Ya no necesitamos lógica aquí, se maneja con el evento (loadeddata)
   }
 
   ngOnDestroy() {
