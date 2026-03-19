@@ -21,7 +21,9 @@
     padding: 0 20px;
 }
 
+
 /* Secciones con mucho contenido pueden crecer */
+
 .hero-section:has(app-wedding-landing) {
     height: auto;
     min-height: 100vh;
