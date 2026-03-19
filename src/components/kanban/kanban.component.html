@@ -205,3 +205,5 @@
   </pantheon-side-action-panel>
   <pantheon-loader [show]="isLoading" [text]="'Cargando...'"></pantheon-loader>
 </div>
+
+<app-recover-detail [(show)]="showRecovery" [userEmail]="userEmail" (tasksRecovered)="onTasksRecovered()"></app-recover-detail>

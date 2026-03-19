@@ -1,0 +1,37 @@
+<div *ngIf="show" class="recover-overlay" (click)="close()">
+  <div class="recover-modal" (click)="$event.stopPropagation()">
+
+    <div class="recover-header">
+      <span>♻️ Papelera de tareas</span>
+      <mat-icon class="close-icon" (click)="close()">close</mat-icon>
+    </div>
+
+    <div *ngIf="isLoading" class="recover-loading">Cargando...</div>
+
+    <div *ngIf="!isLoading && deletedTasks.length === 0" class="recover-empty">
+      No hay tareas en la papelera.
+    </div>
+
+    <div *ngIf="!isLoading && deletedTasks.length > 0" class="recover-list">
+      <div *ngFor="let task of deletedTasks" class="recover-item">
+        <mat-checkbox
+          [checked]="isSelected(task._id!)"
+          (change)="toggleSelection(task._id!, $event)">
+        </mat-checkbox>
+        <div class="recover-item-info">
+          <span class="recover-item-title">{{ task.title }}</span>
+          <span class="recover-item-days">{{ getDaysRemaining(task.deletedAt!) }} días restantes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="recover-actions" *ngIf="!isLoading && deletedTasks.length > 0">
+      <button mat-raised-button color="primary"
+        [disabled]="selectedTaskIds.size === 0"
+        (click)="recoverSelected()">
+        Recuperar seleccionadas ({{ selectedTaskIds.size }})
+      </button>
+    </div>
+
+  </div>
+</div>

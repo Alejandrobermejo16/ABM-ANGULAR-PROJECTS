@@ -1,4 +1,4 @@
-import { Component, PLATFORM_ID, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, PLATFORM_ID, Inject, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule, MatCheckboxChange} from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { RecoverComponent } from './recover-detail/recover-detail.component';
 
 
 const STATUS_MAP: Record<string, string> = {
@@ -52,7 +53,8 @@ const STATUS_MAP: Record<string, string> = {
     MatCheckboxModule,
     LoaderComponent,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RecoverComponent
   ]
 })
 export class KanbanComponent extends PantheonBaseComponent {
@@ -78,12 +80,15 @@ export class KanbanComponent extends PantheonBaseComponent {
   public isMultiSelectMode: boolean = false;
   public selectedTaskIds: Set<string> = new Set();
   public showDelete: boolean = false;
+  public showRecovery: boolean = false;
   public userGroups = [];
   public selectedLabel: string = '';
 
   public fieldActions: Action[] = [
     { label: 'Añadir tarea', icon: '➕', type: 'primary', callback: () => this.openCreateModal() },
     { label: 'Eliminar', icon: '🗑', type: 'danger', callback: () => this.toggleMultiSelectMode() },
+    { label: 'Recuperar tareas eliminadas(30 días)', icon: '♻️', type: 'primary', callback: () => this.recoverDeletedTasks() },
+
   ];
 
   public prioritys = [
@@ -100,7 +105,8 @@ export class KanbanComponent extends PantheonBaseComponent {
 
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
-    private restService: PantheonRestService
+    private restService: PantheonRestService,
+    private cdr: ChangeDetectorRef
   ) {
     super();
     this.isBrowser = isPlatformBrowser(platformId);
@@ -186,6 +192,17 @@ export class KanbanComponent extends PantheonBaseComponent {
       this.groupOptions = [];
     } catch (err) {
     }
+  }
+  
+  //max 30 days
+  public recoverDeletedTasks() {
+    this.isMenuOpen = false;
+    this.showRecovery = true;
+    this.cdr.detectChanges();
+  }
+
+  public onTasksRecovered() {
+    super.ngOnInit();
   }
 
   private loadUserFromSession() {
