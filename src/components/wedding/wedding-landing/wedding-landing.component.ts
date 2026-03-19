@@ -38,6 +38,7 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   private intervalId1: any;
   private intervalId2: any;
   private intervalId3: any;
+  private videoPlayed = false;
 
   ngOnInit() {
     // Solo ejecutar intervalos en el navegador, no en SSR
@@ -60,9 +61,10 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
     this.intervalId2 = setInterval(() => {
       const nextIndex = (this.currentIndex2 + 1) % this.galeria2.length;
       
-      // Si el siguiente item es un video, detener el intervalo
+      // Si el siguiente item es un video, detener el intervalo y resetear bandera
       if (this.galeria2[nextIndex].type === 'video') {
         clearInterval(this.intervalId2);
+        this.videoPlayed = false; // Resetear para permitir reproducción
       }
       
       this.currentIndex2 = nextIndex;
@@ -71,6 +73,7 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   
   onVideoEnded() {
     // Cuando el video termine, avanzar a la siguiente imagen y reiniciar rotación
+    this.videoPlayed = false;
     this.currentIndex2 = (this.currentIndex2 + 1) % this.galeria2.length;
     // Reiniciar el intervalo para continuar la rotación automática
     if (isPlatformBrowser(this.platformId)) {
@@ -78,20 +81,38 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
     }
   }
   
-  onVideoLoaded(event: Event) {
-    // Cuando el video esté cargado, configurar tiempo inicial y reproducir
-    if (isPlatformBrowser(this.platformId)) {
-      const video = event.target as HTMLVideoElement;
-      // Pequeño timeout para asegurar que el video esté completamente listo
-      setTimeout(() => {
-        video.currentTime = 4;
-        video.play().catch(err => console.log('Error playing video:', err));
-      }, 100);
+  ngAfterViewChecked() {
+    // Intentar reproducir video cuando aparece en el DOM
+    if (isPlatformBrowser(this.platformId) && 
+        this.galeria2[this.currentIndex2].type === 'video' && 
+        !this.videoPlayed) {
+      const video = this.videoPlayer?.nativeElement;
+      if (video) {
+        this.videoPlayed = true;
+        // Intentar reproducir inmediatamente
+        video.load(); // Forzar recarga del video
+        setTimeout(() => {
+          video.currentTime = 4;
+          video.play().catch(err => {
+            console.log('Error playing video:', err);
+            // Si falla, reintentar una vez más
+            setTimeout(() => {
+              video.currentTime = 4;
+              video.play().catch(e => console.log('Error retry:', e));
+            }, 300);
+          });
+        }, 100);
+      }
     }
   }
   
-  ngAfterViewChecked() {
-    // Ya no necesitamos lógica aquí, se maneja con el evento (loadeddata)
+  onVideoLoaded(event: Event) {
+    // Evento de respaldo cuando el video se carga completamente
+    if (isPlatformBrowser(this.platformId)) {
+      const video = event.target as HTMLVideoElement;
+      video.currentTime = 4;
+      video.play().catch(err => console.log('Error on loadeddata:', err));
+    }
   }
 
   ngOnDestroy() {
