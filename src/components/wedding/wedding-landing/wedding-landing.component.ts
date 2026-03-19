@@ -82,36 +82,26 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   }
   
   ngAfterViewChecked() {
-    // Intentar reproducir video cuando aparece en el DOM
-    if (isPlatformBrowser(this.platformId) && 
-        this.galeria2[this.currentIndex2].type === 'video' && 
-        !this.videoPlayed) {
-      const video = this.videoPlayer?.nativeElement;
-      if (video) {
-        this.videoPlayed = true;
-        // Intentar reproducir inmediatamente
-        video.load(); // Forzar recarga del video
-        setTimeout(() => {
-          video.currentTime = 4;
-          video.play().catch(err => {
-            console.log('Error playing video:', err);
-            // Si falla, reintentar una vez más
-            setTimeout(() => {
-              video.currentTime = 4;
-              video.play().catch(e => console.log('Error retry:', e));
-            }, 300);
-          });
-        }, 100);
-      }
-    }
+    // No hacer nada aquí, dejar que los eventos del video manejen la reproducción
   }
   
   onVideoLoaded(event: Event) {
-    // Evento de respaldo cuando el video se carga completamente
-    if (isPlatformBrowser(this.platformId)) {
+    // Evento loadeddata - reproducir cuando hay datos
+    if (isPlatformBrowser(this.platformId) && !this.videoPlayed) {
+      this.videoPlayed = true;
       const video = event.target as HTMLVideoElement;
       video.currentTime = 4;
       video.play().catch(err => console.log('Error on loadeddata:', err));
+    }
+  }
+  
+  onVideoCanPlay(event: Event) {
+    // Evento canplay - reproducir cuando puede reproducirse
+    if (isPlatformBrowser(this.platformId) && !this.videoPlayed) {
+      this.videoPlayed = true;
+      const video = event.target as HTMLVideoElement;
+      video.currentTime = 4;
+      video.play().catch(err => console.log('Error on canplay:', err));
     }
   }
 
