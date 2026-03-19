@@ -1,14 +1,46 @@
 <div class="landing-container">
     <section>
         <p>
-            Estamos emocionados de compartir nuestra historia. Todo comenzó una tarde cualquiera durante la pandemia: en circunstancias atípicas nos encontramos, nos fuimos conociendo y pronto descubrimos que disfrutábamos de las mismas pequeñas cosas. Con el tiempo
-            compartimos proyectos, remodelamos nuestra casa y recorrimos juntos buena parte del mundo.
+            Estamos emocionados de compartir nuestra historia.
         </p>
+        <p>Todo comenzó una tarde cualquiera durante la pandemia: en circunstancias atípicas nos encontramos, nos fuimos conociendo y pronto descubrimos que disfrutábamos de las mismas pequeñas cosas.</p>
+
+        <!-- Galería 1 -->
+        <div class="gallery-container">
+            <img [src]="galeria1[currentIndex1].src" [alt]="galeria1[currentIndex1].alt" class="gallery-image">
+            <div class="gallery-dots">
+                <span *ngFor="let img of galeria1; let i = index" class="dot" [class.active]="i === currentIndex1" (click)="currentIndex1 = i"></span>
+            </div>
+        </div>
+
+        <p>
+            empezamos con el mayor de nuestros proyectos con ilusión
+        </p>
+
+        <!-- Galería 2 -->
+        <div class="gallery-container">
+            <img *ngIf="galeria2[currentIndex2].type === 'image'" [src]="galeria2[currentIndex2].src" [alt]="galeria2[currentIndex2].alt" class="gallery-image">
+            <video *ngIf="galeria2[currentIndex2].type === 'video'" autoplay muted class="gallery-image" style="max-width: 400px; max-height: 400px; object-fit: cover;" (ended)="onVideoEnded()">
+                <source [src]="galeria2[currentIndex2].src" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+            </video>
+            <div class="gallery-dots">
+                <span *ngFor="let img of galeria2; let i = index" class="dot" [class.active]="i === currentIndex2" (click)="currentIndex2 = i"></span>
+            </div>
+        </div>
+
+        <p>y recorrimos juntos buena parte del mundo.</p>
+
+        <!-- Galería 3 -->
+        <div class="gallery-container">
+            <img [src]="galeria3[currentIndex3].src" [alt]="galeria3[currentIndex3].alt" class="gallery-image">
+            <div class="gallery-dots">
+                <span *ngFor="let img of galeria3; let i = index" class="dot" [class.active]="i === currentIndex3" (click)="currentIndex3 = i"></span>
+            </div>
+        </div>
+
         <p>
             Hoy no imaginamos nuestras vidas el uno sin el otro, y por eso queremos dar un paso más y celebrar el futuro que nos espera. Nos encantaría contar con vuestra presencia en este día tan especial.
         </p>
-    </section>
-    <section>
-        <img src="assets/images/wedding/test.jpg" alt="Parcela antes de la boda">
     </section>
 </div>
