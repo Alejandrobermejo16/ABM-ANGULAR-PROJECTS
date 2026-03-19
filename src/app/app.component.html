@@ -2,62 +2,64 @@
 
 <!-- Menú principal -->
 <div class="tabBar" *ngIf="showMenu">
-  <button [routerLink]="['/']" mat-button class="botonMenu">HOME</button>
-  <button mat-button [matMenuTriggerFor]="aboveMenu" class="botonMenu">PROYECTOS</button>
-  <mat-menu #aboveMenu="matMenu" yPosition="above">
-    <button mat-menu-item [routerLink]="['/Playground']" class="botonMenu">PLAYGROUND</button>
-    <button mat-menu-item [routerLink]="['/InfoAngular']" class="botonMenu">AngularInfo</button>
-    <button mat-menu-item [routerLink]="['/Screen-Money']" class="botonMenu">CAMBIO DIVISA</button>
-    <button mat-menu-item [routerLink]="['/Kanban']" class="botonMenu">KANBAN BOARD</button>
-    <button mat-menu-item [routerLink]="['/ResumeDesignerComponent']" class="botonMenu">DISEÑO CURRICULUMS(PROXIMAMENTE)</button>
-    <button mat-menu-item [routerLink]="['/CvFormComponent']" class="botonMenu">Formulario CV</button> 
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="beforeMenu" class="botonMenu">PROXIMAMENTE</button>
-  <mat-menu #beforeMenu="matMenu" xPosition="before">
-    <button mat-menu-item class="botonMenu" [routerLink]="['/someRoute']">Go to Some Route</button>
-    <button mat-menu-item class="botonMenu">Item 2</button>
-  </mat-menu>
-  <button mat-button [matMenuTriggerFor]="afterMenu" class="botonMenu">PROXIMAMENTE</button>
-  <mat-menu #afterMenu="matMenu" xPosition="after">
-    <button mat-menu-item class="botonMenu">Item 1</button>
-    <button mat-menu-item class="botonMenu">Item 2</button>
-  </mat-menu>
+    <button [routerLink]="['/']" mat-button class="botonMenu">HOME</button>
+    <button mat-button [matMenuTriggerFor]="aboveMenu" class="botonMenu">PROYECTOS</button>
+    <mat-menu #aboveMenu="matMenu" yPosition="above">
+        <button mat-menu-item [routerLink]="['/Playground']" class="botonMenu">PLAYGROUND</button>
+        <button mat-menu-item [routerLink]="['/InfoAngular']" class="botonMenu">AngularInfo</button>
+        <button mat-menu-item [routerLink]="['/Screen-Money']" class="botonMenu">CAMBIO DIVISA</button>
+        <button mat-menu-item [routerLink]="['/Kanban']" class="botonMenu">KANBAN BOARD</button>
+        <button mat-menu-item [routerLink]="['/ResumeDesignerComponent']" class="botonMenu">DISEÑO CURRICULUMS(PROXIMAMENTE)</button>
+        <button mat-menu-item [routerLink]="['/CvFormComponent']" class="botonMenu">Formulario CV</button>
+        <button mat-menu-item [routerLink]="['/WeddingComponent']" class="botonMenu">BODA ALEX Y TERE</button>
+
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="beforeMenu" class="botonMenu">PROXIMAMENTE</button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item class="botonMenu" [routerLink]="['/someRoute']">Go to Some Route</button>
+        <button mat-menu-item class="botonMenu">Item 2</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="afterMenu" class="botonMenu">PROXIMAMENTE</button>
+    <mat-menu #afterMenu="matMenu" xPosition="after">
+        <button mat-menu-item class="botonMenu">Item 1</button>
+        <button mat-menu-item class="botonMenu">Item 2</button>
+    </mat-menu>
 </div>
 
 <!-- Slider de bienvenida -->
 <div class="principalMenu" *ngIf="isSliderVisible && showMenu">
-  <div class="contenedorbajo">
-    <div class="carruselcontenedor">
-      <p class="parraf" style="color: black; font-weight: bold; text-align: center;">¡Bienvenido!</p>
-      <p class="parraf" style="color: black; font-weight: bold; text-align: center;">¡Descubre Nuestros Proyectos Innovadores!</p>
+    <div class="contenedorbajo">
+        <div class="carruselcontenedor">
+            <p class="parraf" style="color: black; font-weight: bold; text-align: center;">¡Bienvenido!</p>
+            <p class="parraf" style="color: black; font-weight: bold; text-align: center;">¡Descubre Nuestros Proyectos Innovadores!</p>
 
-      <div class="card" style="width: 80%;">
-        <img src="https://miro.medium.com/v2/resize:fit:1400/1*v6ucd36pXcbCjHSC1A4HTg.png" class="card-img-top" alt="Descripción de la imagen">
-        <div class="card-body">
-          <h5 class="card-title">Angular</h5>
-          <p class="card-text">Utilizamos Angular como la columna vertebral de nuestra web debido a sus robustas capacidades y su enfoque en la creación de experiencias de usuario interactivas y de alto rendimiento</p>
-          <a href="/InfoAngular" class="btn btn-primary">Leer más</a>
+            <div class="card" style="width: 80%;">
+                <img src="https://miro.medium.com/v2/resize:fit:1400/1*v6ucd36pXcbCjHSC1A4HTg.png" class="card-img-top" alt="Descripción de la imagen">
+                <div class="card-body">
+                    <h5 class="card-title">Angular</h5>
+                    <p class="card-text">Utilizamos Angular como la columna vertebral de nuestra web debido a sus robustas capacidades y su enfoque en la creación de experiencias de usuario interactivas y de alto rendimiento</p>
+                    <a href="/InfoAngular" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+
+            <div class="card" style="width: 80%;">
+                <img src="/CambioMoneda.jpg" class="card-img-top" alt="Descripción de la imagen">
+                <div class="card-body">
+                    <h5 class="card-title">ABM CAMBIO DIVISA</h5>
+                    <p class="card-text">El proyecto consiste en desarrollar un sistema automatizado para el cambio de monedas, que permita a los usuarios intercambiar diferentes tipos de monedas de manera rápida y eficiente</p>
+                    <a href="/Screen-Money" class="btn btn-primary">Ver más</a>
+                </div>
+            </div>
+
+            <div class="card" style="width: 80%;">
+                <img src="/angularPlayground.jpg" class="card-img-top" alt="Descripción de la imagen">
+                <div class="card-body">
+                    <h5 class="card-title">Angular Playground</h5>
+                    <p class="card-text">Espacio diseñado para la práctica continua de los conceptos de Angular, fomentando su actualización y dominio</p>
+                    <a href="/Playground" class="btn btn-primary">Ver más</a>
+                </div>
+            </div>
+
         </div>
-      </div>
-
-      <div class="card" style="width: 80%;">
-        <img src="/CambioMoneda.jpg" class="card-img-top" alt="Descripción de la imagen">
-        <div class="card-body">
-          <h5 class="card-title">ABM CAMBIO DIVISA</h5>
-          <p class="card-text">El proyecto consiste en desarrollar un sistema automatizado para el cambio de monedas, que permita a los usuarios intercambiar diferentes tipos de monedas de manera rápida y eficiente</p>
-          <a href="/Screen-Money" class="btn btn-primary" >Ver más</a>
-        </div>
-      </div>
-
-      <div class="card" style="width: 80%;">
-        <img src="/angularPlayground.jpg" class="card-img-top" alt="Descripción de la imagen">
-        <div class="card-body">
-          <h5 class="card-title">Angular Playground</h5>
-          <p class="card-text">Espacio diseñado para la práctica continua de los conceptos de Angular, fomentando su actualización y dominio</p>
-          <a href="/Playground" class="btn btn-primary">Ver más</a>
-        </div>
-      </div>
-
     </div>
-  </div>
 </div>

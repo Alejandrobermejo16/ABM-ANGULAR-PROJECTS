@@ -33,7 +33,7 @@ export class AppComponent {
       .subscribe(() => {
         this.isSliderVisible = this.router.url === '/';
 
-        this.showMenu = this.router.url !== '/Kanban';
+        this.showMenu = this.router.url !== '/Kanban' && this.router.url !== '/WeddingComponent';
       });
   }
 }

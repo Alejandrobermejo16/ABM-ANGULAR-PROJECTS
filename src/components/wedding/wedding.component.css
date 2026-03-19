@@ -1,0 +1,69 @@
+.scroll-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    /* Esto hace el efecto de salto entre páginas */
+    scroll-behavior: smooth;
+}
+
+
+/* Base de cada sección */
+
+.hero-section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    /* Punto donde se detiene el imán */
+    text-align: center;
+    padding: 0 20px;
+}
+
+
+/* Estilo para las secciones IMPARES (1, 3, 5...) - AZUL */
+
+.hero-section:nth-child(odd) {
+    background-color: #1e3a8a;
+    /* Un azul elegante (Tailwind style) */
+    color: #ffffff;
+}
+
+
+/* Estilo para las secciones PARES (2, 4, 6...) - BLANCO */
+
+.hero-section:nth-child(even) {
+    background-color: #ffffff;
+    color: #1e293b;
+}
+
+
+/* Contenedor de texto para que no sea gigante en pantallas grandes */
+
+.content-wrapper {
+    max-width: 800px;
+    animation: fadeIn 1s ease-in;
+    /* Un toque de animación suave */
+}
+
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

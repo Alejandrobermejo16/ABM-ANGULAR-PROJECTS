@@ -35,8 +35,6 @@ export class RecoverComponent implements OnChanges {
     ) {}
 
     async ngOnChanges(changes: SimpleChanges) {
-        console.log(this.show, "show en changes", changes);
-        console.log("cambios en show", changes['show']);
         if (changes['show'] && this.show && this.userEmail) {
             await this.loadDeletedTasks();
         }
