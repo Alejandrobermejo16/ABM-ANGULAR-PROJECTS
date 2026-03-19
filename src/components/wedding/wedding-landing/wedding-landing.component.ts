@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -8,7 +8,9 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
   templateUrl: './wedding-landing.component.html',
   styleUrls: ['./wedding-landing.component.css']
 })
-export class WeddingLandingComponent implements OnInit, OnDestroy {
+export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChecked {
+  
+  @ViewChild('videoPlayer', { static: false }) videoPlayer?: ElementRef<HTMLVideoElement>;
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
   
@@ -21,7 +23,7 @@ export class WeddingLandingComponent implements OnInit, OnDestroy {
     { src: 'assets/images/wedding/parcela.jpg', alt: 'Parcela antes de la boda', type: 'image' },
     { src: 'assets/images/wedding/techo.jpg', alt: 'techo', type: 'image' },
     { src: 'assets/images/wedding/nevada.jpg', alt: 'nevada', type: 'image' },
-    { src: 'assets/videos/wedding/vueloparcela.mp4#t=4', alt: 'vuelo parcela', type: 'video' }
+    { src: 'assets/videos/wedding/vueloparcela.mp4', alt: 'vuelo parcela', type: 'video' }
   ];
   
   galeria3 = [
@@ -73,6 +75,17 @@ export class WeddingLandingComponent implements OnInit, OnDestroy {
     // Reiniciar el intervalo para continuar la rotación automática
     if (isPlatformBrowser(this.platformId)) {
       this.startGallery2Rotation();
+    }
+  }
+  
+  ngAfterViewChecked() {
+    // Cuando el video aparece en el DOM, iniciarlo manualmente
+    if (this.videoPlayer && isPlatformBrowser(this.platformId)) {
+      const video = this.videoPlayer.nativeElement;
+      if (video.paused && video.readyState >= 2) {
+        video.currentTime = 4; // Empezar en el segundo 4
+        video.play().catch(err => console.log('Error playing video:', err));
+      }
     }
   }
 
