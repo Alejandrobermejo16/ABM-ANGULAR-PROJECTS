@@ -20,7 +20,8 @@
         <!-- Galería 2 -->
         <div class="gallery-container">
             <img *ngIf="galeria2[currentIndex2].type === 'image'" [src]="galeria2[currentIndex2].src" [alt]="galeria2[currentIndex2].alt" class="gallery-image">
-            <video *ngIf="galeria2[currentIndex2].type === 'video'" #videoPlayer muted playsinline webkit-playsinline class="gallery-image" style="max-width: 400px; max-height: 400px; object-fit: cover;" (loadeddata)="onVideoLoaded($event)" (canplay)="onVideoCanPlay($event)" (ended)="onVideoEnded()">
+            <video *ngIf="galeria2[currentIndex2].type === 'video'" #videoPlayer muted playsinline webkit-playsinline class="gallery-image" style="max-width: 400px; max-height: 400px; object-fit: cover;" (loadeddata)="onVideoLoaded($event)" (canplay)="onVideoCanPlay($event)"
+                (ended)="onVideoEnded()">
                 <source [src]="galeria2[currentIndex2].src" type="video/mp4">
                 Tu navegador no soporta videos HTML5.
             </video>
