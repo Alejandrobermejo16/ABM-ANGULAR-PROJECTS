@@ -8,7 +8,7 @@ import { CvTypeComponent } from '../cv-type/cv-type.component';
   standalone: true,
   imports: [CommonModule,ProgressbarModule,FormsModule,CvTypeComponent],
   templateUrl: './cv-template.html',
-  styleUrl: './cv-template.css',
+  styleUrls: ['./cv-template.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 

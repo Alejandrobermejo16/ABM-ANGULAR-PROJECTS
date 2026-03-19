@@ -2,7 +2,7 @@
     <section *ngFor="let item of secciones" class="hero-section">
         <div class="content-wrapper">
             <h1>{{ item.titulo }}</h1>
-            <p>{{ item.contenido }}</p>
+            <ng-container *ngComponentOutlet="item.componente ?? null"></ng-container>
             <!-- Aquí puedes añadir botones o imágenes más tarde -->
         </div>
     </section>

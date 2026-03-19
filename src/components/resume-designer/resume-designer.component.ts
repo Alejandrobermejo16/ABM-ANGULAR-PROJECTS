@@ -13,7 +13,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
             MatButtonModule, MatMenuModule, RouterModule, 
             RouterOutlet],
   templateUrl: './resume-designer.component.html',
-  styleUrl: './resume-designer.component.css',
+  styleUrls: ['./resume-designer.component.css'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
