@@ -27,7 +27,7 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   ];
   
   galeria3 = [
-    { src: 'assets/images/wedding/Marraketchs_.jpg', alt: 'Marrakech' },
+    { src: 'assets/images/wedding/Marraketchs_2.jpg', alt: 'Marrakech' },
     { src: 'assets/images/wedding/rumayey.jpg', alt: 'Rumania' }
   ];
   
