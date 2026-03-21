@@ -15,20 +15,20 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
   
   galeria1 = [
-    { src: 'assets/images/wedding/tomandoalgo.jpg', alt: 'Conocimos bailando' },
-    { src: 'assets/images/wedding/citarestaurante.jpg', alt: 'Restaurante donde nos conocimos' }
+    { src: 'assets/images/wedding/tomandoalgo_.jpg', alt: 'Conocimos bailando' },
+    { src: 'assets/images/wedding/citarestaurante_.jpg', alt: 'Restaurante donde nos conocimos' }
   ];
   
   galeria2 = [
     { src: 'assets/images/wedding/parcela_antes_.jpg', alt: 'Parcela antes de la boda', type: 'image' },
-    { src: 'assets/images/wedding/techo.jpg', alt: 'techo', type: 'image' },
-    { src: 'assets/images/wedding/nevada.jpg', alt: 'nevada', type: 'image' },
+    { src: 'assets/images/wedding/techo_.jpg', alt: 'techo', type: 'image' },
+    { src: 'assets/images/wedding/nevada_.jpg', alt: 'nevada', type: 'image' },
     { src: 'assets/videos/wedding/vueloparcela.mp4', alt: 'vuelo parcela', type: 'video' }
   ];
   
   galeria3 = [
     { src: 'assets/images/wedding/Marraketchs_2.jpg', alt: 'Marrakech' },
-    { src: 'assets/images/wedding/rumayey.jpg', alt: 'Rumania' }
+    { src: 'assets/images/wedding/rumania_.jpg', alt: 'Rumania' }
   ];
   
   currentIndex1 = 0;
