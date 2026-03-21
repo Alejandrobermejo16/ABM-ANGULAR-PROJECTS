@@ -15,8 +15,8 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
   
   galeria1 = [
-    { src: 'assets/images/wedding/tomando_algo.jpg', alt: 'Tomando algo' },
-    { src: 'assets/images/wedding/restaurantecena.jpg', alt: 'Restaurante' }
+    { src: 'assets/images/wedding/tomando_algo.jpg', alt: 'Tomando algo', type: 'image' },
+    { src: 'assets/images/wedding/restaurantecena.jpg', alt: 'Restaurante', type: 'image' }
   ];
   
   galeria2 = [
@@ -27,8 +27,8 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   ];
   
   galeria3 = [
-    { src: 'assets/images/wedding/Marraketchs_2.jpg', alt: 'Marrakech' },
-    { src: 'assets/images/wedding/rumania_.jpg', alt: 'Rumania' }
+    { src: 'assets/images/wedding/marruecos_.jpg', alt: 'Marrakech', type: 'image' },
+    { src: 'assets/images/wedding/rumania_.jpg', alt: 'Rumania', type: 'image' }
   ];
   
   currentIndex1 = 0;
