@@ -15,14 +15,14 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
   
   galeria1 = [
-    { src: 'assets/images/wedding/tomandoalgo_.jpg', alt: 'Conocimos bailando' },
-    { src: 'assets/images/wedding/citarestaurante_.jpg', alt: 'Restaurante donde nos conocimos' }
+    { src: 'assets/images/wedding/tomando_algo.jpg', alt: 'Tomando algo' },
+    { src: 'assets/images/wedding/restaurantecena.jpg', alt: 'Restaurante' }
   ];
   
   galeria2 = [
     { src: 'assets/images/wedding/parcela_antes_.jpg', alt: 'Parcela antes de la boda', type: 'image' },
-    { src: 'assets/images/wedding/techo_.jpg', alt: 'techo', type: 'image' },
-    { src: 'assets/images/wedding/nevada_.jpg', alt: 'nevada', type: 'image' },
+    { src: 'assets/images/wedding/techito.jpg', alt: 'techo', type: 'image' },
+    { src: 'assets/images/wedding/nevadita.jpg', alt: 'nevada', type: 'image' },
     { src: 'assets/videos/wedding/vueloparcela.mp4', alt: 'vuelo parcela', type: 'video' }
   ];
   
