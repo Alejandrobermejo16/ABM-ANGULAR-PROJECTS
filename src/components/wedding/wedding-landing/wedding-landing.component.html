@@ -34,9 +34,14 @@
 
         <!-- Galería 3 -->
         <div class="gallery-container">
-            <img [src]="galeria3[currentIndex3].src" [alt]="galeria3[currentIndex3].alt" class="gallery-image">
+            <img *ngIf="galeria3[currentIndex3].type === 'image'" [src]="galeria3[currentIndex3].src" [alt]="galeria3[currentIndex3].alt" class="gallery-image">
+            <video *ngIf="galeria3[currentIndex3].type === 'video'" #videoPlayer3 muted playsinline webkit-playsinline controls class="gallery-image" style="max-width: 400px; max-height: 400px; object-fit: cover;" (loadeddata)="onVideo3Loaded($event)" (canplay)="onVideo3CanPlay($event)"
+                (ended)="onVideo3Ended()">
+                <source [src]="galeria3[currentIndex3].src" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+            </video>
             <div class="gallery-dots">
-                <span *ngFor="let img of galeria3; let i = index" class="dot" [class.active]="i === currentIndex3" (click)="currentIndex3 = i"></span>
+                <span *ngFor="let img of galeria3; let i = index" class="dot" [class.active]="i === currentIndex3" (click)="currentIndex3 = i; videoPlayed3 = false"></span>
             </div>
         </div>
 
