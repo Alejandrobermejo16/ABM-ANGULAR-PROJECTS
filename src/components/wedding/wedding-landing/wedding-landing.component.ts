@@ -20,7 +20,7 @@ export class WeddingLandingComponent implements OnInit, OnDestroy, AfterViewChec
   ];
   
   galeria2 = [
-    { src: 'assets/images/wedding/parcela.jpg', alt: 'Parcela antes de la boda', type: 'image' },
+    { src: 'assets/images/wedding/parcela_antes_.jpg', alt: 'Parcela antes de la boda', type: 'image' },
     { src: 'assets/images/wedding/techo.jpg', alt: 'techo', type: 'image' },
     { src: 'assets/images/wedding/nevada.jpg', alt: 'nevada', type: 'image' },
     { src: 'assets/videos/wedding/vueloparcela.mp4', alt: 'vuelo parcela', type: 'video' }
